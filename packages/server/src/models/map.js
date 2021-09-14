@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-const mapSchema = new.mongoose.Schema({
+const mapSchema = new mongoose.Schema({
     city: {
         type: String,
         required: false,
