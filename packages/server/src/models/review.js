@@ -19,7 +19,7 @@ const reviewSchema = new mongoose.Schema(
     },
     likes: [
       {
-        type: ObjectID,
+        type: ObjectId,
         ref: "User",
       },
     ],
