@@ -1,5 +1,10 @@
 import express from 'express'
 import { User } from '../models'
+import userRouter from './users'
+import authRouter from './auth'
+import mapsRouter from './maps'
+import placesRouter from './places'
+
 
 const router = express.Router()
 
@@ -20,5 +25,11 @@ router.get('/sample', async (req, res, next) => {
 
   res.status(200).send(user)
 })
+
+
+router.use('/auth', authRouter)
+router.use('/users', userRouter)
+router.use('/maps', mapsRouter)
+router.use('/places', placesRouter)
 
 module.exports = router
