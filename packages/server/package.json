@@ -22,7 +22,7 @@
     "express": "~4.16.1",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.12",
+    "mongoose": "^6.0.5",
     "morgan": "~1.9.1",
     "regenerator-runtime": "^0.13.9"
   },
