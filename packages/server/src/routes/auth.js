@@ -1,5 +1,9 @@
 import express from "express";
 const router = express.Router();
+import { User } from '../models'
+import keys from '../config/keys'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
 
 router.route('/').get((req, res, next) => {
@@ -7,7 +11,7 @@ router.route('/').get((req, res, next) => {
 })
 
 router.post('/signup', async (req, res) => {
-  const { username, password, profile_image } = req.body
+  const { username, password, profile_image, email } = req.body
 
   if (!password || !username) {
     return res.status(422).json({ error: 'please add all the fields' })
@@ -29,6 +33,7 @@ router.post('/signup', async (req, res) => {
           username,
           passwordHash: hashedpassword,
           profile_image: profile_image,
+          email: email,
         })
 
         user
