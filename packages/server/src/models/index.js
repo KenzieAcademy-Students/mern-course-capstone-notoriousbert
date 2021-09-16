@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+export { default as Pet } from './pet'
 export { default as User } from './user'
 export { default as Map } from './map'
 export { default as Review } from './review'

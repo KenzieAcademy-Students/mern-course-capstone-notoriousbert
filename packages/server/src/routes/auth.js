@@ -1,8 +1,8 @@
 import express from "express";
-import {User} from '../models'
-import bcrypt from 'bcryptjs'
+import { User } from '../models'
 import keys from '../config/keys'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
 const router = express.Router();
 
@@ -36,6 +36,7 @@ router.post('/signup', async (req, res) => {
           email,
           passwordHash: hashedpassword,
           profile_image: profile_image,
+          email: email,
         })
 
         user
