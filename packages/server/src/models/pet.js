@@ -8,6 +8,6 @@ const petSchema = new mongoose.Schema({
     },
 })
 
-const Pet = mongoose.model('Pt', petSchema)
+const Pet = mongoose.model('Pet', petSchema)
 
 export default Pet;

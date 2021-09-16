@@ -1,10 +1,10 @@
 import express from "express";
-
-const router = express.Router();
 import { User } from '../models'
 import keys from '../config/keys'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+
+const router = express.Router();
 
 
 
