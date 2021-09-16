@@ -46,7 +46,33 @@ router.post('/signup', async (req, res) => {
     })
 })
 
-
+router.post('/signin', async (req, res) => {
+    const { username, password } = req.body
+    if (!username || !password) {
+      return res.status(422).json({ error: 'missing username or password' })
+    }
+  
+    const user = await User.findOne({ username: username })
+    const passwordCorrect =
+      user === null ? false : await bcrypt.compare(password, user.passwordHash)
+  
+    if (!(user && passwordCorrect)) {
+      return res.status(401).json({
+        error: 'invalid username or password',
+      })
+    }
+  
+    const userForToken = {
+      username: user.username,
+      id: user._id,
+    }
+  
+    const token = jwt.sign(userForToken, keys.jwt.secret)
+    res
+      .status(200)
+      .send({ token, username, uid: user.id, profile_image: user.profile_image })
+  })
+  
 
 
 module.exports = router;
