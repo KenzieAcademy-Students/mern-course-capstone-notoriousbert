@@ -3,6 +3,10 @@ import { Place, Review} from '../models'
 
 const router = express.Router()
 
+//Sanity Check
+router.get('/', (req, res) => {
+    res.status(200).send('places connected')
+})
 
 //get PLACE
 router.get("/:id", async (req,res) => {
@@ -25,7 +29,7 @@ router.get("/:id", async(req,res) => {
 })
 
 //post REVIEW
-router.post("/", requireauth, async (req,res)=>{
+router.post("/", async (req,res)=>{
     let {text} = request.body
     let {user} = request
 
