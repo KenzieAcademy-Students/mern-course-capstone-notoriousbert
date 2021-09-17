@@ -8,9 +8,23 @@ router.get('/', (req, res) => {
     res.status(200).send('places connected')
 })
 
+//Get all Places
+router.get("/all", async (req, res, next) => {
+    const place = await Place.find({})
+    try {
+      res.json(place.map((place) => map.toJSON()));
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+
+
 //get PLACE
 router.get("/:id", async (req,res) => {
-    let place = await Place.findById(req.params.id)
+    console.log("dog",req.params.id)
+    let place = await Place.findOne({placeName:req.params.id})
+    console.log(place)
     if (place){
         res.json(place.json())
     } else {
