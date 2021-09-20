@@ -4,58 +4,50 @@ import { Place, Review} from '../models'
 const router = express.Router()
 
 //Sanity Check
-router.get('/', (req, res) => {
-    res.status(200).send('places connected')
-})
+// router.get('/', (req, res) => {
+//     res.status(200).send('places connected')
+// })
 
-//Get all Places
-router.get("/all", async (req, res, next) => {
-    const place = await Place.find({})
-    try {
-      res.json(place.map((place) => map.toJSON()));
-    } catch (error) {
-      next(error);
-    }
-  });
-  
+  //get REVIEW by ID
+  router.get("/review/:id", async(req,res) => {
+      let review = await Review.findById(req.params.id)
+      try{
+        res.json(review.toJSON()) 
+      } catch (error) {
+        res.status(400).end 
+      }
+  })
+
+//   Sanity Check for Review  
+//   router.get('/review', (req, res) => {
+//       res.status(200).send('reviews connected')
+//   })
 
 //get PLACE by ID
 router.get("/:id", async (req,res) => {
-    console.log("dog",req.params.id)
     let place = await Place.findById(req.params.id)
-    console.log(place)
-    if (place){
-        res.json(place.toJSON())
-    } else {
-        res.status(400).end
-    }
-})
-
-//get REVIEW
-router.get("/:id", async(req,res) => {
-    let review = await Review.findbyId(req.params.id)
-    if (review) {
-        res.json(review.json())
-    } else {  
+    try{
+        res.json(place.toJSON())  
+    } catch (error) {
         res.status(400).end
     }
 })
 
 //post REVIEW
-router.post("/", async (req,res)=>{
-    let {text} = request.body
-    let {user} = request
+router.post("/review", async (req,res)=>{
+    console.log("fish",req.body)
+    const {text, userId} = req.body
 
     const review = new Review({
         text:text,
-        author: user._id,
+        author:userId
     })
-    let savedReview = await review.save()
 
-    if (savedReview) {
-        res.json(savedReview.tojson())
-    } else {
-        res.status(400).end
+    try {
+    const savedReview = await review.save()
+    res.json(savedReview.toJSON())
+    } catch (error) {
+        res.status(400).end 
     }
 })
    
