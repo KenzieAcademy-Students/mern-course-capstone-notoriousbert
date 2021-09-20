@@ -19,14 +19,13 @@ router.get("/all", async (req, res, next) => {
   });
   
 
-
-//get PLACE
+//get PLACE by ID
 router.get("/:id", async (req,res) => {
     console.log("dog",req.params.id)
-    let place = await Place.findOne({placeName:req.params.id})
+    let place = await Place.findById(req.params.id)
     console.log(place)
     if (place){
-        res.json(place.json())
+        res.json(place.toJSON())
     } else {
         res.status(400).end
     }
