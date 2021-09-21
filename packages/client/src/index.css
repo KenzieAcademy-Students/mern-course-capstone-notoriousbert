@@ -4,3 +4,8 @@
 main {
   text-align: center;
 }
+
+.signupForm {
+  width: 80%;
+  margin: auto;
+}
