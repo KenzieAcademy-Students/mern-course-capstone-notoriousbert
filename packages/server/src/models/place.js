@@ -35,18 +35,18 @@ const placeSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-  petsAllowed: [
-    {
-      pet: {
-        type: String,
-        required: true,
-      },
-      allowed: {
-        type: Boolean,
-        required: true,
-      },
-    },
-  ],
+  // petsAllowed: [
+  //   {
+  //     pet: {
+  //       type: String,
+  //       required: true,
+  //     },
+  //     allowed: {
+  //       type: Boolean,
+  //       required: true,
+  //     },
+  //   },
+  // ],
 });
 
 const Place = mongoose.model('Place', placeSchema)
