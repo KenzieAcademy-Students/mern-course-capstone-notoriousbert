@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import { Row } from 'react-bootstrap'
-import { Col, Button } from 'react-bootstrap'
+import { Col, Button, Image, InputGroup, FormControl } from 'react-bootstrap'
 
 export default function LandingPage(props) {
 return (
@@ -9,15 +9,29 @@ return (
     <Container fluid>
         <Row>
             {/* <p> Row one </p> */}
-            <Col>
-            <p> Col One</p>
+            <Col style={{/*border:"2px solid black",*/ height:350}}>
+            <Button variant="outline-warning" size="sm">Register</Button>
+            <Button variant="outline-primary"size="sm">Login</Button>
+                <div>
+                    <h1><Image src="holder.js/171x180" rounded />Kibbles & Ritz</h1>
+                    <p> Find pet friendly bars, hotels, restaurants wherever you're traveling</p>
+                        <div>
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                placeholder="Enter a city Zipcode or address"
+                                aria-label="Recipient's username"
+                                aria-describedby="basic-addon2"
+                                />
+                                <InputGroup.Text id="basic-addon2">Get Started!</InputGroup.Text>
+                            </InputGroup>
+                        </div>
+                </div>
             </Col>
         </Row>
         <Row>
-            {/* <p> Row Two </p> */}
-            <Col> One - About K/R </Col>
-            <Col> Two - Our Mission </Col>
-            <Col> Three - Contact US</Col>
+            <Col style={{/*border:"2px solid black",*/ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
+            <Col style={{/*border:"2px solid black".*/ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
+            <Col style={{/*border:"2px solid black",*/ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
         </Row>
     </Container>
     </div>
