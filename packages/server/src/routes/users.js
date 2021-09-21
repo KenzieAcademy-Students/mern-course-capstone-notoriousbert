@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
 router
   .route('/:id')
   .get(async (req, res) => {
-    const {id} = req.params
 
     const populateQuery = [
       {
@@ -21,7 +20,7 @@ router
       },
     ]
     try {
-    const user = await User.findById(id)
+    const user = await User.findOne({ username: req.params.id })
       .populate(populateQuery)
       .exec()
     if (user) {
@@ -62,4 +61,3 @@ router
   })
 
 module.exports = router
-
