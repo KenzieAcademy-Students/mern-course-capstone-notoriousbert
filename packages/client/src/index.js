@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -11,13 +12,14 @@ import {
   UserRegistrationPage,
 } from "pages";
 import "./index.css";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={MapPage} />
-        {/* Add more routes here */}
+        <Route exact path='/' component={LandingPage} />
+        { /* Add more routes here */} 
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
