@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 const router = express.Router();
 import { Map } from "../models";
 import requireAuth from "../middleware";
