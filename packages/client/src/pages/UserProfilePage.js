@@ -1,44 +1,76 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Container } from 'react-bootstrap'
-import { Row } from 'react-bootstrap'
-import { Col, Button, Image, InputGroup, FormControl, Form } from 'react-bootstrap'
+import { Col, Row, Button} from 'react-bootstrap'
+import axios from 'utils/axiosConfig.js'
+
 
 export default function UserProfilePage(props) {
+
+    // const { state } = useProvideAuth()
+    const [user, setUser] = useState()
+    // const [loading, setLoading] = useState(true)
+    // const [validated, setValidated] = useState(false)
+    // const [open, setOpen] = useState(false)
+    const [data, setData] = useState({
+    //   password: '',
+    //   currentPassword: "",
+    //   confirmPassword: "",
+    //   isSubmitting: false,
+    //   errorMessage: null,
+    //   profileAvatar: ""
+        userName:"",
+        email:"",
+        passwordHash:"",
+        profileImage:"",
+        reviews:"",
+        reviewLikes:"",
+        favorites:"",
+        pets:""
+    })
+
+    //returned from endpoint
+    // "_id": "614391d284fe56afaef4daa0",
+    // "username": "alicia",
+    // "email": "alicia@gmail.com",
+    // "passwordHash": "$2a$12$Ay6Fe/hPn/UaUqH2dj/wVuSFDgnmiZzXTfWiGm1F8bKz4fK5I8iZ6",
+    // "profile_image": "whale.svg",
+    // "reviews": [],
+    // "reviewLikes": [],
+    // "favorites": [],
+    // "pets": [],
+    // "__v": 0
+
+    useEffect(() => {
+        const getUser = async () => {
+        try {
+            const userResponse = await axios.get(`users/${uid}`)
+            setUser(userResponse.data)
+            setData({
+                ...data,
+                [event.target.name]: event.target.value,
+              })
+            // setLoading(false)
+        } catch (err) {
+            console.error(err.message)
+        }
+        }})
+
 return (
     <div>
     <Container fluid>
-        <Row style={{height:350, /*border:"1px solid black"*/}}>
-        <Image src="holder.js/171x180" roundedCircle />
-        <div>
-            <h1><Image src="holder.js/171x180" roundedCircle />Kibbles & Ritz</h1>
-        </div>
-        <div className='signupForm' style={{width:"40%", margin:"auto", height:500}}>
-            <span style={{fontSize:12}}>REGISTER</span>
-        <Form size="sm">
-            <Form.Group size="sm" className="d-flex flex-column input-sm" controlId="formBasicEmail">
-                <Form.Label size="sm">Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" size="sm" />
-            </Form.Group>
-        
-            <Form.Group className="d-flex flex-column input-sm" controlId="formBasicPassword">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="username" placeholder="Username" />
-            </Form.Group>
-            <Form.Group className="d-flex flex-column input-sm" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="d-flex flex-column input-sm" controlId="formBasicPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="confirm password" placeholder="Confirm Password" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Register
-            </Button>
-            </Form>
-            </div>
-        </Row>
-        <Row style= {{height:125, /*border: "1px solid black"*/}}>
+        <Row>
+            <Col>
+            <h3>Favorites</h3>
+            <div>list of favorites</div>
+            <h3>Reviews</h3>
+            <div>list of reviews</div>
+            </Col> 
+            <Col>
+            <div>Username</div>
+            <div>Email</div>
+            <h3>Edit Profile Information</h3>
+            <Button variant="outline-primary" size="sm">EDIT</Button>
+            </Col>
         </Row>
     </Container>
     </div>
