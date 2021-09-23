@@ -1,6 +1,6 @@
 import React from 'react'
 import { useApiFetch } from "util/api"
-import LoadingSpinner from 'components/LoadingSpinner'
+import LoadingSpinner from 'components'
 
 export default function HomePage(props) {
   const {error, isLoading, response} = useApiFetch("/sample")
