@@ -12,7 +12,8 @@ import {
 } from "pages";
 import Navbar from './components/Layout/Navbar';
 import "./index.css";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.render(
     <Navbar />
       <Switch>
         <Route exact path='/' component={LandingPage} />
+        <Route exact path='/map' component={MapPage} />
         <Route exact path='/signup' component={UserRegistrationPage} />
         <Route exact path='/login' component={LoginPage} />
       </Switch>
