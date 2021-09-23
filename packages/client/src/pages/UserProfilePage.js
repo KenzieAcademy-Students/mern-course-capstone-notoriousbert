@@ -1,32 +1,34 @@
 import React, {useEffect, useState} from 'react'
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button} from 'react-bootstrap'
-import axios from 'utils/axiosConfig.js'
+import axios from 'util/axiosConfig.js'
+
+
 
 
 export default function UserProfilePage(props) {
 
-    // const { state } = useProvideAuth()
+    // // const { state } = useProvideAuth()
     const [user, setUser] = useState()
-    // const [loading, setLoading] = useState(true)
-    // const [validated, setValidated] = useState(false)
-    // const [open, setOpen] = useState(false)
-    const [data, setData] = useState({
-    //   password: '',
-    //   currentPassword: "",
-    //   confirmPassword: "",
-    //   isSubmitting: false,
-    //   errorMessage: null,
-    //   profileAvatar: ""
-        userName:"",
-        email:"",
-        passwordHash:"",
-        profileImage:"",
-        reviews:"",
-        reviewLikes:"",
-        favorites:"",
-        pets:""
-    })
+    // // const [loading, setLoading] = useState(true)
+    // // const [validated, setValidated] = useState(false)
+    // // const [open, setOpen] = useState(false)
+    // const [data, setData] = useState({
+    // //   password: '',
+    // //   currentPassword: "",
+    // //   confirmPassword: "",
+    // //   isSubmitting: false,
+    // //   errorMessage: null,
+    // //   profileAvatar: ""
+    //     userName:"",
+    //     email:"",
+    //     passwordHash:"",
+    //     profileImage:"",
+    //     reviews:"",
+    //     reviewLikes:"",
+    //     favorites:"",
+    //     pets:""
+    // })
 
     //returned from endpoint
     // "_id": "614391d284fe56afaef4daa0",
@@ -40,20 +42,18 @@ export default function UserProfilePage(props) {
     // "pets": [],
     // "__v": 0
 
-    useEffect(() => {
-        const getUser = async () => {
-        try {
-            const userResponse = await axios.get(`users/${uid}`)
-            setUser(userResponse.data)
-            setData({
-                ...data,
-                [event.target.name]: event.target.value,
-              })
-            // setLoading(false)
-        } catch (err) {
-            console.error(err.message)
+    const getUser = async ()=>{
+        try{
+            const userResponse = await axios.get('/users/alicia')
+            console.log(userResponse)
+        } catch (error) { 
+            console.log("there has been an error")
         }
-        }})
+    }
+
+    useEffect(()=>{
+        getUser()
+    },[])
 
 return (
     <div>
