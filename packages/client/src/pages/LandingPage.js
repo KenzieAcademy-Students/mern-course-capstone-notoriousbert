@@ -9,8 +9,6 @@ return (
       <Row>
       {/* <p> Row one </p> */}
       <Col style={{/*border:"2px solid black",*/ height:350}}>
-        <Link to='/register' className="btn btn-primary">Sign Up</Link>
-        <Link to='/login' className="btn btn-light">Login</Link>
       <div>
         <h1><Image src="holder.js/171x180" rounded />Kibbles & Ritz</h1>
         <p> Find pet friendly bars, hotels, restaurants wherever you're traveling</p>
