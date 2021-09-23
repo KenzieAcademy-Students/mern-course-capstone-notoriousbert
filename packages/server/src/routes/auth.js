@@ -6,9 +6,7 @@ import bcrypt from 'bcryptjs'
 
 const router = express.Router();
 
-
-
-router.route('/').get((req, res, next) => {
+router.get('/', (req, res) => {
   res.send('auth endpoint')
 })
 
@@ -20,7 +18,7 @@ router.post('/signup', async (req, res) => {
   }
 
   if (password.length < 8 || password.length > 20) {
-    return res.status(400).json({error: ' password must be between 8 and 20 characters.'})
+    return res.status(400).json({error: 'password must be between 8 and 20 characters.'})
   }
 
   User.findOne({ username: username })
@@ -81,7 +79,5 @@ router.post('/signin', async (req, res) => {
       .status(200)
       .send({ token, username, uid: user.id, profile_image: user.profile_image })
   })
-  
-
 
 module.exports = router;
