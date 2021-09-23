@@ -1,6 +1,7 @@
 import React from "react";
-import mapStyles from "./mapStyles"
-
+import mapStyles from "./mapStyles";
+import "./index.scss";
+import { useState, useCallback, useRef } from "react";
 // import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
 
 import {
@@ -50,10 +51,10 @@ const center = {
 };
 
 const options = {
-    styles: mapStyles,
-    disableDefaultUI: true,
-    zoomControl: true
-}
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+};
 
 export default function MapPage() {
   const { isLoaded, loadError } = useLoadScript({
@@ -61,17 +62,55 @@ export default function MapPage() {
     libraries,
   });
 
+  const [markers, setMarkers] = useState([]);
+
+  const onMapClick = useCallback((event) => {
+      setMarkers((current) => [
+        ...current,
+        {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
+          time: new Date(),
+        },
+      ]);
+  }, [])
+
+  const mapRef =useRef()
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map
+  }, [])
+
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
 
   return (
     <div>
+      <h1>
+        Pet Friendly?
+        {/* <span role="img" aria-label="tent">
+          🐩 🐈 🐦 🦎
+        </span> */}
+      </h1>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={8}
         center={center}
         options={options}
-      ></GoogleMap>
+        onClick={onMapClick}
+      >
+        {markers.map((marker) => (
+          <Marker
+            key={marker.time.toISOString()}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            icon={{
+              url: '/icons8-dog.svg',
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15)
+            }}
+          />
+        ))}
+      </GoogleMap>
     </div>
   );
 }
