@@ -1,135 +1,30 @@
-
-/* Your CSS Here */
-/* @import 'custom';
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap'); */
-
-/* 
-
-a {
-  color: var(--primary);
-}
-
-html {
-  overflow: hidden;
-}
-
-body {
-  background: linear-gradient(#0e2039, #183054) no-repeat;
-  background-attachment: fixed;
-}
-
-.custom-file-input {
-  position: relative; 
- z-index: 2;
-  max-width: 50%;
-  height: calc(1.5em + 0.75rem + 2px);
-   margin: 0;
-  overflow: hidden;
-  opacity: 100%;
-}
-
-.bg-info {
-  background-color: #183054;
-}
-
-textarea {
-  resize: none;
-}
-
-.form-group {
+main {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 0;
+  text-align: center;
 }
 
-.form-file-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-control-file, .form-control-range {
+.navbar {
   display: flex;
-  max-width: 50%;
-  align-self: flex-end;
-  position: relative;
-  left: 10px;
-}
-
-.file-control-file button {
-  background-color: var(--primary); 
-  padding: 20px;
-}
-
-.registration-page-file-upload #validationFormik107 {
-  display: flex;
-  max-width: 70%;
-  align-self: flex-end;
-  position: relative;
-}
-
-#validationFormik107 {
-  border: 2px var(--primary) dotted;
-  border-radius: 5px;
-  padding: 10px;
-
-}
-
-#validationFormik107::-webkit-file-upload-button {
-  background: var(--primary);
-  border-radius: 5px;
-  border: none;
-  margin-right: 10px;
-}
-
-
-
-.form-file {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-  padding: 10px 0;
-}
-
-.navbar-light .navbar-nav .nav-link {
-  color: var(--primary) !important;
-}
-
-.nav-user {
-  color: white;
-}
-
-.rounded-edge {
-  margin-top: 20px;
-  border-radius: 0.3rem;
-  /* &:last-child{
-    border-radius: 0.3rem;
-  } */
-/* }
-
-.username {
-  font-weight: 800;
-  font-size: large;
-}
-
-.hero-text {
-  margin-top: 60px;
-}
-
-.landing-text {
-  margin-top: 20px;
-  font-size: large;
-  font-weight: 50;
-}
-
-.landing-img-wrapper {
-  border-radius: 10px;
-}
-
-.media-position {
+  justify-content: space-between;
   align-items: center;
-} */ 
+  padding: 0.7rem 2rem;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  opacity: 0.9;
+}
 
-/* .nav {
-  height: 55px;
-} */
+.navbar ul {
+  display: flex;
+}
+
+.navbar a {
+  color: lightskyblue;
+  padding: 0.45rem;
+  margin: 0 0.25rem;
+}
+
+.navbar a:hover {
+  color: darkblue;
+}
