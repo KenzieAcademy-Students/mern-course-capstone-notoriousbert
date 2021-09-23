@@ -15,12 +15,13 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
     <Navbar />
       <Switch>
-        <Route exact path='/' component={LandingPage} />
+        <Route exact path='/' component={UserProfilePage} />
         <Route exact path='/signup' component={UserRegistrationPage} />
         <Route exact path='/login' component={LoginPage} />
       </Switch>

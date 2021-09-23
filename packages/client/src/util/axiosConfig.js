@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-// import { API_URL } from 'constants.js'
 
 const getUserToken = () => {
   const savedUser = JSON.parse(localStorage.getItem('MernAppUser'))

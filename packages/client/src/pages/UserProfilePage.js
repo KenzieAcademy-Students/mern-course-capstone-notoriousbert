@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import { Container } from 'react-bootstrap'
-import { Col, Row, Button} from 'react-bootstrap'
+import { Col, Row, Button, Form} from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
 
-
+const initialState ={
+    username: "",
+    oldPassword:"",
+    newPassword:"",
+    confirmPassword:"",
+    email:"",
+}
 
 
 export default function UserProfilePage(props) {
+    const [formData, setFormData] = useState(initialState)
 
     // // const { state } = useProvideAuth()
     const [user, setUser] = useState()
@@ -44,7 +51,7 @@ export default function UserProfilePage(props) {
 
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get('/users/bert')
+            const userResponse = await axios.get('/users/rob')
             // console.log(userResponse)
             setUser(userResponse.data)
         } catch (error) { 
@@ -57,7 +64,32 @@ export default function UserProfilePage(props) {
         getUser()
     },[])
 
-    console.log(user)
+    const handleChange = (e)=>{
+        setFormData({
+            ...formData,
+            [e.target.name]:e.target.value
+        })
+    }
+    console.log(formData)
+
+    const handleSubmit = async (e)=>{
+        console.log(formData)
+        // e.preventDefault
+        // e.preventPropogation
+        try{
+            console.log(user.username)
+            await axios.put('users/', {
+            username: formData.username,
+            oldPassword: formData.oldPassword,
+            newPassword: formData.newPassword,
+            confirmPassword: formData.confirmPassword,
+            email: formData.email})
+        } catch (error) {
+           console.log("you cannot edit profile at this time")
+        }
+    }
+
+    // console.log(user)
     // console.log(user.username)
     // console.log(user.favorites)
     
@@ -76,10 +108,32 @@ return (
             <div>list of reviews</div>
             </Col> 
             <Col>
-            <div>{user.username}</div>
-            <div>{user.email}</div> 
+            <div style={{margin:10}}>{user.username}</div>
+            <div style={{margin:10}}>{user.email}</div> 
             <h3>Edit Profile Information</h3>
-            <Button variant="outline-primary" size="sm">EDIT</Button>
+            <Form>
+                <h5>Profile Information</h5>
+                <span> Current Username: {user.username}</span>
+                <div class="form-group">
+                    <input name="newusername" placeholder="New Username" value={formData.username} onChange={(e)=>{handleChange(e)}}/>
+                </div>
+                <h5>Change Password</h5>
+                <div class="form-group">
+                    <input name="oldPassword" placeholder="Old Password" value={formData.oldPassword} onChange={(e)=>{handleChange(e)}}/>
+                </div>
+                <div class="form-group">
+                    <input name="newPassword" placeholder="New Password" value={formData.newPassword} onChange={(e)=>{handleChange(e)}}/>
+                </div>
+                <div class="form-group">
+                    <input name="confirmPassword" placeholder="Confirm New Password"value={formData.confirmPassword} onChange={(e)=>{handleChange(e)}}/>
+                </div>
+                <h5>Change Email</h5>
+                <span>Current Email: {user.email}</span>
+                <div class="form-group">
+                    <input name="email" placeholder="New Email" value={formData.email} onChange={(e)=>{handleChange(e)}}/>
+                </div>
+                <Button variant="outline-primary" size="sm" style={{margin:10}} onClick={(e)=>{handleSubmit(e)}}>EDIT</Button>
+            </Form>
             </Col>
         </Row>
     </Container>
