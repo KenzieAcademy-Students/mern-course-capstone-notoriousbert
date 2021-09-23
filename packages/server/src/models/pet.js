@@ -4,8 +4,12 @@ const { ObjectId } = mongoose.Schema.Types;
 const petSchema = new mongoose.Schema({
     type: {
         type: String,
-        required: false,
+        required: true,
     },
+    size: {
+        type: Number,
+        required: false,
+    }
 })
 
 const Pet = mongoose.model('Pet', petSchema)
