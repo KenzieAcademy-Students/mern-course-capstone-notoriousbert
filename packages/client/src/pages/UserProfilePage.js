@@ -44,30 +44,40 @@ export default function UserProfilePage(props) {
 
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get('/users/alicia')
-            console.log(userResponse)
+            const userResponse = await axios.get('/users/bert')
+            // console.log(userResponse)
+            setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
         }
+        
     }
 
     useEffect(()=>{
         getUser()
     },[])
 
+    console.log(user)
+    // console.log(user.username)
+    // console.log(user.favorites)
+    
+
+if (!user){
+    return <div>LOADING</div>
+}
 return (
     <div>
     <Container fluid>
         <Row>
             <Col>
-            <h3>Favorites</h3>
+            <h3>favorites</h3>
             <div>list of favorites</div>
             <h3>Reviews</h3>
             <div>list of reviews</div>
             </Col> 
             <Col>
-            <div>Username</div>
-            <div>Email</div>
+            <div>{user.username}</div>
+            <div>{user.email}</div> 
             <h3>Edit Profile Information</h3>
             <Button variant="outline-primary" size="sm">EDIT</Button>
             </Col>
