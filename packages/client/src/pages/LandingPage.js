@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Image, InputGroup, FormControl } from 'react-bootstrap'
 
 const Landing = () => {
