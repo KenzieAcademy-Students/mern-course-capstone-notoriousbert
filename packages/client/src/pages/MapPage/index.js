@@ -76,7 +76,7 @@ export default function MapPage() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div>
+    <div className='mapStyleContainer'>
       <h1>
         Pet Friendly?
         {/* <span role="img" aria-label="tent">
