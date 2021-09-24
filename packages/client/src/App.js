@@ -45,6 +45,7 @@ console.log(useProvideAuth())
             <Switch>
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/signup" component={UserRegistrationPage} />
+              <Route exact path="/places/placeId" component={PlacesDetailPage} />
               <Route exact path="/add-a-place" component={AddAPlacePage} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/map" component={MapPage} />
