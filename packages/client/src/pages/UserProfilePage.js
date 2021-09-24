@@ -4,7 +4,6 @@ import { Col, Row, Button, Form} from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
 
 const initialState ={
-    username: "",
     oldPassword:"",
     newPassword:"",
     confirmPassword:"",
@@ -37,22 +36,9 @@ export default function UserProfilePage(props) {
     //     pets:""
     // })
 
-    //returned from endpoint
-    // "_id": "614391d284fe56afaef4daa0",
-    // "username": "alicia",
-    // "email": "alicia@gmail.com",
-    // "passwordHash": "$2a$12$Ay6Fe/hPn/UaUqH2dj/wVuSFDgnmiZzXTfWiGm1F8bKz4fK5I8iZ6",
-    // "profile_image": "whale.svg",
-    // "reviews": [],
-    // "reviewLikes": [],
-    // "favorites": [],
-    // "pets": [],
-    // "__v": 0
-
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get('/users/rob')
-            // console.log(userResponse)
+            const userResponse = await axios.get('/users/newrob')
             setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
@@ -73,27 +59,19 @@ export default function UserProfilePage(props) {
     console.log(formData)
 
     const handleSubmit = async (e)=>{
-        console.log(formData)
         e.preventDefault()
         e.stopPropagation()
+        console.log(formData)
         try{
-            console.log(user.username)
-            console.log(formData.newusername)
-            await axios.put('users/:614c993aa62627fb3947970f', {
+            await axios.put('users/614c993aa62627fb3947970f', {
             username: formData.newusername,
             oldPassword: formData.oldPassword,
             newPassword: formData.newPassword,
-            confirmPassword: formData.confirmPassword,
             email: formData.email})
         } catch (error) {
            console.log("you cannot edit profile at this time")
         }
     }
-
-    // console.log(user)
-    // console.log(user.username)
-    // console.log(user.favorites)
-    
 
 if (!user){
     return <div>LOADING</div>
