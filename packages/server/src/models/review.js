@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-
 const reviewSchema = new mongoose.Schema(
   {
     text: {
@@ -25,17 +24,14 @@ const reviewSchema = new mongoose.Schema(
     ],
     petsAllowed: [
       {
-        pet: {
-          type: String,
-          required: true,
-        },
+        type: String,
+        required: true,
       },
     ],
   },
   { timestamps: true }
 );
 
-const Review = mongoose.model('Review', reviewSchema)
+const Review = mongoose.model("Review", reviewSchema);
 
 export default Review;
-

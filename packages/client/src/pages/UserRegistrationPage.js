@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from 'react'
 // import axios from 'axios'
 import { Link } from 'react-router-dom'
+import useRouter from "hooks/useRouter";
+import { useProvideAuth } from "hooks/useAuth";
+import { setAuthToken } from "util/axiosConfig";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +12,9 @@ const Register = () => {
     password: '',
     password2: ''
   })
+
+  const auth = useProvideAuth();
+  const router = useRouter();
 
   const { name, email, password, password2 } = formData
 

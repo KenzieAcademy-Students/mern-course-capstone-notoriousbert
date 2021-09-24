@@ -1,7 +1,9 @@
 import React from "react";
 import mapStyles from "./mapStyles";
 import "./index.scss";
-import { useState, useCallback, useRef } from "react";
+import { Link } from 'react-router-dom'
+import { useState, useCallback, useRef, useEffect } from "react";
+import axios from "util/axiosConfig.js";
 
 import {
   GoogleMap,
@@ -28,7 +30,7 @@ const libraries = ["places"];
 
 const mapContainerStyle = {
   width: "100vw",
-  height: "100vh",
+  height: "calc(100vh - 80px)",
 };
 
 const center = {
@@ -50,6 +52,21 @@ export default function MapPage() {
 
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
+
+  const getMarkers = async () => {
+    try {
+      const mapMarkers = await axios.get('maps')
+      console.log(mapMarkers)
+      setMarkers(prev => [...prev, ...mapMarkers.data])
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  useEffect(() => {
+    getMarkers()
+    console.log(markers)
+  }, []);
 
   const onMapClick = useCallback((event) => {
     setMarkers((current) => [
@@ -76,7 +93,7 @@ export default function MapPage() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div>
+    <div className='mapStyleContainer'>
       <h1>
         Pet Friendly?
         {/* <span role="img" aria-label="tent">
@@ -96,12 +113,12 @@ export default function MapPage() {
         onLoad={onMapLoad}
       >
         {markers.map((marker) => (
-          <Marker
-            key={marker.time.toISOString()}
+             <Marker
+            key={marker.time}
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
-              url: "/icons8-dog.svg",
-              scaledSize: new window.google.maps.Size(30, 30),
+              url: "/icons-dog.svg",
+              scaledSize: new window.google.maps.Size(40, 35),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
             }}
@@ -119,13 +136,14 @@ export default function MapPage() {
             }}
           >
             <div>
-              <h2>Place Name</h2>
-              <h3>Pets Allowed: </h3>
-              <p>{formatRelative(selected.time, new Date())}</p>
+              <h2>{selected.place.placeName}</h2>
+              <h3>Pets Allowed: {selected.place.petsAllowed} </h3>
+              {/* <p>{formatRelative(selected.time.toISOString(), new Date())}</p> */}
             </div>
           </InfoWindow>
         ) : null}
       </GoogleMap>
+      <div className="add-a-location"><Link to="/add-a-place">Add a new location!</Link></div>
     </div>
   );
 }

@@ -14,18 +14,30 @@ const mapSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  placeMarkers: [
-    {
-      place: {
-        type: ObjectId,
-        ref: "Place",
-      },
-      radiusDistance: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+  lat: {
+    type: Number,
+    required: false,
+  },
+  lng: {
+    type: Number,
+    required: false,
+  },
+  // placeMarkers: [
+  //   {
+  place: {
+    type: ObjectId,
+    ref: "Place",
+  },
+  time: {
+    type: Date,
+    default: Date.now,
+  },
+  // radiusDistance: {
+  //   type: Number,
+  //   required: false,
+  // },
+  //   },
+  // ],
 });
 
 const Map = mongoose.model("Map", mapSchema);

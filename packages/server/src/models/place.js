@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-
 const placeSchema = new mongoose.Schema({
   typeOfPlace: {
     type: String,
@@ -37,19 +36,19 @@ const placeSchema = new mongoose.Schema({
   },
   petsAllowed: [
     {
-      pet: {
-        type: String,
-        required: true,
-      },
-      allowed: {
-        type: Boolean,
-        required: true,
-      },
+      type: ObjectId,
+      ref: "Pet",
+    },
+  ],
+  reviews: [
+    {
+      type: ObjectId,
+      ref: "Review",
     },
   ],
 });
 
-const Place = mongoose.model('Place', placeSchema)
+const Place = mongoose.model("Place", placeSchema);
 
 export default Place;
 
