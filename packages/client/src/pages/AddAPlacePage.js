@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import axios from "../util/axiosConfig.js"
 
 export default function AddAPlacePage() {
+  const [petsAllowed, setPetsAllowed] = useState([
+    ...
+    
+  ])
+
 	const [values, setValues] = useState({
 		placeName: "",
 		typeOfPlace: "",
@@ -23,8 +28,9 @@ export default function AddAPlacePage() {
 }
   const handleSubmit = (e) => {
     e.preventDefault
-    axios.post()
-};
+  };
+  axios.post()
+
 	return (
 		<div className='form-container'>
 			<h1>Add a place</h1>
@@ -62,7 +68,7 @@ export default function AddAPlacePage() {
 				<label>
 					Pets Allowed:
 					<input 
-          type='text' 
+          type='checkbox' 
           name='petsAllowed'
           value={values.petsAllowed}
           onChange={handleChange}/>
