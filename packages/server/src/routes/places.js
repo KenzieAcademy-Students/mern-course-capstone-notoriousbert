@@ -24,26 +24,6 @@ router.get("/review/:id", async (req, res) => {
 //   })
 
 //get PLACE by ID
-<<<<<<< HEAD
-router.get("/:id", async (req,res) => {
-    //let type = req.query.type
-    //let placeIds = req.query.id
-
-    // if(type === "array"){
-
-    // }
-    //Place.find({'_id': {$in placeIds}})
-    let place = await Place.findById(req.params.id)
-    if(type === "array"){
-
-    }
-    try{
-        res.json(place.toJSON())  
-    } catch (error) {
-        res.status(400).end
-    }
-})
-=======
 router.get("/:id", async (req, res) => {
   const populateQuery = [{ path: "petsAllowed" }];
   let place = await Place.findById(req.params.id)
@@ -55,7 +35,6 @@ router.get("/:id", async (req, res) => {
     res.status(400).end;
   }
 });
->>>>>>> 3359bf2877e601853c8099378369f0d22e0db9e3
 
 //post a new place
 router.post("/", async (request, response, next) => {
