@@ -78,12 +78,12 @@ export function useProvideAuth() {
     }
   }
 
-  const signup = async (username, password, profile_image, email) => {
+  const signup = async (username, password, email) => {
     try {
       await axios.post(`auth/signup`, {
         username: username,
-        password: password,
-        email: email
+        email: email,
+        password: password
       })
       return await signin(username, password)
     } catch (error) {
