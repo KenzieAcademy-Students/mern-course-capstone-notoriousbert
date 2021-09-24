@@ -20,6 +20,7 @@ ReactDOM.render(
     <Navbar />
       <Switch>
         <Route exact path='/' component={LandingPage} />
+        <Route exact path='/places/placeId'component={PlacesDetailPage}   />
         <Route exact path='/signup' component={UserRegistrationPage} />
         <Route exact path='/login' component={LoginPage} />
       </Switch>

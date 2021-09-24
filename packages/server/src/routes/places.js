@@ -24,7 +24,17 @@ const router = express.Router();
 
 //get PLACE by ID
 router.get("/:id", async (req,res) => {
+    //let type = req.query.type
+    //let placeIds = req.query.id
+
+    // if(type === "array"){
+
+    // }
+    //Place.find({'_id': {$in placeIds}})
     let place = await Place.findById(req.params.id)
+    if(type === "array"){
+
+    }
     try{
         res.json(place.toJSON())  
     } catch (error) {
