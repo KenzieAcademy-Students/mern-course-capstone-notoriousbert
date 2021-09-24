@@ -17,10 +17,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profile_image:{
-    type: String,
-    required: true,
-  },
+  // profile_image:{
+  //   type: String,
+  //   required: true,
+  // },
   reviews: [
     {
       type: ObjectId,

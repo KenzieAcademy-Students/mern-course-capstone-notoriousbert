@@ -1,33 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import App from "App";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import {
-  HomePage,
-  LandingPage,
-  LoginPage,
-  MapPage,
-  PlacesDetailPage,
-  UserProfilePage,
-  UserRegistrationPage
-} from "pages";
-import Navbar from './components/Layout/Navbar';
 import "./index.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import { AppRouter } from "AppRouter";
+import { ProvideAuth } from "hooks/useAuth";
 
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <Navbar />
-      <Switch>
-        <Route exact path='/' component={UserProfilePage} />
-        <Route exact path='/map' component={MapPage} />
-        <Route exact path='/signup' component={UserRegistrationPage} />
-        <Route exact path='/login' component={LoginPage} />
-      </Switch>
-    </BrowserRouter>
+    <ProvideAuth>
+      <BrowserRouter>
+        <AppRouter>
+          <App />
+        </AppRouter>
+      </BrowserRouter>
+    </ProvideAuth>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -4,6 +4,7 @@ import keys from '../config/keys'
 import { User } from '../models'
 
 module.exports = async (req, res, next) => {
+  console.log(req.get('content-type'))
   const authorization = req.get('authorization')
   // authorization === Bearer ewefwegwrherhe
   if (!authorization) {

@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/signup', async (req, res) => {
-  const { username, email, password, profile_image } = req.body
+  const { username, email, password } = req.body
 
   if (!password || !username || !email) {
     return res.status(422).json({ error: 'please add all the fields' })
@@ -33,7 +33,6 @@ router.post('/signup', async (req, res) => {
           username,
           email,
           passwordHash: hashedpassword,
-          profile_image: profile_image,
           email: email,
         })
 
@@ -77,7 +76,7 @@ router.post('/signin', async (req, res) => {
     const token = jwt.sign(userForToken, keys.jwt.secret)
     res
       .status(200)
-      .send({ token, username, uid: user.id, profile_image: user.profile_image })
+      .send({ token, username, uid: user.id })
   })
 
 module.exports = router;
