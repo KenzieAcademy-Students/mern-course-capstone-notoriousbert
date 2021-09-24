@@ -12,7 +12,8 @@ import {
 } from "pages";
 import Navbar from './components/Layout/Navbar';
 import "./index.css";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
@@ -21,7 +22,12 @@ ReactDOM.render(
     <BrowserRouter>
     <Navbar />
       <Switch>
+<<<<<<< HEAD
         <Route exact path='/' component={UserProfilePage} />
+=======
+        <Route exact path='/' component={LandingPage} />
+        <Route exact path='/map' component={MapPage} />
+>>>>>>> development
         <Route exact path='/signup' component={UserRegistrationPage} />
         <Route exact path='/login' component={LoginPage} />
       </Switch>
