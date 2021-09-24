@@ -3,12 +3,6 @@ main {
   text-align: center;
 }
 
-<<<<<<< HEAD
-.signupForm {
-  width: 80%;
-  margin: auto;
-}
-=======
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -34,4 +28,3 @@ main {
 .navbar a:hover {
   color: darkblue;
 }
->>>>>>> development
