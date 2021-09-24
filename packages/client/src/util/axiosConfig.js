@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { API_URL } from 'constants.js'
 
 const getUserToken = () => {
   const savedUser = JSON.parse(localStorage.getItem('MernAppUser'))
@@ -9,7 +8,7 @@ const getUserToken = () => {
 
 // configure axios instance
 const instance = axios.create({
-  baseURL: `http://localhost:3000/${API_URL}/`,
+  baseURL: `http://localhost:3000/api/`,
 })
 
 instance.defaults.headers.post['Content-Type'] = 'application/json'

@@ -1,0 +1,45 @@
+.navbar-container {
+  main {
+    display: flex;
+    text-align: center;
+  }
+
+  .navbar {
+    width: 100%;
+    position: fixed;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 2rem;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    top: 0;
+    opacity: 0.9;
+  }
+
+  img {
+    max-width: 4rem;
+    position: relative;
+    bottom: 0.2rem;
+  }
+
+  .navbar ul {
+    display: flex;
+  }
+
+  .navbar li {
+    list-style-type: none;
+  }
+
+  .navbar a {
+    color: lightskyblue;
+    padding: 0.45rem;
+    margin: 0 0.25rem;
+  }
+
+  .navbar a:hover {
+    color: darkblue;
+  }
+}
