@@ -4,7 +4,13 @@ import { Map } from "../models";
 import requireAuth from "../middleware";
 
 router.get("/", async (req, res, next) => {
-  const maps = await Map.find({}).sort({}).populate("placeMarkers").exec();
+  const populateQuery = [
+    { path: "place" },
+
+  ];
+  const maps = await Map.find({}).sort({}).populate(populateQuery)
+  .exec();
+  console.log(maps[0].place.petsAllowed)
   try {
     res.json(maps.map((map) => map.toJSON()));
   } catch (error) {
@@ -31,12 +37,11 @@ router.get("/:city", async (request, response) => {
 });
 
 router.post("/", async (request, response, next) => {
-  const { city, zipCode, fullAddress, placeMarkers } = request.body;
+  const { lat, lng, place } = request.body;
   const map = new Map({
-    city: city,
-    zipCode: zipCode,
-    fullAddress: fullAddress,
-    placeMarkers: placeMarkers,
+    lat: lat,
+    lng: lng,
+    place: place,
   });
 
   try {
