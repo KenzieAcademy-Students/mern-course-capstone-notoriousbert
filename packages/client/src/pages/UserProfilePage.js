@@ -74,12 +74,13 @@ export default function UserProfilePage(props) {
 
     const handleSubmit = async (e)=>{
         console.log(formData)
-        // e.preventDefault
-        // e.preventPropogation
+        e.preventDefault()
+        e.stopPropagation()
         try{
             console.log(user.username)
-            await axios.put('users/', {
-            username: formData.username,
+            console.log(formData.newusername)
+            await axios.put('users/:614c993aa62627fb3947970f', {
+            username: formData.newusername,
             oldPassword: formData.oldPassword,
             newPassword: formData.newPassword,
             confirmPassword: formData.confirmPassword,
@@ -115,7 +116,7 @@ return (
                 <h5>Profile Information</h5>
                 <span> Current Username: {user.username}</span>
                 <div class="form-group">
-                    <input name="newusername" placeholder="New Username" value={formData.username} onChange={(e)=>{handleChange(e)}}/>
+                    <input name="newusername" placeholder="New Username" value={formData.newusername} onChange={(e)=>{handleChange(e)}}/>
                 </div>
                 <h5>Change Password</h5>
                 <div class="form-group">
