@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AppRouter } from "AppRouter";
 import { ProvideAuth } from "hooks/useAuth";
 
+
+
 ReactDOM.render(
   <React.StrictMode>
     <ProvideAuth>
