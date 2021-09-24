@@ -1,20 +1,33 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useProvideAuth } from "hooks/useAuth";
+import { setAuthToken } from "util/axiosConfig";
+import useRouter from "hooks/useRouter";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   })
 
-  const { email, password } = formData
+  const auth = useProvideAuth()
+  const router = useRouter()
+
+  const { username, password } = formData
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const onSubmit = async (e) => {
     e.preventDefault()
-      console.log('Success')
+    
+    try {
+      const res = await auth.signin(formData.username, formData.password)
+      setAuthToken(res.token)
+      router.push('/')
+    } catch (error) {
+      console.log('could not sign in')
     }
+  }
 
   return (
     <Fragment>
@@ -23,10 +36,10 @@ const Login = () => {
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input 
-            type="email" 
-            placeholder="Email Address" 
-            name="email"
-            value={email}
+            type="username" 
+            placeholder="Username" 
+            name="username"
+            value={username}
             onChange={e => onChange(e)}
             required
           />
