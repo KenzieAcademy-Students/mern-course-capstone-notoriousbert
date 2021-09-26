@@ -7,7 +7,7 @@ import { setAuthToken } from "util/axiosConfig";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
     password2: ''
@@ -16,18 +16,26 @@ const Register = () => {
   const auth = useProvideAuth();
   const router = useRouter();
 
-  const { name, email, password, password2 } = formData
-
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+
+  const { username, email, password, password2 } = formData
 
   const onSubmit = async (e) => {
     e.preventDefault()
-
+    
     if (password !== password2) {
       console.log('Passwords do not match')
-    } else {
+    } 
 
-      console.log('Success')
+    console.log(formData)
+
+    try {
+      const res = await auth.signup(formData.username, formData.password, formData.email)
+      setAuthToken(res.token)
+      // router.push('/user/:id')
+
+    } catch(err) {
+      console.log("not submitted")
     }
   }
 
@@ -40,9 +48,9 @@ const Register = () => {
         <div className="form-group">
           <input 
               type="text" 
-              placeholder="Name" 
-              name="name" 
-              value={name}
+              placeholder="Username" 
+              name="username" 
+              value={username}
               onChange={e => onChange(e)}
               required
             />
