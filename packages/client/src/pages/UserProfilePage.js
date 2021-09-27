@@ -13,32 +13,10 @@ const initialState ={
 
 export default function UserProfilePage(props) {
     const [formData, setFormData] = useState(initialState)
-
-    // // const { state } = useProvideAuth()
     const [user, setUser] = useState()
-    // // const [loading, setLoading] = useState(true)
-    // // const [validated, setValidated] = useState(false)
-    // // const [open, setOpen] = useState(false)
-    // const [data, setData] = useState({
-    // //   password: '',
-    // //   currentPassword: "",
-    // //   confirmPassword: "",
-    // //   isSubmitting: false,
-    // //   errorMessage: null,
-    // //   profileAvatar: ""
-    //     userName:"",
-    //     email:"",
-    //     passwordHash:"",
-    //     profileImage:"",
-    //     reviews:"",
-    //     reviewLikes:"",
-    //     favorites:"",
-    //     pets:""
-    // })
-
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get('/users/newrob')
+            const userResponse = await axios.get('/users/snoopy')
             setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
@@ -56,12 +34,10 @@ export default function UserProfilePage(props) {
             [e.target.name]:e.target.value
         })
     }
-    console.log(formData)
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
         e.stopPropagation()
-        console.log(formData)
         try{
             await axios.put('users/614c993aa62627fb3947970f', {
             username: formData.newusername,
