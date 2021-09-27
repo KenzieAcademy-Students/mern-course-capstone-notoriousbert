@@ -2,6 +2,7 @@ import express from 'express'
 import bcrypt from 'bcryptjs'
 import { User } from '../models'
 
+
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -30,21 +31,40 @@ router
     }
   })
   .put(async (req, res) => {
-    const { username, email, password, profile_image, pets } = req.body
+    const { username, email, newPassword, oldPassword, pets } = req.body
     const { id } = req.params
 
-    const hashedpassword = await bcrypt.hash(password, 12)
+    console.log(id, username, email)
+
+    const thisUser = await User.findById(id);
+
+    console.log(thisUser)
+
+    if (newPassword.length > 0 && oldPassword.length > 0) {
+      const passwordCorrect = await bcrypt.compare(
+        oldPassword,
+        thisUser.passwordHash 
+      )
+    
+    const hashedpasswordold = await bcrypt.hash(oldPassword, 12)
+    console.log("frog", hashedpasswordold)
+
+    if (!(thisUser && passwordCorrect)) {
+      console.log("invalid password");
+      return res.status(401).json({
+        error: "invalid password",
+      });
+    }
+
+    const hashedpassword = await bcrypt.hash(newPassword, 12)
 
     try {
-      const userUpdate = await User.findByIdAndUpdate(
-        {
-          _id: id,
-        },
+      const userUpdate = await User.findByIdAndUpdate (
+          id,
         {
           username: username, 
           email: email,
           passwordHash: hashedpassword,
-          profile_image: profile_image,
           // pets: pets
         },
         {
@@ -52,11 +72,11 @@ router
           strict: false,
         }
       )
-
+      userUpdate.save()
       res.json(userUpdate.toJSON())
     } catch (error) {
       res.status(404).end()
     }
-  })
+  }})
 
 module.exports = router
