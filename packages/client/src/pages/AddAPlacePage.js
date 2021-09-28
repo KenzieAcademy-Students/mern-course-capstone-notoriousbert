@@ -3,15 +3,10 @@ import axios from "util/axiosConfig.js";
 import { toast } from 'react-toastify'
 
 export default function AddAPlacePage() {
-<<<<<<< HEAD
-	const [petsAllowedCheck, setPetsAllowedCheck] = useState({
-		cats: false,
-=======
 	const [petsAllowed, setPetsAllowed] = useState({
 		Reptile: 'r',
     cats: false,
     Cat: 'c',
->>>>>>> 0b5f03aa6834f9960980669e2c1da684b9d71860
 		dogs: false,
     Dog: 'd',
 		reptiles: false,
@@ -21,8 +16,8 @@ export default function AddAPlacePage() {
 	});
 
 	const handleCheckBox = (e) => {
-		setPetsAllowedCheck({
-			...petsAllowedCheck,
+		setPetsAllowed({
+			...petsAllowed,
 			[e.target.name]: e.target.checked,
 		});
 	};
@@ -84,22 +79,6 @@ export default function AddAPlacePage() {
 			zipcode,
 			pricePerNight,
 		} = values;
-<<<<<<< HEAD
-
-        const { petsAllowed } = petsAllowedCheck
-		e.preventDefault();
-		axios.post("/places", {
-			typeOfPlace,
-			placeName,
-			address,
-			aptOrSuitNumber,
-			city,
-			state,
-			zipcode,
-			pricePerNight,
-			petsAllowed,
-		});
-=======
     console.log(	'typeOfPlace:', typeOfPlace,
     'placeName:',placeName,
     'address:',address,
@@ -125,7 +104,6 @@ export default function AddAPlacePage() {
     }catch(err){
       toast.error("Unable to submit new place")
     }
->>>>>>> 0b5f03aa6834f9960980669e2c1da684b9d71860
 	};
 	return (
 		<div className='form-container'>
@@ -171,7 +149,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='cats'
-						checked={petsAllowedCheck.cats}
+						checked={petsAllowed.cats}
 						onChange={handleCheckBox}
 					/>
 				</label>
@@ -180,7 +158,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='dogs'
-						checked={petsAllowedCheck.dogs}
+						checked={petsAllowed.dogs}
 						onChange={handleCheckBox}
 					/>
 				</label>
@@ -189,7 +167,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='reptiles'
-						checked={petsAllowedCheck.reptiles}
+						checked={petsAllowed.reptiles}
 						onChange={handleCheckBox}
 					/>
 				</label>
@@ -198,7 +176,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='birds'
-						checked={petsAllowedCheck.birds}
+						checked={petsAllowed.birds}
 						onChange={handleCheckBox}
 					/>
 				</label>
