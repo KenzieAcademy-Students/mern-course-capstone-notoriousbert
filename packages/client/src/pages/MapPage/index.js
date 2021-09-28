@@ -115,7 +115,7 @@ export default function MapPage() {
         {markers.map((marker) => (
              <Marker
             key={marker.time}
-            position={{ lat: parseFloat(marker.lat), lng: parseFloat(marker.lng) }}
+            position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
               url: "/icons-dog.svg",
               scaledSize: new window.google.maps.Size(40, 35),
