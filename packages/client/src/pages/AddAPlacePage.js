@@ -1,12 +1,23 @@
-import React, { useState } from "react";
-import axios from "../util/axiosConfig.js";
+import React, { useEffect, useState } from "react";
+import axios from "util/axiosConfig.js";
+import { toast } from 'react-toastify'
 
 export default function AddAPlacePage() {
+<<<<<<< HEAD
 	const [petsAllowedCheck, setPetsAllowedCheck] = useState({
 		cats: false,
+=======
+	const [petsAllowed, setPetsAllowed] = useState({
+		Reptile: 'r',
+    cats: false,
+    Cat: 'c',
+>>>>>>> 0b5f03aa6834f9960980669e2c1da684b9d71860
 		dogs: false,
+    Dog: 'd',
 		reptiles: false,
+    
 		birds: false,
+    Bird: 'b',
 	});
 
 	const handleCheckBox = (e) => {
@@ -17,7 +28,7 @@ export default function AddAPlacePage() {
 	};
 	const [values, setValues] = useState({
 		placeName: "",
-		typeOfPlace: "",
+		typeOfPlace: "None",
 		address: "",
 		petsAllowed: "",
 		description: "",
@@ -28,6 +39,29 @@ export default function AddAPlacePage() {
 		pricePerNight: "",
 	});
 
+  const getPets = async () => {
+    try {
+      const pets = await axios.get('pets')
+      console.log(pets)
+      for (const pet of pets.data) {
+        console.log(pet.category)
+        console.log(petsAllowed[pet.category])
+        let test = petsAllowed
+        
+        console.log('test:', test)
+        setPetsAllowed({
+          ...petsAllowed,
+          [pet.category]: pet._id})
+      }
+    } catch (err) {
+      toast.error(`couldn't get pets`)
+    }
+  }
+
+  useEffect(() => {
+    getPets()
+  }, [])
+
 	const handleChange = (e) => {
 		console.log(e);
 		setValues({
@@ -36,7 +70,10 @@ export default function AddAPlacePage() {
 		});
 		console.log(values);
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
+    console.log(petsAllowed)
+    e.preventDefault();
+        e.stopPropagation();
 		const {
 			typeOfPlace,
 			placeName,
@@ -47,6 +84,7 @@ export default function AddAPlacePage() {
 			zipcode,
 			pricePerNight,
 		} = values;
+<<<<<<< HEAD
 
         const { petsAllowed } = petsAllowedCheck
 		e.preventDefault();
@@ -61,6 +99,33 @@ export default function AddAPlacePage() {
 			pricePerNight,
 			petsAllowed,
 		});
+=======
+    console.log(	'typeOfPlace:', typeOfPlace,
+    'placeName:',placeName,
+    'address:',address,
+    'aptNumber:',aptOrSuitNumber,
+    'city:',city,
+		'state:',	state,
+    'zip:',zipcode,
+    'pricePerNight:',pricePerNight)
+    console.log(petsAllowed)
+    try{
+      const aPlace = await axios.post("/places", {
+        typeOfPlace,
+        placeName,
+        address,
+        aptOrSuitNumber,
+        city,
+        state,
+        zipcode,
+        pricePerNight,
+        petsAllowed,
+      }); 
+      toast.success("Place was created!")
+    }catch(err){
+      toast.error("Unable to submit new place")
+    }
+>>>>>>> 0b5f03aa6834f9960980669e2c1da684b9d71860
 	};
 	return (
 		<div className='form-container'>
@@ -71,6 +136,7 @@ export default function AddAPlacePage() {
 					<input
 						type='text'
 						name='placeName'
+            required
 						value={values.placeName}
 						onChange={handleChange}
 					/>
@@ -79,6 +145,7 @@ export default function AddAPlacePage() {
 					Place Type:
 					<select
 						name='typeOfPlace'
+            required
 						id='places'
 						value={values.typeOfPlace}
 						onChange={handleChange}
@@ -94,6 +161,7 @@ export default function AddAPlacePage() {
 					<input
 						type='text'
 						name='address'
+            required
 						value={values.address}
 						onChange={handleChange}
 					/>
@@ -157,6 +225,7 @@ export default function AddAPlacePage() {
 					<input
 						type='text'
 						name='city'
+            required
 						value={values.city}
 						onChange={handleChange}
 					/>
@@ -166,6 +235,7 @@ export default function AddAPlacePage() {
 					<input
 						type='text'
 						name='state'
+            required
 						value={values.state}
 						onChange={handleChange}
 					/>
@@ -175,14 +245,15 @@ export default function AddAPlacePage() {
 					<input
 						type='text'
 						name='zipCode'
+            required
 						value={values.zipCode}
 						onChange={handleChange}
 					/>
 				</label>
 				<label>
-					Price per night:
+					Price per night (optional):
 					<input
-						type='text'
+						type='number'
 						name='pricePerNight'
 						value={values.pricePerNight}
 						onChange={handleChange}
@@ -190,8 +261,10 @@ export default function AddAPlacePage() {
 				</label>
 				<button className='place-form' type='submit'>
 					Add a Place
-				</button>
+				</button>        
 			</form>
 		</div>
 	);
-}
+};
+
+//{(e) => handleSubmit(e)}
