@@ -34,8 +34,8 @@ const mapContainerStyle = {
 };
 
 const center = {
-  lat: 43.653225,
-  lng: -79.383186,
+  lat: 39.765840,
+  lng: -86.157620,
 };
 
 const options = {
@@ -55,7 +55,7 @@ export default function MapPage() {
 
   const getMarkers = async () => {
     try {
-      const mapMarkers = await axios.get('maps')
+      const mapMarkers = await axios.get('places')
       console.log(mapMarkers)
       setMarkers(prev => [...prev, ...mapMarkers.data])
     } catch (error) {
@@ -115,7 +115,7 @@ export default function MapPage() {
         {markers.map((marker) => (
              <Marker
             key={marker.time}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            position={{ lat: parseFloat(marker.lat), lng: parseFloat(marker.lng) }}
             icon={{
               url: "/icons-dog.svg",
               scaledSize: new window.google.maps.Size(40, 35),
@@ -136,8 +136,11 @@ export default function MapPage() {
             }}
           >
             <div>
-              <h2>{selected.place.placeName}</h2>
-              <h3>Pets Allowed: {selected.place.petsAllowed} </h3>
+              {selected.placeName && <div><Link to="/">{selected.placeName}</Link></div>}
+              <div>{selected.address}, {selected.city}, {selected.state}</div>
+              {selected.petsAllowed && selected.petsAllowed.length > 0 && <div>Pets Allowed: {selected.petsAllowed.map((pet, index) => (
+                index === selected.petsAllowed.length - 1 ? <span>{pet.category}</span> : <span>{pet.category}, </span>
+              ))} </div>}
               {/* <p>{formatRelative(selected.time.toISOString(), new Date())}</p> */}
             </div>
           </InfoWindow>
@@ -178,7 +181,7 @@ function Search({ panTo }) {
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      location: { lat: () => 43.653225, lng: () => -79.383186 },
+      location: { lat: () => 39.765840, lng: () => -86.157620 },
       radius: 200 * 1000,
     },
   });
