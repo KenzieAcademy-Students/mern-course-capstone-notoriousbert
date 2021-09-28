@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import Axios from 'axios';
+import React from 'react'
 import { Container } from 'react-bootstrap'
+import { ErrorBoundary, LoadingSpinner } from 'components';
+import { useAxios } from 'hooks';
+import PlaceBox from 'components/PlaceBox'
+
 
 export default function PlacesDetailPage({
 match:{
@@ -8,20 +11,31 @@ match:{
 },
 
 }) {
-    const [place, setPlace] = useState([]);
+    const { data, loading, error } = useAxios({
+        config: { url: `places/${placeId}`},
+    })
 
-    useEffect(()=>{
-         Axios.get(`api/place/places_by_id?id=${placeId}&type=single`)
-         .then(response =>{
-             setPlace(response.data[0])
-
-         })
-    },[])
+    
 
     return (
-        <div>
-            
-        </div>
+        <Container className='h-100'>
+            <ErrorBoundary>
+                {error ? (
+                    <p>Error...</p>
+                ) : (
+                  (() => {
+                    switch (loading) {
+                      case false:
+                        return <PlaceBox place={data} />
+                    case true:
+                        return <LoadingSpinner full />
+                    default:
+                      return null
+                    }
+                  })()
+                )}
+            </ErrorBoundary>
+        </Container>
     )
 }
 
