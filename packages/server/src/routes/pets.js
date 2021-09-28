@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/create", async (req, res, next) => {
     const pet = new Pet({
-      type: req.query.type,
+      category: req.query.type,
       size: req.query.size,
     });
   
@@ -16,5 +16,16 @@ router.get("/create", async (req, res, next) => {
       next(new Error("Error Creating Pet"));
     }
   });
+
+router.get('/', async (req, res, next) => {
+
+  const pets = await Pet.find({})
+    .sort({ created: -1 })
+    .populate(populateQuery)
+    .exec();
+
+  response.json(pets.map((pet) => pet.toJSON()));
+
+})
 
   module.exports = router
