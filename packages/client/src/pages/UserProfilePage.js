@@ -1,7 +1,10 @@
+import DeviceDeveloperMode from 'material-ui/svg-icons/device/developer-mode'
 import React, {useEffect, useState} from 'react'
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button, Form} from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
+import { toast } from "react-toastify";
+
 
 const initialState ={
     oldPassword:"",
@@ -11,12 +14,16 @@ const initialState ={
 }
 
 
-export default function UserProfilePage(props) {
+export default function UserProfilePage({
+    match: {
+    params: {uid},
+  },
+}) {
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState()
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get('/users/snoopy')
+            const userResponse = await axios.get(`/users/alicia`)
             setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
@@ -39,19 +46,26 @@ export default function UserProfilePage(props) {
         e.preventDefault()
         e.stopPropagation()
         try{
+            if(formData.newPassword.length >0 && (formData.newPassword !== formData.confirmPassword)){
+                toast.error(
+                    `'New Password' and 'Confirm New Password' input fields do not match`
+                  )
+                  return
+            }
             await axios.put('users/614c993aa62627fb3947970f', {
-            username: formData.newusername,
-            oldPassword: formData.oldPassword,
-            newPassword: formData.newPassword,
-            email: formData.email})
+            username: formData.newusername === ""? user.username: formData.newusername,
+            oldPassword: formData.oldPassword === "" ? user.oldPassword: formData.oldPassword,
+            newPassword: formData.newPassword === "" ? user.oldPassword: formData.newPassword, 
+            email: formData.email ===""? user.email: formData.email})
         } catch (error) {
            console.log("you cannot edit profile at this time")
         }
-    }
+}
 
 if (!user){
     return <div>LOADING</div>
 }
+
 return (
     <div>
     <Container fluid>
@@ -60,7 +74,14 @@ return (
             <h3>favorites</h3>
             <div>list of favorites</div>
             <h3>Reviews</h3>
-            <div>list of reviews</div>
+            {console.log(user)}
+            <div>{user.reviews.map((review)=>(
+                <div>{review.location}
+                    <div>{review.author.username}</div>
+                    <div>{review.text}</div>
+                    <div>{console.log(review)}</div>
+                </div>
+            ))}</div>
             </Col> 
             <Col>
             <div style={{margin:10}}>{user.username}</div>

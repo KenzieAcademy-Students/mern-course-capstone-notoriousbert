@@ -10,7 +10,13 @@ const reviewSchema = new mongoose.Schema(
     },
     author: {
       type: ObjectId,
+      required: true,
       ref: "User",
+    },
+    location: {
+      type: ObjectId,
+      // required: true,
+      ref: "Place",
     },
     created: {
       type: Date,
@@ -22,12 +28,12 @@ const reviewSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    petsAllowed: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
+    // petsAllowed: [
+    //   {
+    //     type: String,
+    //     required: true,
+    //   },
+    // ],
   },
   { timestamps: true }
 );
