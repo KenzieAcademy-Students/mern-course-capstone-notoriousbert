@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "../util/axiosConfig.js";
 
 export default function AddAPlacePage() {
-	const [petsAllowed, setPetsAllowed] = useState({
+	const [petsAllowedCheck, setPetsAllowedCheck] = useState({
 		cats: false,
 		dogs: false,
 		reptiles: false,
@@ -10,8 +10,8 @@ export default function AddAPlacePage() {
 	});
 
 	const handleCheckBox = (e) => {
-		setPetsAllowed({
-			...petsAllowed,
+		setPetsAllowedCheck({
+			...petsAllowedCheck,
 			[e.target.name]: e.target.checked,
 		});
 	};
@@ -46,8 +46,9 @@ export default function AddAPlacePage() {
 			state,
 			zipcode,
 			pricePerNight,
-			petsAllowed,
 		} = values;
+
+        const { petsAllowed } = petsAllowedCheck
 		e.preventDefault();
 		axios.post("/places", {
 			typeOfPlace,
@@ -102,7 +103,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='cats'
-						checked={petsAllowed.cats}
+						checked={petsAllowedCheck.cats}
 						onChange={handleCheckBox}
 					/>
 				</label>
@@ -111,7 +112,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='dogs'
-						checked={petsAllowed.dogs}
+						checked={petsAllowedCheck.dogs}
 						onChange={handleCheckBox}
 					/>
 				</label>
@@ -120,7 +121,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='reptiles'
-						checked={petsAllowed.reptiles}
+						checked={petsAllowedCheck.reptiles}
 						onChange={handleCheckBox}
 					/>
 				</label>
@@ -129,7 +130,7 @@ export default function AddAPlacePage() {
 					<input
 						type='checkbox'
 						name='birds'
-						checked={petsAllowed.birds}
+						checked={petsAllowedCheck.birds}
 						onChange={handleCheckBox}
 					/>
 				</label>

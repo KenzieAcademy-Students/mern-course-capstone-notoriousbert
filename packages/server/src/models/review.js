@@ -24,8 +24,8 @@ const reviewSchema = new mongoose.Schema(
     ],
     petsAllowed: [
       {
-        type: String,
-        required: true,
+        type: ObjectId,
+        ref: "Pet",
       },
     ],
   },
