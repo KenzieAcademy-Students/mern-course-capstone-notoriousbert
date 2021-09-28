@@ -21,10 +21,8 @@ router.get('/', async (req, res, next) => {
 
   const pets = await Pet.find({})
     .sort({ created: -1 })
-    .populate(populateQuery)
-    .exec();
 
-  response.json(pets.map((pet) => pet.toJSON()));
+  res.json(pets.map((pet) => pet.toJSON()));
 
 })
 

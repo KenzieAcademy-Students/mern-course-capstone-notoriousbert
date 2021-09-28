@@ -17,16 +17,28 @@ router
       {
         path: 'reviews',
         populate: { path: 'author', select: ['username'] },
+        // populate: { path: 'location',},
+      },
+      {
+        path: 'reviews',
+
+      //   populate: {
+      //     path: 'location',
+      //     populate: {
+      //       path: 'place'
+      //     }
+      //   },
+        populate: { path: 'location', select: ['placeName'] },
       },
     ]
     try {
-    const user = await User.findOne({ username: req.params.id })
-      .populate(populateQuery)
-      .exec()
-    if (user) {
-      res.json(user.toJSON())
-    }
-  } catch(err) {
+      const user = await User.findOne({ username: req.params.id })
+        .populate(populateQuery)
+        .exec()
+      if (user) {
+        res.json(user.toJSON())
+      }
+    } catch (err) {
       res.status(404).end()
     }
   })
@@ -43,40 +55,41 @@ router
     if (newPassword.length > 0 && oldPassword.length > 0) {
       const passwordCorrect = await bcrypt.compare(
         oldPassword,
-        thisUser.passwordHash 
+        thisUser.passwordHash
       )
-    
-    const hashedpasswordold = await bcrypt.hash(oldPassword, 12)
-    console.log("frog", hashedpasswordold)
 
-    if (!(thisUser && passwordCorrect)) {
-      console.log("invalid password");
-      return res.status(401).json({
-        error: "invalid password",
-      });
-    }
+      const hashedpasswordold = await bcrypt.hash(oldPassword, 12)
+      console.log("frog", hashedpasswordold)
 
-    const hashedpassword = await bcrypt.hash(newPassword, 12)
+      if (!(thisUser && passwordCorrect)) {
+        console.log("invalid password");
+        return res.status(401).json({
+          error: "invalid password",
+        });
+      }
 
-    try {
-      const userUpdate = await User.findByIdAndUpdate (
+      const hashedpassword = await bcrypt.hash(newPassword, 12)
+
+      try {
+        const userUpdate = await User.findByIdAndUpdate(
           id,
-        {
-          username: username, 
-          email: email,
-          passwordHash: hashedpassword,
-          // pets: pets
-        },
-        {
-          new: true,
-          strict: false,
-        }
-      )
-      userUpdate.save()
-      res.json(userUpdate.toJSON())
-    } catch (error) {
-      res.status(404).end()
+          {
+            username: username,
+            email: email,
+            passwordHash: hashedpassword,
+            // pets: pets
+          },
+          {
+            new: true,
+            strict: false,
+          }
+        )
+        userUpdate.save()
+        res.json(userUpdate.toJSON())
+      } catch (error) {
+        res.status(404).end()
+      }
     }
-  }})
+  })
 
 module.exports = router

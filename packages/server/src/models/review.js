@@ -10,7 +10,13 @@ const reviewSchema = new mongoose.Schema(
     },
     author: {
       type: ObjectId,
+      required: true,
       ref: "User",
+    },
+    location: {
+      type: ObjectId,
+      // required: true,
+      ref: "Place",
     },
     created: {
       type: Date,
