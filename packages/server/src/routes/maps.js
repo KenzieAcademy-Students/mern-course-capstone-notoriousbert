@@ -5,8 +5,12 @@ import requireAuth from "../middleware";
 
 router.get("/", async (req, res, next) => {
   const populateQuery = [
-    { path: "place" },
-
+    { 
+      path: "place",
+      populate: {
+        path: "petsAllowed", select: ["category"]
+      }
+    },
   ];
   const maps = await Map.find({}).sort({}).populate(populateQuery)
   .exec();

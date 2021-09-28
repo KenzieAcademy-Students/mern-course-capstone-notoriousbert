@@ -8,6 +8,21 @@ import { requireAuth } from "../middleware";
 //     res.status(200).send('places connected')
 // })
 
+router.get("/", async (req, res) => {
+  const populateQuery = [
+    {
+      path: "petsAllowed",
+      select: ["category"],
+    },
+  ];
+  const places = await Place.find({}).sort({}).populate(populateQuery).exec();
+  try {
+    res.json(places.map((place) => place.toJSON()));
+  } catch (error) {
+    next(error);
+  }
+});
+
 //get REVIEW by ID
 router.get("/review/:id", async (req, res) => {
   let review = await Review.findById(req.params.id);
@@ -59,9 +74,9 @@ router.post("/", async (request, response, next) => {
     zipcode: zipcode,
     pricePerNight: pricePerNight,
     petsAllowed: petsAllowed,
-  })
- 
-  const populatedPlace = await place.populate({path: 'petsAllowed' })
+  });
+
+  const populatedPlace = await place.populate({ path: "petsAllowed" });
 
   try {
     const savedPlace = await populatedPlace.save();
@@ -94,7 +109,7 @@ router.put("/review", async (req, res) => {
     {
       new: true,
     }
-  )
+  );
 
   try {
     const savedReview = await review.save();
