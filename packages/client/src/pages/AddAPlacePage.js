@@ -9,12 +9,12 @@ export default function AddAPlacePage() {
 		birds: false,
 	});
 
-  const handleCheckBox = (e) => {
+	const handleCheckBox = (e) => {
 		setPetsAllowed({
 			...petsAllowed,
-			[e.target.name]: !e.target.checked,
+			[e.target.name]: e.target.checked,
 		});
-  }
+	};
 	const [values, setValues] = useState({
 		placeName: "",
 		typeOfPlace: "",
@@ -29,16 +29,38 @@ export default function AddAPlacePage() {
 	});
 
 	const handleChange = (e) => {
+		console.log(e);
 		setValues({
 			...values,
 			[e.target.name]: e.target.value,
 		});
+		console.log(values);
 	};
 	const handleSubmit = (e) => {
+		const {
+			typeOfPlace,
+			placeName,
+			address,
+			aptOrSuitNumber,
+			city,
+			state,
+			zipcode,
+			pricePerNight,
+			petsAllowed,
+		} = values;
 		e.preventDefault();
-    axios.post();
+		axios.post("/places", {
+			typeOfPlace,
+			placeName,
+			address,
+			aptOrSuitNumber,
+			city,
+			state,
+			zipcode,
+			pricePerNight,
+			petsAllowed,
+		});
 	};
-
 	return (
 		<div className='form-container'>
 			<h1>Add a place</h1>
@@ -55,7 +77,7 @@ export default function AddAPlacePage() {
 				<label>
 					Place Type:
 					<select
-						name='places'
+						name='typeOfPlace'
 						id='places'
 						value={values.typeOfPlace}
 						onChange={handleChange}
@@ -88,9 +110,9 @@ export default function AddAPlacePage() {
 					Dogs:
 					<input
 						type='checkbox'
-						name='petsAllowed'
+						name='dogs'
 						checked={petsAllowed.dogs}
-						onChange={handleChange}
+						onChange={handleCheckBox}
 					/>
 				</label>
 				<label>
@@ -99,16 +121,16 @@ export default function AddAPlacePage() {
 						type='checkbox'
 						name='reptiles'
 						checked={petsAllowed.reptiles}
-						onChange={handleChange}
+						onChange={handleCheckBox}
 					/>
 				</label>
 				<label>
 					Birds:
 					<input
 						type='checkbox'
-						name='petsAllowed'
+						name='birds'
 						checked={petsAllowed.birds}
-						onChange={handleChange}
+						onChange={handleCheckBox}
 					/>
 				</label>
 				<label>
