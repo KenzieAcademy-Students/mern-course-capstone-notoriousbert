@@ -72,6 +72,7 @@ router.post("/", async (request, response, next) => {
     lat,
     lng
   } = request.body;
+  
 
   const regZipCode = /^\d{5}(?:[-\s]\d{4})?$/
 

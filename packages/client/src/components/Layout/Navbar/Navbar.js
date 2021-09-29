@@ -1,23 +1,48 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './navbar.scss'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Navbar, Nav, Button, Figure } from "react-bootstrap";
+import "./navbar.scss";
+import { useProvideAuth } from "hooks/useAuth";
 
-const Navbar = () => {
+const NavbarTop = () => {
+  const {
+    state: { user },
+    signout,
+  } = useProvideAuth();
+
   return (
     <div className="navbar-container">
       <nav className="navbar bg-dark">
         <div>
-          <Link to='/users/:uid'><img src='icons8-animal-shelter.svg' alt='logo' /></Link>
+          <Link to="/users/:uid">
+            <img src="icons8-animal-shelter.svg" alt="logo" />
+          </Link>
         </div>
         <ul>
-          <li><Link to="/map">Map</Link></li>
-          <li><Link to='/signup'>Register</Link></li>
-          <li><Link to='/login'>Login</Link></li>
-          <li><Link to='/add-a-place'>Add a Place</Link></li>
+          <li>
+            <Link to="/map">Map</Link>
+          </li>
+          <li>
+            <Link to="/signup">Register</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/add-a-place">Add a Place</Link>
+          </li>
         </ul>
+        {user ? (
+        <Button
+          variant="outline-info"
+          onClick={() => signout()}
+          style={{ border: "none", marginRight: "50px", color: "#E5E1DF" }}
+        >
+          Sign Out
+        </Button>) : null}
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default NavbarTop;

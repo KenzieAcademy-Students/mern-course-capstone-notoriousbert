@@ -100,7 +100,7 @@ export function useProvideAuth() {
     dispatch({
       type: 'LOGOUT',
     })
-    router.push('/')
+    router.push('/login')
   }
 
   const getCurrentUser = () => {

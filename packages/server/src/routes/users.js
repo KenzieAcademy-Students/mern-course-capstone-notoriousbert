@@ -22,6 +22,9 @@ router
         path: 'reviews',
         populate: { path: 'location' },
       },
+      {
+        path: 'favorites'
+      },
     ]
     try {
       const user = await User.findOne({ username: req.params.id })
@@ -39,6 +42,8 @@ router
     const { id } = req.params
 
     console.log(id, username, email)
+    console.log("oldPassword", oldPassword)
+    console.log("newPassword", newPassword)
 
     const thisUser = await User.findById(id);
 
@@ -69,7 +74,24 @@ router
             username: username,
             email: email,
             passwordHash: hashedpassword,
-            // pets: pets
+          },
+          {
+            new: true,
+            strict: false,
+          }
+        )
+        userUpdate.save()
+        res.json(userUpdate.toJSON())
+      } catch (error) {
+        res.status(404).end()
+      }
+    } else {
+      try {
+        const userUpdate = await User.findByIdAndUpdate(
+          id,
+          {
+            username: username,
+            email: email,
           },
           {
             new: true,

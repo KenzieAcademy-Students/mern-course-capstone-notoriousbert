@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Geocode from "react-geocode";
 
 export default function AddAPlacePage() {
-  const [petsAllowedCheck, setPetsAllowedCheck] = useState({
+  const petsAllowedInitialState = {
     Reptile: {
       id: "",
       check: false,
@@ -21,12 +21,15 @@ export default function AddAPlacePage() {
       id: "",
       check: false,
     },
-  });
+  };
+  const [petsAllowedCheck, setPetsAllowedCheck] = useState(
+    petsAllowedInitialState
+  );
 
-  const [latlng, setLatLng] = useState({
-    lat: "",
-    lng: "",
-  });
+//   const [latlng, setLatLng] = useState({
+//     lat: "",
+//     lng: "",
+//   });
 
   const geocodeFunc = async (address) => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
@@ -34,11 +37,12 @@ export default function AddAPlacePage() {
       const response = await Geocode.fromAddress(address);
       const { lat, lng } = response.results[0].geometry.location;
       console.log(lat, lng);
-      setLatLng({
-        ...latlng,
-        lat: lat,
-        lng: lng,
-      });
+    //   setLatLng({
+    //     ...latlng,
+    //     lat: lat,
+    //     lng: lng,
+    //   });
+    return [lat, lng]
     } catch (error) {
       console.log(error);
       toast.error("Unable to retrieve location data, please re-enter data.");
@@ -115,74 +119,75 @@ export default function AddAPlacePage() {
 
     const addressForGeocode = `${address} ${city} ${state} ${zipcode}`;
 
-    await geocodeFunc(addressForGeocode)
-
-    const { lat, lng } = latlng;
-
-    console.log("dafd", lat, lng);
-
-    let petsAllowed = [];
-    for (const [pet, value] of Object.entries(petsAllowedCheck)) {
-      if (value.check === true) {
-        petsAllowed.push(value.id);
-      }
-    }
-
     try {
-      const aPlace = await axios.post("places", {
-        typeOfPlace,
-        placeName,
-        address,
-        aptOrSuiteNumber,
-        city,
-        description,
-        state,
-        zipcode,
-        pricePerNight,
-        petsAllowed,
-        lat: parseFloat(lat),
-        lng: parseFloat(lng),
-      });
-      toast.success("Place was created!");
-      setValues({
-        ...values,
-        placeName: "",
-        typeOfPlace: "Restaurant",
-        address: "",
-        petsAllowed: "",
-        description: "",
-        aptOrSuiteNumber: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        pricePerNight: "",
-      });
-      setLatLng({
-        ...latlng,
-        lat: "",
-        lng: "",
-      });
-      setPetsAllowedCheck({
-        ...petsAllowedCheck,
-        Reptile: {
-          id: "",
-          check: false,
-        },
-        Cat: {
-          id: "",
-          check: false,
-        },
-        Dog: {
-          id: "",
-          check: false,
-        },
-        Bird: {
-          id: "",
-          check: false,
-        },
-      });
+      const [lat, lng ] = await geocodeFunc(addressForGeocode);
+
+      let petsAllowed = [];
+      for (const [pet, value] of Object.entries(petsAllowedCheck)) {
+        if (value.check === true) {
+          petsAllowed.push(value.id);
+        }
+      }
+
+      try {
+        const aPlace = await axios.post("places", {
+          typeOfPlace,
+          placeName,
+          address,
+          aptOrSuiteNumber,
+          city,
+          description,
+          state,
+          zipcode,
+          pricePerNight,
+          petsAllowed,
+          lat: parseFloat(lat),
+          lng: parseFloat(lng),
+        });
+        toast.success("Place was created!");
+        setValues({
+          ...values,
+          placeName: "",
+          typeOfPlace: "Restaurant",
+          address: "",
+          petsAllowed: "",
+          description: "",
+          aptOrSuiteNumber: "",
+          city: "",
+          state: "",
+          zipcode: "",
+          pricePerNight: "",
+        });
+        // setLatLng({
+        //   ...latlng,
+        //   lat: "",
+        //   lng: "",
+        // });
+        setPetsAllowedCheck({
+          ...petsAllowedCheck,
+          Reptile: {
+            id: "",
+            check: false,
+          },
+          Cat: {
+            id: "",
+            check: false,
+          },
+          Dog: {
+            id: "",
+            check: false,
+          },
+          Bird: {
+            id: "",
+            check: false,
+          },
+        });
+        getPets()
+      } catch (error) {
+        toast.error(error.response.data.error);
+      }
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error("Unable to retrieve location data, please re-enter data.");
     }
   };
   return (
