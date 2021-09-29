@@ -26,13 +26,18 @@ const placeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: false,
+  },
+
   lat: {
     type: Number,
-    required: false,
+    required: true,
   },
   lng: {
     type: Number,
-    required: false,
+    required: true,
   },
   zipcode: {
     type: Number,

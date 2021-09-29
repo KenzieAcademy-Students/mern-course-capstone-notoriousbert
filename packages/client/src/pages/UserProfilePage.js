@@ -75,13 +75,13 @@ return (
             <div>list of favorites</div>
             <h3>Reviews</h3>
             {console.log(user)}
-            <div>{user.reviews.map((review)=>(
+            {/* <div>{user.reviews.map((review)=>(
                 <div>{review.location}
                     <div>{review.author.username}</div>
                     <div>{review.text}</div>
                     <div>{console.log(review)}</div>
                 </div>
-            ))}</div>
+            ))}</div> */}
             </Col> 
             <Col>
             <div style={{margin:10}}>{user.username}</div>

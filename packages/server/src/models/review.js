@@ -28,12 +28,12 @@ const reviewSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    // petsAllowed: [
-    //   {
-    //     type: String,
-    //     required: true,
-    //   },
-    // ],
+    petsAllowed: [
+      {
+        type: ObjectId,
+        ref: "Pet",
+      },
+    ],
   },
   { timestamps: true }
 );

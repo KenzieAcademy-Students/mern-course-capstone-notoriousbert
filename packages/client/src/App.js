@@ -40,10 +40,10 @@ export default function App() {
               paddingLeft: "0px",
               paddingRight: "0px",
             }}
-            className="no-gutters"
+
           >
             <Switch>
-              <Route exact path="/:uid" component={UserProfilePage} />
+              <Route exact path="/users/:uid" component={UserProfilePage} />
               <Route exact path="/signup" component={UserRegistrationPage} />
               <Route exact path="/add-a-place" component={AddAPlacePage} />
               <Route exact path="/login" component={LoginPage} />

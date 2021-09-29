@@ -19,8 +19,8 @@ router
         populate: { path: 'author', select: ['username'] },
         // populate: { path: 'location',},
       },
-      // {
-      //   path: 'reviews',
+      {
+        path: 'reviews',
 
       //   populate: {
       //     path: 'location',
@@ -28,8 +28,8 @@ router
       //       path: 'place'
       //     }
       //   },
-      //   // populate: { path: 'location',},
-      // },
+        populate: { path: 'location', select: ['placeName'] },
+      },
     ]
     try {
       const user = await User.findOne({ username: req.params.id })
