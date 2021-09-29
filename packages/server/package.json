@@ -25,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
     "morgan": "~1.9.1",
+    "react-geocode": "^0.2.3",
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {

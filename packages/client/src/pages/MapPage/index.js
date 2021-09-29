@@ -131,6 +131,7 @@ export default function MapPage() {
         {selected ? (
           <InfoWindow
             position={{ lat: selected.lat, lng: selected.lng }}
+            maxWidth='300px'
             onCloseClick={() => {
               setSelected(null);
             }}
