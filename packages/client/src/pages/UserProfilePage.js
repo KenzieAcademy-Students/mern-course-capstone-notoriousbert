@@ -24,6 +24,7 @@ export default function UserProfilePage({
     const getUser = async ()=>{
         try{
             const userResponse = await axios.get(`/users/alicia`)
+            console.log(userResponse.data)
             setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
@@ -74,14 +75,13 @@ return (
             <h3>favorites</h3>
             <div>list of favorites</div>
             <h3>Reviews</h3>
-            {console.log(user)}
-            {/* <div>{user.reviews.map((review)=>(
-                <div>{review.location}
+            <div>{user.reviews.map((review)=>(
+                <div>{review.location.placeName}
                     <div>{review.author.username}</div>
                     <div>{review.text}</div>
                     <div>{console.log(review)}</div>
                 </div>
-            ))}</div> */}
+            ))}</div>
             </Col> 
             <Col>
             <div style={{margin:10}}>{user.username}</div>
