@@ -113,7 +113,7 @@ export default function MapPage() {
         onLoad={onMapLoad}
       >
         {markers.map((marker) => (
-             <Marker
+          <Marker
             key={marker.time}
             position={{ lat: marker.lat && parseFloat(marker.lat), lng: marker.lng && parseFloat(marker.lng) }}
             icon={{
@@ -136,7 +136,7 @@ export default function MapPage() {
             }}
           >
             <div>
-              {selected.placeName && <div><Link to="/">{selected.placeName}</Link></div>}
+              {selected.placeName && <div><Link to={"/places/:placeId"}>{selected.placeName}</Link></div>}
               <div>{selected.address}, {selected.city}, {selected.state}</div>
               {selected.petsAllowed && selected.petsAllowed.length > 0 && <div>Pets Allowed: {selected.petsAllowed.map((pet, index) => (
                 index === selected.petsAllowed.length - 1 ? <span>{pet.category}</span> : <span>{pet.category}, </span>
