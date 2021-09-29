@@ -62,6 +62,7 @@ export default function App() {
                     {/* <Redirect to="/map" /> */}
                   {/* </Route> */}
 
+
                   <Route
                     component={({ location }) => {
                       return (

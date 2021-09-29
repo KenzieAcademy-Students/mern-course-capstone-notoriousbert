@@ -14,6 +14,12 @@ router.get("/", async (req, res) => {
       path: "petsAllowed",
       select: ["category"],
     },
+    {
+      path: "reviews",
+      populate: {
+        path: "author",
+      }
+    },
   ];
   const places = await Place.find({}).sort({}).populate(populateQuery).exec();
   try {
@@ -87,7 +93,7 @@ router.post("/", async (request, response, next) => {
     return response.status(422).json({
       error: "Please provide a valid Zip Code.",
     });
-  } 
+  }
 
   const place = new Place({
     typeOfPlace: typeOfPlace,
