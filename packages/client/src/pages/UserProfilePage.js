@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 
 const initialState ={
+    newusername:"",
     oldPassword:"",
     newPassword:"",
     confirmPassword:"",
@@ -24,6 +25,7 @@ export default function UserProfilePage({
     const getUser = async ()=>{
         try{
             const userResponse = await axios.get(`/users/${uid}`)
+            console.log(userResponse)
             setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
@@ -32,7 +34,7 @@ export default function UserProfilePage({
     }
 
     useEffect(()=>{
-        getUser()
+       getUser()
     },[])
 
     const handleChange = (e)=>{
@@ -54,9 +56,10 @@ export default function UserProfilePage({
             }
             await axios.put('users/614c993aa62627fb3947970f', {
             username: formData.newusername === ""? user.username: formData.newusername,
-            oldPassword: formData.oldPassword === "" ? user.oldPassword: formData.oldPassword,
-            newPassword: formData.newPassword === "" ? user.oldPassword: formData.newPassword, 
+            oldPassword: formData.oldPassword === "" ? "" : formData.oldPassword,
+            newPassword: formData.newPassword === "" ? "" : formData.newPassword, 
             email: formData.email ===""? user.email: formData.email})
+            setFormData(initialState)
         } catch (error) {
            console.log("you cannot edit profile at this time")
         }
@@ -65,14 +68,13 @@ export default function UserProfilePage({
 if (!user){
     return <div>LOADING</div>
 }
-console.log(user)
 
 return (
     <div>
     <Container fluid>
         <Row>
             <Col>
-            <h3>favorites</h3>
+            <h3>Favorites</h3>
             <div>{user.favorites.map((favorite)=>(
                 <div>PlaceName: {favorite.placeName}</div>
             ))}</div>
@@ -80,7 +82,7 @@ return (
             <div>{user.reviews.map((review)=>(
                 <div>Placename: {review.location.placeName}
                     <div>Author: {review.author.username}</div>
-                    <div>{review.text}</div>
+                    <div>Review: {review.text}</div>
                 </div>
             ))}</div>
             </Col> 
@@ -88,7 +90,7 @@ return (
             <div style={{margin:10}}>{user.username}</div>
             <div style={{margin:10}}>{user.email}</div> 
             <h3>Edit Profile Information</h3>
-            <Form>
+            <Form id="editForm">
                 <h5>Profile Information</h5>
                 <span> Current Username: {user.username}</span>
                 <div class="form-group">
