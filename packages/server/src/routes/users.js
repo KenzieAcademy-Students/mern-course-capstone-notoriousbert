@@ -17,18 +17,10 @@ router
       {
         path: 'reviews',
         populate: { path: 'author', select: ['username'] },
-        // populate: { path: 'location',},
       },
       {
         path: 'reviews',
-
-      //   populate: {
-      //     path: 'location',
-      //     populate: {
-      //       path: 'place'
-      //     }
-      //   },
-        populate: { path: 'location', select: ['placeName'] },
+        populate: { path: 'location' },
       },
     ]
     try {
