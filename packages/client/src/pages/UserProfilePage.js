@@ -23,8 +23,7 @@ export default function UserProfilePage({
     const [user, setUser] = useState()
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get(`/users/alicia`)
-            console.log(userResponse.data)
+            const userResponse = await axios.get(`/users/${uid}`)
             setUser(userResponse.data)
         } catch (error) { 
             console.log("there has been an error")
@@ -66,6 +65,7 @@ export default function UserProfilePage({
 if (!user){
     return <div>LOADING</div>
 }
+console.log(user)
 
 return (
     <div>
@@ -73,13 +73,14 @@ return (
         <Row>
             <Col>
             <h3>favorites</h3>
-            <div>list of favorites</div>
+            <div>{user.favorites.map((favorite)=>(
+                <div>PlaceName: {favorite.placeName}</div>
+            ))}</div>
             <h3>Reviews</h3>
             <div>{user.reviews.map((review)=>(
-                <div>{review.location.placeName}
-                    <div>{review.author.username}</div>
+                <div>Placename: {review.location.placeName}
+                    <div>Author: {review.author.username}</div>
                     <div>{review.text}</div>
-                    <div>{console.log(review)}</div>
                 </div>
             ))}</div>
             </Col> 

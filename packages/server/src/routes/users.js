@@ -22,6 +22,9 @@ router
         path: 'reviews',
         populate: { path: 'location' },
       },
+      {
+        path: 'favorites'
+      },
     ]
     try {
       const user = await User.findOne({ username: req.params.id })
