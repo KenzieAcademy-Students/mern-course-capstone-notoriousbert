@@ -7,7 +7,7 @@ const Navbar = () => {
     <div className="navbar-container">
     <nav className="navbar bg-dark">
       <div>
-        <Link to='/:uid'><img src='icons8-animal-shelter.svg' alt='logo'/></Link>
+        <Link to='/users/:uid'><img src='icons8-animal-shelter.svg' alt='logo'/></Link>
       </div>
       <ul>
         <li><Link to="/map">Map</Link></li>
