@@ -63,7 +63,31 @@ router.post("/", async (request, response, next) => {
     zipcode,
     pricePerNight,
     petsAllowed,
+    lat,
+    lng
   } = request.body;
+
+  const regZipCode = /^\d{5}(?:[-\s]\d{4})?$/
+
+
+  if (!(placeName) || placeName.length === 0) {
+    return response.status(401).json({
+      error: "Please provide a place name.",
+    });
+  } else if (!(address) || address.length === 0) {
+    return response.status(401).json({
+      error: "Please provide an address.",
+    });
+  } else if (!(city) || city.length === 0) {
+    return response.status(401).json({
+      error: "Please provide a city.",
+    });
+  } else if (!regZipCode.test(zipcode)) {
+    return response.status(422).json({
+      error: "Please provide a valid Zip Code.",
+    });
+  } 
+
   const place = new Place({
     typeOfPlace: typeOfPlace,
     placeName: placeName,
@@ -71,9 +95,11 @@ router.post("/", async (request, response, next) => {
     aptOrSuitNumber: aptOrSuitNumber,
     city: city,
     state: state,
-    zipcode: zipcode,
+    zipcode: parseInt(zipcode),
     pricePerNight: pricePerNight,
     petsAllowed: petsAllowed,
+    lat,
+    lng
   });
 
   const populatedPlace = await place.populate({ path: "petsAllowed" });

@@ -23,7 +23,7 @@ export default function App() {
 //   const {
 //     state: { user },
 //   } = useProvideAuth();
-console.log(useProvideAuth())
+// console.log(useProvideAuth())
 
   return (
     <ErrorBoundary>
@@ -40,10 +40,10 @@ console.log(useProvideAuth())
               paddingLeft: "0px",
               paddingRight: "0px",
             }}
-            className="no-gutters"
+
           >
             <Switch>
-              <Route exact path="/" component={UserProfilePage} />
+              <Route exact path="/users/:uid" component={UserProfilePage} />
               <Route exact path="/signup" component={UserRegistrationPage} />
               <Route exact path="/places/:placeId" component={PlacesDetailPage} />
               <Route exact path="/add-a-place" component={AddAPlacePage} />
