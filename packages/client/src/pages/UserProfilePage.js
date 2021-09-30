@@ -4,7 +4,6 @@ import { LoadingSpinner } from "components";
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button, Form} from 'react-bootstrap'
 import { useProvideAuth } from "hooks/useAuth";
-import { useRequireAuth } from "hooks/useRequireAuth";
 import axios from 'util/axiosConfig.js'
 import { toast } from "react-toastify";
 
@@ -27,24 +26,19 @@ export default function UserProfilePage({
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true);
-    // const {
-    //     state: { isAuthenticated },
-    //   } = useRequireAuth();
+    
 
     const getUser = async ()=>{
         try{
             const userResponse = await axios.get(`/users/${uid}`)
-            console.log(userResponse)
             setUser(userResponse.data)
             setLoading(false);
         } catch (error) { 
             console.log("there has been an error")
-        }
-        
+        }   
     }
 
     useEffect(()=>{
-        console.log('state:', state)
        getUser()
     },[uid])
 
