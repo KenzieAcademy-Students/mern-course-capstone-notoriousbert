@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useContext, createContext } from 'react'
 import useRouter from 'hooks/useRouter'
 import axios from '../util/axiosConfig.js'
+import { toast } from 'react-toastify'
 
 const initialState = {
   isAuthenticated: null,
@@ -87,8 +88,10 @@ export function useProvideAuth() {
       })
       return await signin(username, password)
     } catch (error) {
-      console.log(error)
+      toast.error(error.response)
       if (error.response) {
+        console.log(error.response)
+        toast.error(error.response.data.error)
         throw new Error(error.response.data.error);
       } else {
         throw error;

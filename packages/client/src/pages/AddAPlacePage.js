@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "util/axiosConfig.js";
 import { toast } from "react-toastify";
 import Geocode from "react-geocode";
+import { useProvideAuth } from "hooks/useAuth";
 
 export default function AddAPlacePage() {
+    const {
+        state: { user },
+      } = useProvideAuth();
+
   const petsAllowedInitialState = {
     Reptile: {
       id: "",
@@ -26,22 +31,12 @@ export default function AddAPlacePage() {
     petsAllowedInitialState
   );
 
-//   const [latlng, setLatLng] = useState({
-//     lat: "",
-//     lng: "",
-//   });
 
   const geocodeFunc = async (address) => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
     try {
       const response = await Geocode.fromAddress(address);
       const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
-    //   setLatLng({
-    //     ...latlng,
-    //     lat: lat,
-    //     lng: lng,
-    //   });
     return [lat, lng]
     } catch (error) {
       console.log(error);
@@ -93,12 +88,10 @@ export default function AddAPlacePage() {
   }, []);
 
   const handleChange = (e) => {
-    console.log(e);
     setValues({
       ...values,
       [e.target.name]: e.target.value,
     });
-    console.log(values);
   };
 
   const handleSubmit = async (e) => {
@@ -158,11 +151,6 @@ export default function AddAPlacePage() {
           zipcode: "",
           pricePerNight: "",
         });
-        // setLatLng({
-        //   ...latlng,
-        //   lat: "",
-        //   lng: "",
-        // });
         setPetsAllowedCheck({
           ...petsAllowedCheck,
           Reptile: {
@@ -191,6 +179,7 @@ export default function AddAPlacePage() {
     }
   };
   return (
+      
     <div className="form-container">
       <h1>Add a place</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="place-form">
@@ -329,5 +318,3 @@ export default function AddAPlacePage() {
     </div>
   );
 }
-
-//{(e) => handleSubmit(e)}

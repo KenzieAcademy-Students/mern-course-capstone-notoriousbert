@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 
 
 
 const PlaceBox = ({ mapMarker }) => {
-  useEffect(() => {
-    console.log("snake", mapMarker)
-  }, [])
   return (
     <Container className='p-sm-2 p-md-4'>
       <Row>
@@ -40,7 +38,7 @@ const PlaceBox = ({ mapMarker }) => {
             <div className='col-xs-8 col-md-7'>
               <h2>Reviews <br />{mapMarker.reviews.map((review) => <div>
                 <h4>
-                  {review.author.username} - {review.created}
+                  <Link to={`/users/${review.author.username}`}>{review.author.username}</Link> - {review.created}
                 </h4>
                 <div>
                   {review.text}

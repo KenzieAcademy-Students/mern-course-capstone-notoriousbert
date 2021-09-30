@@ -9,6 +9,7 @@ export function useRequireAuth(redirectUrl = '/login') {
   // If auth.user is false that means we're not
   // logged in and should redirect.
   useEffect(() => {
+    console.log('auth', auth)
     if (auth.state.isAuthenticated === false) {
       router.push(redirectUrl)
     }

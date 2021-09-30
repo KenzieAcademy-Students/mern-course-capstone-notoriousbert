@@ -53,6 +53,7 @@ export default function App() {
                 <Switch>
                   <Route exact path="/users/:uid" component={UserProfilePage} />
                   <Route exact path="/add-a-place" component={AddAPlacePage} />
+                  <Route exact path="/places/:pid" component={PlacesDetailPage} />
                   <Route exact path="/map" component={MapPage} />
                   <Route exact path="/signup" component={UserRegistrationPage}/>
                     {/* <Redirect to="/map" /> */}

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import useRouter from "hooks/useRouter";
 import { useProvideAuth } from "hooks/useAuth";
 import { setAuthToken } from "util/axiosConfig";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -24,18 +25,22 @@ const Register = () => {
     e.preventDefault()
     
     if (password !== password2) {
-      console.log('Passwords do not match')
+      toast.error('Passwords do not match. Please try again.')
+      return
     } 
 
     console.log(formData)
 
     try {
       const res = await auth.signup(formData.username, formData.password, formData.email)
-      setAuthToken(res.token)
-      // router.push('/user/:id')
+      setAuthToken(res.data.token)
+      console.log(res)
+      router.push(`/users/${res.data.username}`)
 
     } catch(err) {
-      console.log("not submitted")
+      console.log('aaaaaa')
+      console.log(err)
+      toast.error(err);
     }
   }
 

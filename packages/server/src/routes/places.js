@@ -46,10 +46,23 @@ router.get("/review/:id", async (req, res) => {
 
 //get PLACE by ID
 router.get("/:id", async (req, res) => {
-  const populateQuery = [{ path: "petsAllowed" }];
-  let place = await Place.findById(req.params.id)
+  const populateQuery = [
+    {
+      path: "petsAllowed",
+      select: ["category"],
+    },
+    {
+      path: "reviews",
+      populate: {
+        path: "author",
+      }
+    },
+  ];
+  console.log('YO:', req.params.id)
+  const place = await Place.findById(req.params.id)
     .populate(populateQuery)
     .exec();
+  console.log(place)
   try {
     res.json(place.toJSON());
   } catch (error) {
