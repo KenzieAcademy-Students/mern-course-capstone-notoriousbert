@@ -1,7 +1,10 @@
 import DeviceDeveloperMode from 'material-ui/svg-icons/device/developer-mode'
 import React, {useEffect, useState} from 'react'
+import { LoadingSpinner } from "components";
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button, Form} from 'react-bootstrap'
+import { useProvideAuth } from "hooks/useAuth";
+import { useRequireAuth } from "hooks/useRequireAuth";
 import axios from 'util/axiosConfig.js'
 import { toast } from "react-toastify";
 
@@ -20,13 +23,20 @@ export default function UserProfilePage({
     params: {uid},
   },
 }) {
+    const { state } = useProvideAuth();
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState()
+    const [loading, setLoading] = useState(true);
+    // const {
+    //     state: { isAuthenticated },
+    //   } = useRequireAuth();
+
     const getUser = async ()=>{
         try{
             const userResponse = await axios.get(`/users/${uid}`)
             console.log(userResponse)
             setUser(userResponse.data)
+            setLoading(false);
         } catch (error) { 
             console.log("there has been an error")
         }
@@ -34,8 +44,9 @@ export default function UserProfilePage({
     }
 
     useEffect(()=>{
+        console.log('state:', state)
        getUser()
-    },[])
+    },[uid])
 
     const handleChange = (e)=>{
         setFormData({
@@ -65,15 +76,17 @@ export default function UserProfilePage({
         }
 }
 
-if (!user){
-    return <div>LOADING</div>
-}
+if (loading) {
+    return <LoadingSpinner full />;
+  }
 
 return (
     <div>
     <Container fluid>
         <Row>
             <Col>
+            <div style={{margin:10}}>{user.username}</div>
+            {state.user && state.user.username === uid ? (<div style={{margin:10}}>{user.email}</div>) : null} 
             <h3>Favorites</h3>
             <div>{user.favorites.map((favorite)=>(
                 <div>PlaceName: {favorite.placeName}</div>
@@ -86,9 +99,8 @@ return (
                 </div>
             ))}</div>
             </Col> 
-            <Col>
-            <div style={{margin:10}}>{user.username}</div>
-            <div style={{margin:10}}>{user.email}</div> 
+            {(state.user && state.user.username === uid) ? 
+            (<Col>
             <h3>Edit Profile Information</h3>
             <Form id="editForm">
                 <h5>Profile Information</h5>
@@ -113,7 +125,7 @@ return (
                 </div>
                 <Button variant="outline-primary" size="sm" style={{margin:10}} onClick={(e)=>{handleSubmit(e)}}>EDIT</Button>
             </Form>
-            </Col>
+            </Col>) : null}
         </Row>
     </Container>
     </div>

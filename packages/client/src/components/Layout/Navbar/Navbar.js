@@ -14,7 +14,7 @@ const NavbarTop = () => {
     <div className="navbar-container">
       <nav className="navbar bg-dark">
         <div>
-          <Link to="/users/:uid">
+          <Link to= {user ? (`/users/${user.username}`) : (`/map`)}>
             <img src="icons8-animal-shelter.svg" alt="logo" />
           </Link>
         </div>
@@ -23,14 +23,15 @@ const NavbarTop = () => {
             <Link to="/map">Map</Link>
           </li>
           <li>
-            <Link to="/signup">Register</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
             <Link to="/add-a-place">Add a Place</Link>
           </li>
+          {user ? null : (
+          <li>
+            <Link to="/signup">Register</Link>
+          </li>)}
+          {user ? null : (<li>
+            <Link to="/login">Login</Link>
+          </li>)}
         </ul>
         {user ? (
         <Button

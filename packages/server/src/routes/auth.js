@@ -21,12 +21,20 @@ router.post('/signup', async (req, res) => {
     return res.status(400).json({error: 'password must be between 8 and 20 characters.'})
   }
 
+  User.findOne({ email: email}).then((savedUser) => {
+    if (savedUser) {
+      return res
+        .status(422)
+        .json({ error: 'A user already exists with that email address.' })
+    }
+  })
+
   User.findOne({ username: username })
     .then((savedUser) => {
       if (savedUser) {
         return res
           .status(422)
-          .json({ error: 'user already exists with that name' })
+          .json({ error: 'A user already exists with that name.' })
       }
       bcrypt.hash(password, 12).then((hashedpassword) => {
         const user = new User({
