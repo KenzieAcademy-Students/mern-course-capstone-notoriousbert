@@ -1,4 +1,3 @@
-import DeviceDeveloperMode from 'material-ui/svg-icons/device/developer-mode'
 import React, {useEffect, useState} from 'react'
 import { LoadingSpinner } from "components";
 import { Container } from 'react-bootstrap'
