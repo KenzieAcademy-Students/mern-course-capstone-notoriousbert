@@ -54,7 +54,7 @@ export default function UserProfilePage({
         try{
             if(formData.newPassword.length >0 && (formData.newPassword !== formData.confirmPassword)){
                 toast.error(
-                    `'New Password' and 'Confirm New Password' input fields do not match`
+                    `'New Password' and 'Confirm New Password' do not match`
                   )
                   return
             }
@@ -96,7 +96,6 @@ return (
             (<Col>
             <h3>Edit Profile Information</h3>
             <Form id="editForm">
-                <h5>Profile Information</h5>
                 <span> Current Username: {user.username}</span>
                 <div class="form-group">
                     <input name="newusername" placeholder="New Username" value={formData.newusername} onChange={(e)=>{handleChange(e)}}/>

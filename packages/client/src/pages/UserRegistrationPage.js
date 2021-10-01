@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react'
-// import axios from 'axios'
 import { Link } from 'react-router-dom'
 import useRouter from "hooks/useRouter";
 import { useProvideAuth } from "hooks/useAuth";
@@ -29,17 +28,12 @@ const Register = () => {
       return
     } 
 
-    console.log(formData)
-
     try {
       const res = await auth.signup(formData.username, formData.password, formData.email)
       setAuthToken(res.data.token)
-      console.log(res)
       router.push(`/users/${res.data.username}`)
 
     } catch(err) {
-      console.log('aaaaaa')
-      console.log(err)
       toast.error(err);
     }
   }

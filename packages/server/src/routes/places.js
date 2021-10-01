@@ -1,12 +1,6 @@
 import express from "express";
 import { Place, Review } from "../models";
 const router = express.Router();
-import { requireAuth } from "../middleware";
-
-//Sanity Check
-// router.get('/', (req, res) => {
-//     res.status(200).send('places connected')
-// })
 
 router.get("/", async (req, res) => {
   const populateQuery = [
@@ -39,11 +33,6 @@ router.get("/review/:id", async (req, res) => {
   }
 });
 
-//   Sanity Check for Review
-//   router.get('/review', (req, res) => {
-//       res.status(200).send('reviews connected')
-//   })
-
 //get PLACE by ID
 router.get("/:id", async (req, res) => {
   const populateQuery = [
@@ -58,11 +47,10 @@ router.get("/:id", async (req, res) => {
       }
     },
   ];
-  console.log('YO:', req.params.id)
+  
   const place = await Place.findById(req.params.id)
     .populate(populateQuery)
     .exec();
-  console.log(place)
   try {
     res.json(place.toJSON());
   } catch (error) {
