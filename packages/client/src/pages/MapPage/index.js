@@ -63,6 +63,7 @@ export default function MapPage() {
     }
   }
 
+  // eslint-disable react-hooks/exhaustive-deps 
   useEffect(() => {
     getMarkers()
     console.log(markers)
