@@ -25,14 +25,14 @@ router.get('/https://maps.googleapis.com/maps/api/geocode/json', function(req, r
 
 
 // router.get("/", async (req, res, next) => {
-//   const populateQuery = [
-//     { 
-//       path: "place",      
+  // const populateQuery = [
+  //   { 
+  //     path: "place",      
 
-//       populate: {
-//         path: "petsAllowed", select: ["category"]
-//       }
-//     },
+  //     populate: {
+  //       path: "petsAllowed", select: ["category"]
+  //     }
+  //   },
 //   ];
 //   const maps = await Map.find({}).sort({}).populate(populateQuery)
 //   .exec();
