@@ -31,15 +31,28 @@ export default function UserProfilePage({
     //     state: { isAuthenticated },
     //   } = useRequireAuth();
 
-    const getUser = async ()=>{
-        try{
-            const userResponse = await axios.get(`/users/${uid}`)
-            console.log(userResponse)
-            setUser(userResponse.data)
-            setLoading(false);
-        } catch (error) { 
-            console.log("there has been an error")
+    const getUser = async (userId)=>{
+        if (userId) {
+            try{
+                const userResponse = await axios.get(`/users/${userId}`)
+                console.log(userResponse)
+                setUser(userResponse.data)
+                setLoading(false);
+            } catch (error) { 
+                console.log("there has been an error")
+            }
+        } else {
+            try{
+                const userResponse = await axios.get(`/users/username/${uid}`)
+                console.log(userResponse)
+                setUser(userResponse.data)
+                setLoading(false);
+            } catch (error) { 
+                console.log("there has been an error")
+            }
         }
+
+        
         
     }
 
@@ -58,6 +71,9 @@ export default function UserProfilePage({
     const handleSubmit = async (e)=>{
         e.preventDefault()
         e.stopPropagation()
+        const {
+            user: { uid},
+          } = state;
         try{
             if(formData.newPassword.length >0 && (formData.newPassword !== formData.confirmPassword)){
                 toast.error(
@@ -65,12 +81,15 @@ export default function UserProfilePage({
                   )
                   return
             }
-            await axios.put('users/614c993aa62627fb3947970f', {
+            await axios.put(`users/${uid}`, {
             username: formData.newusername === ""? user.username: formData.newusername,
             oldPassword: formData.oldPassword === "" ? "" : formData.oldPassword,
             newPassword: formData.newPassword === "" ? "" : formData.newPassword, 
             email: formData.email ===""? user.email: formData.email})
             setFormData(initialState)
+            
+            console.log('newstate:', state)
+            getUser(uid)
         } catch (error) {
            console.log("you cannot edit profile at this time")
         }

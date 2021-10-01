@@ -9,9 +9,7 @@ router.get('/', (req, res) => {
   res.send("User endpoint working")
 })
 
-router
-  .route('/:id')
-  .get(async (req, res) => {
+  router.get('/username/:id', async (req, res) => {
 
     const populateQuery = [
       {
@@ -27,7 +25,7 @@ router
       },
     ]
     try {
-      const user = await User.findOne({ username: req.params.id })
+      const user = await User.findOne({ username: req.params.id})
         .populate(populateQuery)
         .exec()
       if (user) {
@@ -37,7 +35,37 @@ router
       res.status(404).end()
     }
   })
-  .put(async (req, res) => {
+
+  router.get('/:id', async (req, res) => {
+    const { id } = req.params
+    console.log(req.params)
+
+    const populateQuery = [
+      {
+        path: 'reviews',
+        populate: { path: 'author', select: ['username'] },
+      },
+      {
+        path: 'reviews',
+        populate: { path: 'location' },
+      },
+      {
+        path: 'favorites'
+      },
+    ]
+    try {
+      const user = await User.findById(id)
+        .populate(populateQuery)
+        .exec()
+      if (user) {
+        res.json(user.toJSON())
+      }
+    } catch (err) {
+      res.status(404).end()
+    }
+  })
+
+  router.put('/:id', async (req, res) => {
     const { username, email, newPassword, oldPassword, pets } = req.body
     const { id } = req.params
 
