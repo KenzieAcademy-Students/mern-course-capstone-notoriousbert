@@ -2,6 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "util/axiosConfig.js";
 import { toast } from "react-toastify";
 import Geocode from "react-geocode";
+import {
+  Container,
+  Form,
+  Button,
+  Media,
+  Figure,
+  ListGroup,
+  Modal,
+  Tooltip,
+  OverlayTrigger,
+  Row,
+  Col,
+} from "react-bootstrap";
+
 import { useProvideAuth } from "hooks/useAuth";
 
 export default function AddAPlacePage() {
@@ -179,24 +193,28 @@ export default function AddAPlacePage() {
     }
   };
   return (
-      
+    <Container className="d-flex flex-row">
     <div className="form-container">
-      <h1>Add a place</h1>
+      <h1 className="text-success">Add a place</h1>
+      <Row className="pt-5 justify-content-center">
       <form onSubmit={(e) => handleSubmit(e)} className="place-form">
+        <div className="form-group" >
         <label>
           Place Name:
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="placeName"
             required
             value={values.placeName}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Place Type:
           <select
-            name="typeOfPlace"
+            class="form-control form-rounded border border-info" name="typeOfPlace"
             required
             id="places"
             value={values.typeOfPlace}
@@ -208,113 +226,138 @@ export default function AddAPlacePage() {
             <option value="bar">Bar</option>
           </select>
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Address:
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="address"
             required
             value={values.address}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Cats:
           <input
-            type="checkbox"
+            class="form-check-input border border-info" type="checkbox"
             name="Cat"
             checked={petsAllowedCheck.Cat.check}
             onChange={handleCheckBox}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Dogs:
           <input
-            type="checkbox"
+            class="form-check-input border border-info" type="checkbox"
             name="Dog"
             checked={petsAllowedCheck.Dog.check}
             onChange={handleCheckBox}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Reptiles:
           <input
-            type="checkbox"
+            class="form-check-input border border-info" type="checkbox"
             name="Reptile"
             checked={petsAllowedCheck.Reptile.check}
             onChange={handleCheckBox}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Birds:
           <input
-            type="checkbox"
+            class="form-check-input border border-info" type="checkbox"
             name="Bird"
             checked={petsAllowedCheck.Bird.check}
             onChange={handleCheckBox}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Description (optional):
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="description"
             value={values.description}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
-          apt or suite number:
+          Apt or suite number:
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="aptOrSuiteNumber"
             value={values.aptOrSuiteNumber}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
-          city:
+          City:
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="city"
             required
             value={values.city}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
-          state:
+          State:
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="state"
             required
             value={values.state}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Zip code:
           <input
-            type="text"
+            class="form-control form-rounded border border-info" type="text"
             name="zipcode"
             required
             value={values.zipcode}
             onChange={handleChange}
           />
         </label>
+        </div>
+        <div className="form-group">
         <label>
           Price per night (optional):
           <input
-            type="number"
+            class="form-control form-rounded border border-info" type="number"
             name="pricePerNight"
             value={values.pricePerNight}
             onChange={handleChange}
           />
         </label>
-        <button className="place-form" type="submit">
+        </div>
+        <button className="btn btn-success" type="submit">
           Add a Place
         </button>
       </form>
+      </Row>
     </div>
+    </Container>  
   );
 }
