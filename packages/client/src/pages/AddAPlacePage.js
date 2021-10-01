@@ -196,7 +196,6 @@ export default function AddAPlacePage() {
     <Container className="d-flex flex-row">
     <div className="form-container">
       <h1 className="text-success">Add a place</h1>
-      <Row className="pt-5 justify-content-center">
       <form onSubmit={(e) => handleSubmit(e)} className="place-form">
         <div className="form-group" >
         <label>
@@ -241,7 +240,7 @@ export default function AddAPlacePage() {
         </div>
         <div className="form-group">
         <label>
-          Cats:
+        {`Cats: `}
           <input
             class="form-check-input border border-info" type="checkbox"
             name="Cat"
@@ -252,7 +251,7 @@ export default function AddAPlacePage() {
         </div>
         <div className="form-group">
         <label>
-          Dogs:
+        {`Dogs: `}
           <input
             class="form-check-input border border-info" type="checkbox"
             name="Dog"
@@ -263,7 +262,7 @@ export default function AddAPlacePage() {
         </div>
         <div className="form-group">
         <label>
-          Reptiles:
+        {`Reptiles: `}
           <input
             class="form-check-input border border-info" type="checkbox"
             name="Reptile"
@@ -274,7 +273,7 @@ export default function AddAPlacePage() {
         </div>
         <div className="form-group">
         <label>
-          Birds:
+          {`Birds: `}
           <input
             class="form-check-input border border-info" type="checkbox"
             name="Bird"
@@ -352,12 +351,14 @@ export default function AddAPlacePage() {
           />
         </label>
         </div>
-        <button className="btn btn-success" type="submit">
+        <button className="btn btn-success" type="submit" style={{marginTop:10}}>
           Add a Place
         </button>
       </form>
-      </Row>
     </div>
     </Container>  
   );
 }
+
+
+//<Row className="pt-5 justify-content-center">
