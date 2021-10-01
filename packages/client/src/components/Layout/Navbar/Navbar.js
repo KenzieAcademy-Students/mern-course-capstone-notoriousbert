@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Button, Figure } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "./navbar.scss";
 import { useProvideAuth } from "hooks/useAuth";
 
@@ -11,13 +11,10 @@ const NavbarTop = () => {
   } = useProvideAuth();
 
   return (
-    <div className="navbar-container">
-      <nav className="navbar bg-dark">
-        <div>
+      <nav className="navbar">
           <Link to= {user ? (`/users/${user.username}`) : (`/map`)}>
-            <img src="icons8-animal-shelter.svg" alt="logo" />
+            <img src="icons8-animal-shelter.svg" alt="logo" className="logo" />
           </Link>
-        </div>
         <ul>
           <li>
             <Link to="/map">Map</Link>
@@ -35,14 +32,11 @@ const NavbarTop = () => {
         </ul>
         {user ? (
         <Button
-          variant="outline-info"
           onClick={() => signout()}
-          style={{ border: "none", marginRight: "50px", color: "#E5E1DF" }}
-        >
+          >
           Sign Out
         </Button>) : null}
       </nav>
-    </div>
   );
 };
 

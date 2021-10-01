@@ -38,7 +38,7 @@ const Login = ({
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign In</h1>
+      <h1 className="large">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Sign Into Your Account
       </p>
@@ -63,10 +63,10 @@ const Login = ({
             minLength="6"
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Login" />
+        <input type="submit" className="btn btn-primary" value="Sign In" />
       </form>
       <p className="my-1">
-        Don't have an account? <Link to="/signup">Sign Up</Link>
+        Don't have an account? <Link to="/signup" className='sign'>Sign Up</Link>
       </p>
     </Fragment>
   );

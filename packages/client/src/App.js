@@ -14,8 +14,8 @@ import {
 import { ErrorBoundary, NavbarTop, Header } from "components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { Container, Row, Col } from "react-bootstrap";
 import "./app.scss";
+import "./styling/style.scss"
 import { useProvideAuth } from "hooks/useAuth";
 import axios from "axios";
 
@@ -38,17 +38,7 @@ export default function App() {
         <NavbarTop />
         {/* {user ? ( */}
           <>
-          <div className="sections">
-            <Container
-              fluid
-              style={{
-                height: "calc(100vh - 72px)",
-                overflow: "auto",
-                paddingLeft: "0px",
-                paddingRight: "0px",
-                paddingBottom: "0px"
-              }}
-            >
+        <section className="container">
               
                 <Switch>
                   <Route exact path="/users/:uid" component={UserProfilePage} />
@@ -82,8 +72,7 @@ export default function App() {
                   />
                 </Switch>
               
-            </Container>
-            </div>
+              </section>
           </>
         {/* // ) : (
         //   <Switch>
