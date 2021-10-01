@@ -28,7 +28,7 @@ const Register = () => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
+      <h1 className="lge">Sign Up</h1>
       <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
@@ -74,7 +74,7 @@ const Register = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <Link to='/login'>Sign In</Link>
+        Already have an account? <Link to='/login' className='sign'>Sign In</Link>
       </p>
   </Fragment>
   )

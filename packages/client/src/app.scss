@@ -3,14 +3,14 @@
 //     overflow-x: hidden;
 //   }
 
-.app {
-    height: 100vh;
+// .app {
+//     height: 100vh;
   
-    .sections {
-      width: 100%;
-      height: calc(100vh - 80px);
-      position: relative;
-      top: 80px;
+//     .sections {
+//       width: 100%;
+//       height: calc(100vh - 80px);
+//       position: relative;
+//       top: 80px;
     //   scroll-behavior: smooth;
     //   scroll-snap-type: y mandatory;
     //   scrollbar-width: none; // for firefox
@@ -18,11 +18,11 @@
     //       display: none;
     //   }
   
-      > *{
-        width: 100vw;
-        height: calc(100vh - 80px);
-        scroll-snap-align: start;
-      }
-    }
-  }
+  //     > *{
+  //       width: 100vw;
+  //       height: calc(100vh - 80px);
+  //       scroll-snap-align: start;
+  //     }
+  //   }
+  // }
   
