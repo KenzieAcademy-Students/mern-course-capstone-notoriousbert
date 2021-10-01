@@ -14,7 +14,8 @@
     "client": "yarn workspace client start",
     "server": "yarn workspace server develop",
     "develop": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
-    "start": "yarn workspace server start"
+    "start": "yarn workspace server start",
+    "watch": "webpack-dev-server --progress --colors --hot --inline"
   },
   "engines": {
     "node": "16.x"

@@ -2,18 +2,19 @@
 @import '_utilities';
 @import '_form';
 
-* {
+.app {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
+.body {
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6rem;
   background-color: #fff;
   color: #333;
+  max-width: 1100px;
 }
 
 a {
@@ -29,38 +30,22 @@ img {
   width: 100%;
 }
 
-// Navbar
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.7rem 2rem;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  top: 0;
-  border-bottom: solid 1px $primary-color;
-  opacity: 0.9;
+a.sign {
+  text-decoration: none;
+  color: $primary-color;
+}
 
-  ul {
-    display: flex;
-  }
-
-  a {
-    color: #fff;
-    padding: 0.45rem;
-    margin: 0 0.25rem;
-
-    &:hover {
-      color: $primary-color;
-    }
-  }
+h1.large {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: $primary-color;
 }
 
 // Landing
 .landing {
   position: relative;
-  background: url('../img/dogwithsunglasses.jpg') no-repeat center center/cover;
+  // background: url('../img/dogwithsunglasses.jpg') no-repeat center center/cover;
   height: 100vh;
 
   &-inner {
@@ -75,17 +60,6 @@ img {
     text-align: center;
   }
 }
-
-// Profile Page
-// .profile {
-//   display: grid;
-//   grid-template-columns: 2fr 4fr 2fr;
-//   grid-gap: 2rem;
-//   align-items: center;
-//   padding: 1rem;
-//   line-height: 1.8;
-//   margin-bottom: 1rem;
-// }
 
 // Profile Page
 .profile-grid {
@@ -168,5 +142,25 @@ img {
     .line {
       padding: 0;
     }
+  }
+}
+
+.form {
+  &-group {
+    margin: 1.5rem 0;
+    input,
+    select,
+    textarea {
+      display: block;
+      width: 100%;
+      padding: 0.4rem;
+      font-size: 1.2rem;
+      border: 1px solid #ccc;
+    }
+  }
+  &-text {
+    display: block;
+    margin-top: 0.3rem;
+    color: #888;
   }
 }
