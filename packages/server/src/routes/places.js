@@ -14,6 +14,12 @@ router.get("/", async (req, res) => {
       path: "petsAllowed",
       select: ["category"],
     },
+    {
+      path: "reviews",
+      populate: {
+        path: "author",
+      }
+    },
   ];
   const places = await Place.find({}).sort({}).populate(populateQuery).exec();
   try {
@@ -40,10 +46,23 @@ router.get("/review/:id", async (req, res) => {
 
 //get PLACE by ID
 router.get("/:id", async (req, res) => {
-  const populateQuery = [{ path: "petsAllowed" }];
-  let place = await Place.findById(req.params.id)
+  const populateQuery = [
+    {
+      path: "petsAllowed",
+      select: ["category"],
+    },
+    {
+      path: "reviews",
+      populate: {
+        path: "author",
+      }
+    },
+  ];
+  console.log('YO:', req.params.id)
+  const place = await Place.findById(req.params.id)
     .populate(populateQuery)
     .exec();
+  console.log(place)
   try {
     res.json(place.toJSON());
   } catch (error) {
@@ -66,6 +85,7 @@ router.post("/", async (request, response, next) => {
     lat,
     lng
   } = request.body;
+  
 
   const regZipCode = /^\d{5}(?:[-\s]\d{4})?$/
 
@@ -86,7 +106,7 @@ router.post("/", async (request, response, next) => {
     return response.status(422).json({
       error: "Please provide a valid Zip Code.",
     });
-  } 
+  }
 
   const place = new Place({
     typeOfPlace: typeOfPlace,

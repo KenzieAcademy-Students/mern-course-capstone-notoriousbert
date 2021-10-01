@@ -1,12 +1,16 @@
 import DeviceDeveloperMode from 'material-ui/svg-icons/device/developer-mode'
 import React, {useEffect, useState} from 'react'
+import { LoadingSpinner } from "components";
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button, Form} from 'react-bootstrap'
+import { useProvideAuth } from "hooks/useAuth";
+import { useRequireAuth } from "hooks/useRequireAuth";
 import axios from 'util/axiosConfig.js'
 import { toast } from "react-toastify";
 
 
 const initialState ={
+    newusername:"",
     oldPassword:"",
     newPassword:"",
     confirmPassword:"",
@@ -19,13 +23,20 @@ export default function UserProfilePage({
     params: {uid},
   },
 }) {
+    const { state } = useProvideAuth();
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState()
+    const [loading, setLoading] = useState(true);
+    // const {
+    //     state: { isAuthenticated },
+    //   } = useRequireAuth();
+
     const getUser = async ()=>{
         try{
-            const userResponse = await axios.get(`/users/alicia`)
-            console.log(userResponse.data)
+            const userResponse = await axios.get(`/users/${uid}`)
+            console.log(userResponse)
             setUser(userResponse.data)
+            setLoading(false);
         } catch (error) { 
             console.log("there has been an error")
         }
@@ -33,8 +44,9 @@ export default function UserProfilePage({
     }
 
     useEffect(()=>{
-        getUser()
-    },[])
+        console.log('state:', state)
+       getUser()
+    },[uid])
 
     const handleChange = (e)=>{
         setFormData({
@@ -55,39 +67,42 @@ export default function UserProfilePage({
             }
             await axios.put('users/614c993aa62627fb3947970f', {
             username: formData.newusername === ""? user.username: formData.newusername,
-            oldPassword: formData.oldPassword === "" ? user.oldPassword: formData.oldPassword,
-            newPassword: formData.newPassword === "" ? user.oldPassword: formData.newPassword, 
+            oldPassword: formData.oldPassword === "" ? "" : formData.oldPassword,
+            newPassword: formData.newPassword === "" ? "" : formData.newPassword, 
             email: formData.email ===""? user.email: formData.email})
+            setFormData(initialState)
         } catch (error) {
            console.log("you cannot edit profile at this time")
         }
 }
 
-if (!user){
-    return <div>LOADING</div>
-}
+if (loading) {
+    return <LoadingSpinner full />;
+  }
 
 return (
     <div>
     <Container fluid>
         <Row>
             <Col>
-            <h3>favorites</h3>
-            <div>list of favorites</div>
+            <div style={{margin:10}}>{user.username}</div>
+            {state.user && state.user.username === uid ? (<div style={{margin:10}}>{user.email}</div>) : null} 
+            <h3>Favorites</h3>
+            <div>{user.favorites.map((favorite)=>(
+                <div>PlaceName: {favorite.placeName}</div>
+            ))}</div>
             <h3>Reviews</h3>
             <div>{user.reviews.map((review)=>(
-                <div>{review.location.placeName}
-                    <div>{review.author.username}</div>
-                    <div>{review.text}</div>
-                    <div>{console.log(review)}</div>
+                <div>Placename: {review.location.placeName}
+                    <div>Author: {review.author.username}</div>
+                    <div>Review: {review.text}</div>
                 </div>
             ))}</div>
             </Col> 
-            <Col>
-            <div style={{margin:10}}>{user.username}</div>
-            <div style={{margin:10}}>{user.email}</div> 
+            {(state.user && state.user.username === uid) ? 
+            (<Col>
             <h3>Edit Profile Information</h3>
-            <Form>
+            <Form id="editForm">
                 <h5>Profile Information</h5>
                 <span> Current Username: {user.username}</span>
                 <div class="form-group">
@@ -110,7 +125,7 @@ return (
                 </div>
                 <Button variant="outline-primary" size="sm" style={{margin:10}} onClick={(e)=>{handleSubmit(e)}}>EDIT</Button>
             </Form>
-            </Col>
+            </Col>) : null}
         </Row>
     </Container>
     </div>
