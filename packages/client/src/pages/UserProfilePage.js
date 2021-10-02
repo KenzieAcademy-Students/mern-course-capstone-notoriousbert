@@ -1,10 +1,8 @@
-import DeviceDeveloperMode from 'material-ui/svg-icons/device/developer-mode'
 import React, {useEffect, useState} from 'react'
 import { LoadingSpinner } from "components";
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button, Form} from 'react-bootstrap'
 import { useProvideAuth } from "hooks/useAuth";
-import { useRequireAuth } from "hooks/useRequireAuth";
 import axios from 'util/axiosConfig.js'
 import { toast } from "react-toastify";
 
@@ -27,9 +25,7 @@ export default function UserProfilePage({
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true);
-    // const {
-    //     state: { isAuthenticated },
-    //   } = useRequireAuth();
+    
 
     const getUser = async (userId)=>{
         if (userId) {
@@ -57,7 +53,6 @@ export default function UserProfilePage({
     }
 
     useEffect(()=>{
-        console.log('state:', state)
        getUser()
     },[uid])
 
@@ -77,7 +72,7 @@ export default function UserProfilePage({
         try{
             if(formData.newPassword.length >0 && (formData.newPassword !== formData.confirmPassword)){
                 toast.error(
-                    `'New Password' and 'Confirm New Password' input fields do not match`
+                    `'New Password' and 'Confirm New Password' do not match`
                   )
                   return
             }
@@ -122,7 +117,6 @@ return (
             (<Col>
             <h3>Edit Profile Information</h3>
             <Form id="editForm">
-                <h5>Profile Information</h5>
                 <span> Current Username: {user.username}</span>
                 <div class="form-group">
                     <input name="newusername" placeholder="New Username" value={formData.newusername} onChange={(e)=>{handleChange(e)}}/>

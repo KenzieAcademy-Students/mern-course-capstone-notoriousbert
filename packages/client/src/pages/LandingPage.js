@@ -1,13 +1,12 @@
 import React from 'react'
-import { Container, Row, Col, Button, Image, InputGroup, FormControl } from 'react-bootstrap'
+import { Container, Row, Col, Image, InputGroup, FormControl } from 'react-bootstrap'
 
 const Landing = () => {
 return (
   <div>
   <Container fluid>
       <Row>
-      {/* <p> Row one </p> */}
-      <Col style={{/*border:"2px solid black",*/ height:350}}>
+      <Col style={{ height:350}}>
       <div>
         <h1><Image src="holder.js/171x180" rounded />Kibbles & Ritz</h1>
         <p> Find pet friendly bars, hotels, restaurants wherever you're traveling</p>
@@ -25,9 +24,9 @@ return (
         </Col>
       </Row>
       <Row>
-        <Col style={{/*border:"2px solid black",*/ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
-        <Col style={{/*border:"2px solid black".*/ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
-        <Col style={{/*border:"2px solid black",*/ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
+        <Col style={{ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
+        <Col style={{ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
+        <Col style={{ height:120, fontSize:13}}><Image src="holder.js/171x180" rounded/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum sapien et nibh condimentum maximus.</p></Col>
       </Row>
     </Container>
   </div>
