@@ -76,6 +76,11 @@ h1.large {
     align-items: center;
     justify-content: center;
     text-align: center;
+
+    h1.large {
+      color: #fff;
+      margin: 0;
+    }
   }
 
   .profile-about {

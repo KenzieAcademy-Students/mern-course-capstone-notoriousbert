@@ -28,7 +28,7 @@ section.container {
   margin-bottom: 1rem;
 }
 
-.text-primary {
+.primary-text {
   color: $primary-color;
 }
 
@@ -40,7 +40,7 @@ section.container {
 }
 
 // Backgrounds
-.bg {
+.background {
   &-primary {
     @include set-background($primary-color);
   }
