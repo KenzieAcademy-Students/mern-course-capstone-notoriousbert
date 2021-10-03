@@ -14,7 +14,7 @@
   line-height: 1.6rem;
   background-color: #fff;
   color: #333;
-  max-width: 1100px;
+  // max-width: 1100px;
 }
 
 a {
@@ -45,7 +45,7 @@ h1.large {
 // Landing
 .landing {
   position: relative;
-  // background: url('../img/dogwithsunglasses.jpg') no-repeat center center/cover;
+  background: url('./dogwithsunglasses.jpg') no-repeat center center/cover;
   height: 100vh;
 
   &-inner {
