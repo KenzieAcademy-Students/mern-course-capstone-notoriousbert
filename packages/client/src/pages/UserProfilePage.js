@@ -53,7 +53,7 @@ export default function UserProfilePage({
     }
 
     useEffect(()=>{
-       getUser()
+      getUser()
     },[uid])
 
     const handleChange = (e)=>{
@@ -84,7 +84,7 @@ export default function UserProfilePage({
             setFormData(initialState)
             getUser(uid)
         } catch (error) {
-           console.log("you cannot edit profile at this time")
+          console.log("you cannot edit profile at this time")
         }
 }
 
@@ -93,51 +93,63 @@ if (loading) {
   }
 
 return (
-    <div>
-    <Container fluid>
-        <Row>
-            <Col>
-            <div style={{margin:10}}>{user.username}</div>
-            {state.user && state.user.username === uid ? (<div style={{margin:10}}>{user.email}</div>) : null} 
-            <h3>Favorites</h3>
-            <div>{user.favorites.map((favorite)=>(
-                <div>PlaceName: {favorite.placeName}</div>
-            ))}</div>
-            <h3>Reviews</h3>
+    <section class="container">
+      <div class="profile-grid my-1">
+
+        <div class="profile-top background-primary p-2">
+          <h1 class="large-profile">{user.username}</h1>
+        </div>
+      
+        <div class="profile-about background-white">
+          <h2 class="primary-text">Edit Profile Information</h2>
+          <div class="line"></div>
+
+          <Form id="editForm">
+            <h4> Current Username: {user.username}</h4>
+            <div class="form-group">
+                <input name="newusername" placeholder="New Username" value={formData.newusername} onChange={(e)=>{handleChange(e)}}/>
+            </div>
+            <h4>Change Password</h4>
+            <div class="form-group">
+                <input name="oldPassword" placeholder="Old Password" value={formData.oldPassword} onChange={(e)=>{handleChange(e)}}/>
+            </div>
+            <div class="form-group">
+                <input name="newPassword" placeholder="New Password" value={formData.newPassword} onChange={(e)=>{handleChange(e)}}/>
+            </div>
+            <div class="form-group">
+                <input name="confirmPassword" placeholder="Confirm New Password"value={formData.confirmPassword} onChange={(e)=>{handleChange(e)}}/>
+            </div>
+            <h4>Change Email</h4>
+            <span>Current Email: {user.email}</span>
+            <div class="form-group">
+                <input name="email" placeholder="New Email" value={formData.email} onChange={(e)=>{handleChange(e)}}/>
+            </div>
+            <input type="submit" className="btn btn-primary" value="Confirm Changes" onClick={(e)=>{handleSubmit(e)}} />
+          </Form>
+        </div>
+
+        <div class="profile-favorites background-white">
+          <h2 class="primary-text">Favorites</h2>
+          <div class="line"></div>
+          <div class="p-1">
+            {user.favorites.map((favorite)=>(
+              <div>PlaceName: {favorite.placeName}</div>
+            ))}
+          </div>
+        </div>
+
+        <div class="profile-reviews background-white">
+        <h2 class="primary-text">Reviews</h2>
+        <div class="line"></div>
             <div>{user.reviews.map((review)=>(
-                <div>Placename: {review.location.placeName}
-                    <div>Author: {review.author.username}</div>
-                    <div>Review: {review.text}</div>
-                </div>
-            ))}</div>
-            </Col> 
-            {(state.user && state.user.username === uid) ? 
-            (<Col>
-            <h3>Edit Profile Information</h3>
-            <Form id="editForm">
-                <span> Current Username: {user.username}</span>
-                <div class="form-group">
-                    <input name="newusername" placeholder="New Username" value={formData.newusername} onChange={(e)=>{handleChange(e)}}/>
-                </div>
-                <h5>Change Password</h5>
-                <div class="form-group">
-                    <input name="oldPassword" placeholder="Old Password" value={formData.oldPassword} onChange={(e)=>{handleChange(e)}}/>
-                </div>
-                <div class="form-group">
-                    <input name="newPassword" placeholder="New Password" value={formData.newPassword} onChange={(e)=>{handleChange(e)}}/>
-                </div>
-                <div class="form-group">
-                    <input name="confirmPassword" placeholder="Confirm New Password"value={formData.confirmPassword} onChange={(e)=>{handleChange(e)}}/>
-                </div>
-                <h5>Change Email</h5>
-                <span>Current Email: {user.email}</span>
-                <div class="form-group">
-                    <input name="email" placeholder="New Email" value={formData.email} onChange={(e)=>{handleChange(e)}}/>
-                </div>
-                <Button variant="outline-primary" size="sm" style={{margin:10}} onClick={(e)=>{handleSubmit(e)}}>EDIT</Button>
-            </Form>
-            </Col>) : null}
-        </Row>
-    </Container>
-    </div>
+              <div>Placename: {review.location.placeName}
+              <div>Author: {review.author.username}</div>
+              <div>Review: {review.text}</div>
+            </div>
+            ))}
+            </div>
+            {(state.user && state.user.username === uid) ? (<Col></Col>) : null}
+        </div>
+      </div>
+  </section>
 )}
