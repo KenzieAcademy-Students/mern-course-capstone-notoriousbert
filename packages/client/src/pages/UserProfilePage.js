@@ -82,8 +82,6 @@ export default function UserProfilePage({
             newPassword: formData.newPassword === "" ? "" : formData.newPassword, 
             email: formData.email ===""? user.email: formData.email})
             setFormData(initialState)
-            
-            console.log('newstate:', state)
             getUser(uid)
         } catch (error) {
            console.log("you cannot edit profile at this time")

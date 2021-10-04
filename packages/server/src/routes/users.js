@@ -38,7 +38,6 @@ router.get('/', (req, res) => {
 
   router.get('/:id', async (req, res) => {
     const { id } = req.params
-    console.log(req.params)
 
     const populateQuery = [
       {
@@ -69,22 +68,13 @@ router.get('/', (req, res) => {
     const { username, email, newPassword, oldPassword, pets } = req.body
     const { id } = req.params
 
-    console.log(id, username, email)
-    console.log("oldPassword", oldPassword)
-    console.log("newPassword", newPassword)
-
     const thisUser = await User.findById(id);
-
-    console.log(thisUser)
 
     if (newPassword.length > 0 && oldPassword.length > 0) {
       const passwordCorrect = await bcrypt.compare(
         oldPassword,
         thisUser.passwordHash
       )
-
-      const hashedpasswordold = await bcrypt.hash(oldPassword, 12)
-      console.log("frog", hashedpasswordold)
 
       if (!(thisUser && passwordCorrect)) {
         console.log("invalid password");
