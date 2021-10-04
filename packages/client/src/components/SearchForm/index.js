@@ -47,9 +47,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
             }
             let checker = (arr, target) => target.every(v => arr.includes(v))
             return checker(pets, petsSearchQuery)
-            // if (containsPets) {
-            //     return marker
-            // }
+
         })
         console.log(filteredMarkers)
         setMarkers(filteredMarkers)
@@ -59,6 +57,10 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
 
     const filterByPlace = (startingMarkers) => {
         if (!markers) {
+            return
+        }
+        if (!typeofPlace.Restaurant && !typeofPlace.Bar && !typeofPlace.Park && !typeofPlace.Hotel) {
+            setMarkers(startingMarkers)
             return
         }
         const filteredMarkers = startingMarkers.filter(marker => {
@@ -78,7 +80,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
             console.log(placeSearchQuery.includes(marker.typeofPlace), "search")
             return placeSearchQuery.includes(noCaseTypeOfPlace)
         })
-        console.log(filteredMarkers)
+        console.log(filteredMarkers, "filtered markers")
         setMarkers(filteredMarkers)
 
     }
