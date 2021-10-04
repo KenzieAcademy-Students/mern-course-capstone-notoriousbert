@@ -17,7 +17,7 @@ const PlaceBox = ({ mapMarker }) => {
           </div>
           <div className='row justify-content-left mb-2'>
             <div className='col-xs-8 col-md-7'>
-              <h4>{mapMarker.typeofPlace}</h4>
+              <h4>{mapMarker.typeofPlace || mapMarker.typeOfPlace}</h4>
             </div>
           </div>
           <div className='row justify-content-left mb-2'>
