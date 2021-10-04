@@ -75,6 +75,7 @@ export default function MapPage() {
     }
   }
 
+  // eslint-disable react-hooks/exhaustive-deps 
   useEffect(() => {
 
     setInitialMarkers()

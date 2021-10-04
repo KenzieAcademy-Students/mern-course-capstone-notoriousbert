@@ -1,10 +1,8 @@
-import DeviceDeveloperMode from 'material-ui/svg-icons/device/developer-mode'
 import React, {useEffect, useState} from 'react'
 import { LoadingSpinner } from "components";
 import { Container } from 'react-bootstrap'
 import { Col, Row, Button, Form} from 'react-bootstrap'
 import { useProvideAuth } from "hooks/useAuth";
-import { useRequireAuth } from "hooks/useRequireAuth";
 import axios from 'util/axiosConfig.js'
 import { toast } from "react-toastify";
 
@@ -27,24 +25,34 @@ export default function UserProfilePage({
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true);
-    // const {
-    //     state: { isAuthenticated },
-    //   } = useRequireAuth();
+    
 
-    const getUser = async ()=>{
-        try{
-            const userResponse = await axios.get(`/users/${uid}`)
-            console.log(userResponse)
-            setUser(userResponse.data)
-            setLoading(false);
-        } catch (error) { 
-            console.log("there has been an error")
+    const getUser = async (userId)=>{
+        if (userId) {
+            try{
+                const userResponse = await axios.get(`/users/${userId}`)
+                console.log(userResponse)
+                setUser(userResponse.data)
+                setLoading(false);
+            } catch (error) { 
+                console.log("there has been an error")
+            }
+        } else {
+            try{
+                const userResponse = await axios.get(`/users/username/${uid}`)
+                console.log(userResponse)
+                setUser(userResponse.data)
+                setLoading(false);
+            } catch (error) { 
+                console.log("there has been an error")
+            }
         }
+
+        
         
     }
 
     useEffect(()=>{
-        console.log('state:', state)
        getUser()
     },[uid])
 
@@ -58,19 +66,25 @@ export default function UserProfilePage({
     const handleSubmit = async (e)=>{
         e.preventDefault()
         e.stopPropagation()
+        const {
+            user: { uid},
+          } = state;
         try{
             if(formData.newPassword.length >0 && (formData.newPassword !== formData.confirmPassword)){
                 toast.error(
-                    `'New Password' and 'Confirm New Password' input fields do not match`
+                    `'New Password' and 'Confirm New Password' do not match`
                   )
                   return
             }
-            await axios.put('users/614c993aa62627fb3947970f', {
+            await axios.put(`users/${uid}`, {
             username: formData.newusername === ""? user.username: formData.newusername,
             oldPassword: formData.oldPassword === "" ? "" : formData.oldPassword,
             newPassword: formData.newPassword === "" ? "" : formData.newPassword, 
             email: formData.email ===""? user.email: formData.email})
             setFormData(initialState)
+            
+            console.log('newstate:', state)
+            getUser(uid)
         } catch (error) {
            console.log("you cannot edit profile at this time")
         }
@@ -103,7 +117,6 @@ return (
             (<Col>
             <h3>Edit Profile Information</h3>
             <Form id="editForm">
-                <h5>Profile Information</h5>
                 <span> Current Username: {user.username}</span>
                 <div class="form-group">
                     <input name="newusername" placeholder="New Username" value={formData.newusername} onChange={(e)=>{handleChange(e)}}/>
