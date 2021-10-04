@@ -125,7 +125,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
         <Container>
             <Form>
                 <div className='pet-checkbox'>
-                    <p>Pet Type</p>
+                    <p>Pets</p>
                     <Form.Check
                         inline
                         type='checkbox'

@@ -75,16 +75,12 @@
     display: inline-block;
     border-radius: 2rem;
     box-sizing:content-box;
-    width: 15%;
+    width: 12%;
     background-color: rgb(237, 241, 245);
     position: absolute;
     z-index: 10;
     bottom: 4.5rem;
-    right: 4rem;
+    right: 1rem;
     
-  }
-  .pet-checkbox {
-    text-decoration: rgba(0, 128, 0, 0.5);
-    display: inline-block;
   }
 }
