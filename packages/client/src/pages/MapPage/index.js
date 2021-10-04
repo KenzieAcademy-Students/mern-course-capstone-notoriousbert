@@ -1,5 +1,7 @@
 import React from "react";
 import mapStyles from "./mapStyles";
+import { Row, Col, Container } from 'react-bootstrap'
+import SearchForm from 'components/SearchForm'
 import "./index.scss";
 import { Link } from 'react-router-dom'
 import { useState, useCallback, useRef, useEffect } from "react";
@@ -57,6 +59,16 @@ export default function MapPage() {
     try {
       const mapMarkers = await axios.get('places')
       console.log(mapMarkers)
+      return mapMarkers.data
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  const setInitialMarkers = async () => {
+    try {
+      const mapMarkers = await axios.get('places')
+      console.log(mapMarkers)
       setMarkers(prev => [...prev, ...mapMarkers.data])
     } catch (error) {
       console.error(error.message)
@@ -64,8 +76,8 @@ export default function MapPage() {
   }
 
   useEffect(() => {
-    getMarkers()
-    console.log(markers)
+
+    setInitialMarkers()
   }, []);
 
   const onMapClick = useCallback((event) => {
@@ -147,6 +159,20 @@ export default function MapPage() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
+      <div className="filter-search-form">
+        <Container>
+          <Row className='mt-4' noGutters>
+            <Col xs={12} sm={4} lg={3}>
+              <SearchForm
+                markers={markers}
+                setMarkers={setMarkers}
+                getMarkers={getMarkers}
+
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
       <div className="add-a-location"><Link to="/add-a-place">Add a new location!</Link></div>
     </div>
   );
@@ -173,6 +199,7 @@ function Locate({ panTo }) {
   );
 }
 
+
 export function Search({ panTo }) {
   const {
     ready,
@@ -186,6 +213,11 @@ export function Search({ panTo }) {
       radius: 200 * 1000,
     },
   });
+
+
+
+
+
 
   return (
     <div className="search">
@@ -220,6 +252,8 @@ export function Search({ panTo }) {
           </ComboboxList>
         </ComboboxPopover>
       </Combobox>
+
     </div>
+
   );
 }
