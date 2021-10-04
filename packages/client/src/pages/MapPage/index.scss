@@ -71,4 +71,11 @@
     padding: 0;
     font-weight: 200;
   }
+  .filter-search-form{
+    position: absolute;
+    z-index: 10;
+    bottom: 10rem;
+    right: 10rem;
+    
+  }
 }
