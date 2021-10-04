@@ -65,10 +65,22 @@
   .add-a-location {
     position: absolute;
     bottom: 2rem;
-    right: 4rem;
+    right: 4.5rem;
     z-index: 10;
     margin: 0;
     padding: 0;
     font-weight: 200;
+  }
+  .filter-search-form{
+    display: inline-block;
+    border-radius: 2rem;
+    box-sizing:content-box;
+    width: 12%;
+    background-color: rgb(237, 241, 245);
+    position: absolute;
+    z-index: 10;
+    bottom: 4.5rem;
+    right: 1rem;
+    
   }
 }
