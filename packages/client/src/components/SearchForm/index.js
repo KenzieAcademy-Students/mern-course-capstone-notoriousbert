@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Form } from 'react-bootstrap'
-
+import axios from "util/axiosConfig.js";
 
 
 export default function SearchForm({ markers, setMarkers, getMarkers }) {
@@ -19,6 +19,8 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
     }
 
 
+
+    const [filteredData, setFilteredData] = useState(null)
     const [typeofPlace, setTypeofPlace] = useState(typeofPlaceInitialState)
 
     const [petsAllowed, setPetsAllowed] = useState(petsAllowedInitialState)
@@ -45,7 +47,9 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
             }
             let checker = (arr, target) => target.every(v => arr.includes(v))
             return checker(pets, petsSearchQuery)
-
+            // if (containsPets) {
+            //     return marker
+            // }
         })
         console.log(filteredMarkers)
         setMarkers(filteredMarkers)
@@ -120,10 +124,10 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
     return (
         <Container>
             <Form>
-
-                <div className='my-3'>
+                <div className='pet-checkbox'>
+                    <p>Pet Type</p>
                     <Form.Check
-                        //custom
+                        inline
                         type='checkbox'
                         id='Dog'
                         label='Dog'
@@ -132,7 +136,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                     />
 
                     <Form.Check
-                        //custom
+                        inline
                         type='checkbox'
                         id='Cat'
                         label='Cat'
@@ -140,7 +144,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                         onChange={handleCheckboxPets}
                     />
                     <Form.Check
-                        //custom
+                        inline
                         type='checkbox'
                         id='Bird'
                         label='Bird'
@@ -148,7 +152,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                         onChange={handleCheckboxPets}
                     />
                     <Form.Check
-                        //custom
+                        inline
                         type='checkbox'
                         id='Reptile'
                         label='Reptile'
@@ -157,9 +161,13 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                     />
                 </div>
 
-                <div>
+            </Form><br />
+
+            <Form>
+                <div className='mb-3'>
+                    <p>Destination</p>
                     <Form.Check
-                        // custom
+                        inline
                         type='checkbox'
                         id='Bar'
                         label='Bar'
@@ -167,7 +175,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                         onChange={handleCheckboxPlaces}
                     />
                     <Form.Check
-                        // custom
+                        inline
                         type='checkbox'
                         id='Restaurant'
                         label='Restaurant'
@@ -175,7 +183,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                         onChange={handleCheckboxPlaces}
                     />
                     <Form.Check
-                        // custom
+                        inline
                         type='checkbox'
                         id='Park'
                         label='Park'
@@ -183,7 +191,7 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                         onChange={handleCheckboxPlaces}
                     />
                     <Form.Check
-                        // custom
+                        inline
                         type='checkbox'
                         id='Hotel'
                         label='Hotel'
@@ -191,7 +199,9 @@ export default function SearchForm({ markers, setMarkers, getMarkers }) {
                         onChange={handleCheckboxPlaces}
                     />
                 </div>
+
             </Form>
+
         </Container>
     )
 }
