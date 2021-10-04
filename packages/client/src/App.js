@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router";
 import {
-  HomePage,
   LandingPage,
   LoginPage,
   MapPage,
@@ -53,7 +52,7 @@ export default function App() {
                     {/* <Redirect to="/map" /> */}
                   {/* </Route> */}
 
-
+                  <Route exact path="/" component={LandingPage} />
                   <Route
                     component={({ location }) => {
                       return (
