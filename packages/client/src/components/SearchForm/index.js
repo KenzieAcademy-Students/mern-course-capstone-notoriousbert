@@ -1,16 +1,118 @@
-import React, { useState } from 'react'
-import { Container, Form, InputGroup, FormControl } from 'react-bootstrap'
-import { FaSearch } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react'
+import { Container, Form } from 'react-bootstrap'
 
-export default function SearchForm({
-    filterInput,
-    searchInput,
-    categories,
-    onCheckboxChange,
-}) {
-    const [filteredPlaces, setFilteredPlaces] = useState(null)
-    const [searchInput, setSearchInput] = useState('')
-    const [categories, setCategories] = useState()
+
+
+export default function SearchForm({ markers, setMarkers, getMarkers }) {
+
+    const petsAllowedInitialState = {
+        Reptile: false,
+        Cat: false,
+        Dog: false,
+        Bird: false,
+    }
+    const typeofPlaceInitialState = {
+        Restaurant: false,
+        Bar: false,
+        Hotel: false,
+        Park: false,
+    }
+
+
+    const [typeofPlace, setTypeofPlace] = useState(typeofPlaceInitialState)
+
+    const [petsAllowed, setPetsAllowed] = useState(petsAllowedInitialState)
+
+
+
+
+
+    const filterByPets = (startingMarkers) => {
+        if (!markers) {
+            return
+        }
+        const filteredMarkers = startingMarkers.filter(marker => {
+            let pets = []
+
+            for (let pet of marker.petsAllowed) {
+                pets.push(pet.category)
+            }
+            let petsSearchQuery = []
+            for (let pet of Object.keys(petsAllowed)) {
+                if (petsAllowed[pet]) {
+                    petsSearchQuery.push(pet)
+                }
+            }
+            let checker = (arr, target) => target.every(v => arr.includes(v))
+            return checker(pets, petsSearchQuery)
+
+        })
+        console.log(filteredMarkers)
+        setMarkers(filteredMarkers)
+        return filteredMarkers
+
+    }
+
+    const filterByPlace = (startingMarkers) => {
+        if (!markers) {
+            return
+        }
+        const filteredMarkers = startingMarkers.filter(marker => {
+            let noCaseTypeOfPlace;
+            if (marker.typeOfPlace) {
+                noCaseTypeOfPlace = marker.typeOfPlace.toLowerCase()
+            } else {
+                noCaseTypeOfPlace = marker.typeofPlace.toLowerCase()
+            }
+
+            let placeSearchQuery = []
+            for (let place of Object.keys(typeofPlace)) {
+                if (typeofPlace[place]) {
+                    placeSearchQuery.push(place.toLowerCase())
+                }
+            }
+            console.log(placeSearchQuery.includes(marker.typeofPlace), "search")
+            return placeSearchQuery.includes(noCaseTypeOfPlace)
+        })
+        console.log(filteredMarkers)
+        setMarkers(filteredMarkers)
+
+    }
+
+
+    const masterFilter = async () => {
+        try {
+            const startingMarkers = await getMarkers()
+            const filteredMarkers = await filterByPets(startingMarkers)
+            console.log(filteredMarkers, "places")
+            filterByPlace(filteredMarkers)
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
+    useEffect(() => {
+        masterFilter()
+    }, [petsAllowed, typeofPlace])
+
+    const handleCheckboxPets = (e) => {
+        console.log('target', e)
+        setPetsAllowed((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.checked
+        }))
+        console.log(petsAllowed)
+    }
+
+    const handleCheckboxPlaces = (e) => {
+        console.log(e.target.id)
+        setTypeofPlace((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.checked
+        }))
+        console.log(typeofPlace)
+    }
 
 
 
@@ -18,90 +120,75 @@ export default function SearchForm({
     return (
         <Container>
             <Form>
-                <div>
-                    <InputGroup className='mb-4'>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text>
-                                <FaSearch />
-                            </InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <FormControl
-                            placeholder='Filter'
-                            aria-label='Filter'
-                            value={searchInput}
-                            onChange={filterInput}
-                        ></FormControl>
-                    </InputGroup>
-                </div>
 
                 <div className='my-3'>
                     <Form.Check
-                        custom
+                        //custom
                         type='checkbox'
-                        id='dog'
+                        id='Dog'
                         label='Dog'
-                        checked={categories['dog']}
-                        onChange={onCheckboxChange}
+                        checked={petsAllowed.Dog}
+                        onChange={handleCheckboxPets}
                     />
 
                     <Form.Check
-                        custom
+                        //custom
                         type='checkbox'
-                        id='cat'
+                        id='Cat'
                         label='Cat'
-                        checked={categories['cat']}
-                        onChange={onCheckboxChange}
+                        checked={petsAllowed.Cat}
+                        onChange={handleCheckboxPets}
                     />
                     <Form.Check
-                        custom
+                        //custom
                         type='checkbox'
-                        id='bird'
+                        id='Bird'
                         label='Bird'
-                        checked={categories['bird']}
-                        onChange={onCheckboxChange}
+                        checked={petsAllowed.Bird}
+                        onChange={handleCheckboxPets}
                     />
                     <Form.Check
-                        custom
+                        //custom
                         type='checkbox'
-                        id='reptile'
+                        id='Reptile'
                         label='Reptile'
-                        checked={categories['reptile']}
-                        onChange={onCheckboxChange}
+                        checked={petsAllowed.Reptile}
+                        onChange={handleCheckboxPets}
                     />
                 </div>
 
                 <div>
                     <Form.Check
-                        custom
+                        // custom
                         type='checkbox'
-                        id='bar'
+                        id='Bar'
                         label='Bar'
-                        checked={categories['bar']}
-                        onChange={onCheckboxChange}
+                        checked={typeofPlace.Bar}
+                        onChange={handleCheckboxPlaces}
                     />
                     <Form.Check
-                        custom
+                        // custom
                         type='checkbox'
-                        id='restaurant'
+                        id='Restaurant'
                         label='Restaurant'
-                        checked={categories['restaurant']}
-                        onChange={onCheckboxChange}
+                        checked={typeofPlace.Restaurant}
+                        onChange={handleCheckboxPlaces}
                     />
                     <Form.Check
-                        custom
+                        // custom
                         type='checkbox'
-                        id='park'
+                        id='Park'
                         label='Park'
-                        checked={categories['park']}
-                        onChange={onCheckboxChange}
+                        checked={typeofPlace.Park}
+                        onChange={handleCheckboxPlaces}
                     />
                     <Form.Check
-                        custom
+                        // custom
                         type='checkbox'
-                        id='hotel'
+                        id='Hotel'
                         label='Hotel'
-                        checked={categories['hotel']}
-                        onChange={onCheckboxChange}
+                        checked={typeofPlace.Hotel}
+                        onChange={handleCheckboxPlaces}
                     />
                 </div>
             </Form>
