@@ -13,6 +13,10 @@
     font-size: 18px;
   }
 
+  .capitalize {
+    text-transform: capitalize;
+  }
+
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
@@ -71,16 +75,15 @@
     padding: 0;
     font-weight: 200;
   }
-  .filter-search-form{
+  .filter-search-form {
     display: inline-block;
     border-radius: 2rem;
-    box-sizing:content-box;
+    box-sizing: content-box;
     width: 12%;
     background-color: rgb(237, 241, 245);
     position: absolute;
     z-index: 10;
     bottom: 4.5rem;
     right: 1rem;
-    
   }
 }
