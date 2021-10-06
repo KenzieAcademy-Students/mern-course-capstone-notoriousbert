@@ -22,7 +22,7 @@ export default function App() {
   const {
     state: { user },
   } = useProvideAuth();
-  console.log(useProvideAuth());
+  // console.log(useProvideAuth());
 
   useEffect(() => {
     if (user) {

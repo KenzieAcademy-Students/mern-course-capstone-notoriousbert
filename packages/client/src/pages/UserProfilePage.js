@@ -31,7 +31,7 @@ export default function UserProfilePage({
         if (userId) {
             try{
                 const userResponse = await axios.get(`/users/${userId}`)
-                console.log(userResponse)
+                console.log('bat', userResponse.data)
                 setUser(userResponse.data)
                 setLoading(false);
             } catch (error) { 
@@ -40,7 +40,7 @@ export default function UserProfilePage({
         } else {
             try{
                 const userResponse = await axios.get(`/users/username/${uid}`)
-                console.log(userResponse)
+                console.log('bat2',userResponse)
                 setUser(userResponse.data)
                 setLoading(false);
             } catch (error) { 
@@ -99,11 +99,12 @@ return (
         <div class="profile-top background-primary p-2">
           <h1 class="large-profile">{user.username}</h1>
         </div>
-      
+        {/* CONDITIONAL RENDER */}
+        {console.log('frog', uid, user.username, state)}
+        {user.username === state.user.username &&
         <div class="profile-about background-white">
           <h2 class="primary-text">Edit Profile Information</h2>
           <div class="line"></div>
-
           <Form id="editForm">
             <h4> Current Username: {user.username}</h4>
             <div class="form-group">
@@ -126,14 +127,14 @@ return (
             </div>
             <input type="submit" className="btn btn-primary" value="Confirm Changes" onClick={(e)=>{handleSubmit(e)}} />
           </Form>
-        </div>
+        </div>}
 
         <div class="profile-favorites background-white">
           <h2 class="primary-text">Favorites</h2>
           <div class="line"></div>
           <div class="p-1">
             {user.favorites.map((favorite)=>(
-              <div>PlaceName: {favorite.placeName}</div>
+              <div style={{borderBottom: '1px solid black'}}>{favorite.placeName}</div>
             ))}
           </div>
         </div>
@@ -142,9 +143,9 @@ return (
         <h2 class="primary-text">Reviews</h2>
         <div class="line"></div>
             <div>{user.reviews.map((review)=>(
-              <div>Placename: {review.location.placeName}
-              <div>Author: {review.author.username}</div>
-              <div>Review: {review.text}</div>
+              <div><b>Placename:</b> {review.location.placeName}
+              <div><b>Author:</b> {review.author.username}</div>
+              <div style={{borderBottom: '1px solid black'}}><b>Review:</b> {review.text}</div>
             </div>
             ))}
             </div>
