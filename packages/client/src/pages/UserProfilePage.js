@@ -19,7 +19,7 @@ export default function UserProfilePage({
     params: { uid },
   },
 }) {
-  const { state } = useProvideAuth();
+  const { state, updateUsername } = useProvideAuth();
   const [formData, setFormData] = useState(initialState);
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -50,7 +50,8 @@ export default function UserProfilePage({
 
   useEffect(() => {
     getUser();
-    console.log(state);
+    console.log("state:", state);
+    console.log("outer uid:", uid);
   }, [uid]);
 
   const handleChange = (e) => {
@@ -63,10 +64,11 @@ export default function UserProfilePage({
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const {
-      user: { uid },
-    } = state;
     try {
+      const {
+        user: { uid },
+      } = state;
+      console.log("USER:", user);
       if (
         formData.newPassword.length > 0 &&
         formData.newPassword !== formData.confirmPassword
@@ -74,7 +76,7 @@ export default function UserProfilePage({
         toast.error(`'New Password' and 'Confirm New Password' do not match`);
         return;
       }
-      await axios.put(`users/${uid}`, {
+      const response = await axios.put(`users/${uid}`, {
         username:
           formData.newusername === "" ? user.username : formData.newusername,
         oldPassword: formData.oldPassword === "" ? "" : formData.oldPassword,
@@ -82,9 +84,12 @@ export default function UserProfilePage({
         email: formData.email === "" ? user.email : formData.email,
       });
       setFormData(initialState);
+      if (formData.newusername) {
+        updateUsername(response);
+      }
 
       console.log("newstate:", state);
-      getUser(uid);
+      getUser(state.user.uid);
     } catch (error) {
       console.log("you cannot edit profile at this time");
     }
