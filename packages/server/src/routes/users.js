@@ -30,34 +30,35 @@ router.get("/username/:id", async (req, res) => {
       res.json(user.toJSON());
     }
   } catch (err) {
-    res.status(404).end();
+    res.status(404).end()
   }
-});
+})
 
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(req.params);
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
 
   const populateQuery = [
     {
-      path: "reviews",
-      populate: { path: "author", select: ["username"] },
+      path: 'reviews',
+      populate: { path: 'author', select: ['username'] },
     },
     {
-      path: "reviews",
-      populate: { path: "location" },
+      path: 'reviews',
+      populate: { path: 'location' },
     },
     {
-      path: "favorites",
+      path: 'favorites'
     },
-  ];
+  ]
   try {
-    const user = await User.findById(id).populate(populateQuery).exec();
+    const user = await User.findById(id)
+      .populate(populateQuery)
+      .exec()
     if (user) {
-      res.json(user.toJSON());
+      res.json(user.toJSON())
     }
   } catch (err) {
-    res.status(404).end();
+    res.status(404).end()
   }
 });
 
@@ -65,22 +66,13 @@ router.put("/:id", async (req, res) => {
   const { username, email, newPassword, oldPassword, pets } = req.body;
   const { id } = req.params;
 
-  console.log(id, username, email);
-  console.log("oldPassword", oldPassword);
-  console.log("newPassword", newPassword);
-
   const thisUser = await User.findById(id);
-
-  console.log(thisUser);
 
   if (newPassword.length > 0 && oldPassword.length > 0) {
     const passwordCorrect = await bcrypt.compare(
       oldPassword,
       thisUser.passwordHash
-    );
-
-    const hashedpasswordold = await bcrypt.hash(oldPassword, 12);
-    console.log("frog", hashedpasswordold);
+    )
 
     if (!(thisUser && passwordCorrect)) {
       console.log("invalid password");
@@ -130,4 +122,56 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+router.all('/favorites/:id', async (request, response) => {
+  const { id } = request.params
+  console.log('frog', id)
+  const user = await User.findById(id)
+  const { favPlace } = request.body
+  console.log(favPlace)
+  if(!user){
+    return response.status(422).json({error:'cannot find user'})
+  } 
+  try {
+    if (user.favorites.includes(favPlace)) {
+            const result = await user.updateOne({
+              $pull: { favorites: favPlace },
+            })
+            response.json(result)
+          } else {
+            const result = await user.updateOne({
+              $push: { favorites: favPlace },
+            }) 
+            response.json(result)
+  }} catch (error) {
+    response.status(404).end()
+  }
+})
+
+module.exports = router
+
+// router.all('/like/:postId', requireAuth, async (request, response) => {
+//   const { postId } = request.params
+//   const { user } = request
+//   const post = await Post.findOne({ _id: postId })
+
+//   if (!post) {
+//     return response.status(422).json({ error: 'Cannot find post' })
+//   }
+//   try {
+//     if (post.likes.includes(user.id)) {
+//       const result = await post.updateOne({
+//         $pull: { likes: user.id },
+//       })
+
+//       response.json(result)
+//     } else {
+//       const result = await post.updateOne({
+//         $push: { likes: user.id },
+//       })
+
+//       response.json(result)
+//     }
+//   } catch (err) {
+//     return response.status(422).json({ error: err })
+//   }
+// })
