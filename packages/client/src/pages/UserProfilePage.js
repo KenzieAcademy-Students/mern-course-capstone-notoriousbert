@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "components";
 import { Container } from "react-bootstrap";
-import { Col, Row, Button, Form } from "react-bootstrap";
+import { Col, Row, Button, Form, Collapse } from "react-bootstrap";
 import { useProvideAuth } from "hooks/useAuth";
 import axios from "util/axiosConfig.js";
 import { toast } from "react-toastify";
@@ -23,6 +23,7 @@ export default function UserProfilePage({
   const [formData, setFormData] = useState(initialState);
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const getUser = async (userId) => {
     if (userId) {
@@ -46,12 +47,8 @@ export default function UserProfilePage({
     }
   };
 
-  //commit test
-
   useEffect(() => {
     getUser();
-    console.log("state:", state);
-    console.log("outer uid:", uid);
   }, [uid]);
 
   const handleChange = (e) => {
@@ -64,11 +61,10 @@ export default function UserProfilePage({
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    const {
+      user: { uid },
+    } = state;
     try {
-      const {
-        user: { uid },
-      } = state;
-      console.log("USER:", user);
       if (
         formData.newPassword.length > 0 &&
         formData.newPassword !== formData.confirmPassword
@@ -76,7 +72,7 @@ export default function UserProfilePage({
         toast.error(`'New Password' and 'Confirm New Password' do not match`);
         return;
       }
-      const response = await axios.put(`users/${uid}`, {
+      const userData = await axios.put(`users/${uid}`, {
         username:
           formData.newusername === "" ? user.username : formData.newusername,
         oldPassword: formData.oldPassword === "" ? "" : formData.oldPassword,
@@ -84,12 +80,9 @@ export default function UserProfilePage({
         email: formData.email === "" ? user.email : formData.email,
       });
       setFormData(initialState);
-      if (formData.newusername) {
-        updateUsername(response);
-      }
-
+      updateUsername(userData);
       console.log("newstate:", state);
-      getUser(state.user.uid);
+      getUser(uid);
     } catch (error) {
       console.log("you cannot edit profile at this time");
     }
@@ -105,77 +98,80 @@ export default function UserProfilePage({
         <div class="profile-top background-primary p-2">
           <h1 class="large-profile">{user.username}</h1>
         </div>
-
         <div class="profile-about background-white">
-          <h2 class="primary-text">Edit Profile Information</h2>
           <div class="line"></div>
-
-          <Form id="editForm">
-            <h4> Current Username: {user.username}</h4>
-            <div class="form-group">
-              <input
-                name="newusername"
-                placeholder="New Username"
-                value={formData.newusername}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <h4>Change Password</h4>
-            <div class="form-group">
-              <input
-                name="oldPassword"
-                placeholder="Old Password"
-                value={formData.oldPassword}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <div class="form-group">
-              <input
-                name="newPassword"
-                placeholder="New Password"
-                value={formData.newPassword}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <div class="form-group">
-              <input
-                name="confirmPassword"
-                placeholder="Confirm New Password"
-                value={formData.confirmPassword}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <h4>Change Email</h4>
-            <span>Current Email: {user.email}</span>
-            <div class="form-group">
-              <input
-                name="email"
-                placeholder="New Email"
-                value={formData.email}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <input
-              type="submit"
-              className="btn btn-primary"
-              value="Confirm Changes"
-              onClick={(e) => {
-                handleSubmit(e);
-              }}
-            />
-          </Form>
+          <div onClick={() => setOpen(!open)} aria-expanded={open}>
+            <Button class="primary-text">Edit Profile Information</Button>
+          </div>
+          <Collapse in={open}>
+            <Form id="editForm" className="mt-3">
+              <h4> Current Username: {user.username}</h4>
+              <div id="example-collapse-text">
+                <div class="form-group">
+                  <input
+                    name="newusername"
+                    placeholder="New Username"
+                    value={formData.newusername}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                <h4>Change Password</h4>
+                <div class="form-group">
+                  <input
+                    name="oldPassword"
+                    placeholder="Old Password"
+                    value={formData.oldPassword}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    name="newPassword"
+                    placeholder="New Password"
+                    value={formData.newPassword}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    name="confirmPassword"
+                    placeholder="Confirm New Password"
+                    value={formData.confirmPassword}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                <h4>Change Email</h4>
+                <span>Current Email: {user.email}</span>
+                <div class="form-group">
+                  <input
+                    name="email"
+                    placeholder="New Email"
+                    value={formData.email}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                <input
+                  type="submit"
+                  className="btn btn-primary"
+                  value="Confirm Changes"
+                  onClick={(e) => {
+                    handleSubmit(e);
+                  }}
+                />
+              </div>
+            </Form>
+          </Collapse>
         </div>
-
         <div class="profile-favorites background-white">
           <h2 class="primary-text">Favorites</h2>
           <div class="line"></div>
@@ -185,7 +181,6 @@ export default function UserProfilePage({
             ))}
           </div>
         </div>
-
         <div class="profile-reviews background-white">
           <h2 class="primary-text">Reviews</h2>
           <div class="line"></div>
