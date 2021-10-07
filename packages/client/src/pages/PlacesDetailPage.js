@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { LoadingSpinner } from "components";
 import axios from "util/axiosConfig.js";
 import PlaceBox from "components/PlaceBox";
@@ -47,8 +48,37 @@ export default function PlacesDetailPage({
   }
 
   return (
-    <Container className="h-100">
-      <PlaceBox mapMarker={mapMarker} />
-    </Container>
+    <section className="container">
+      <div className="places-grid my-1">
+      <div className="places-top background-primary p-2">
+        <h1 className="large-places">{mapMarker.placeName}</h1>
+        </div>
+
+        <div className="places-about background-white">
+          <h2 className="primary-text">Details</h2>
+          <div className="line"></div>
+          <h4>Category: {mapMarker.typeofPlace || mapMarker.typeOfPlace}</h4>
+          <h4>Address: {mapMarker.address} <br /> {mapMarker.city},{mapMarker.state} <br />{mapMarker.zipcode}</h4>
+
+          <h4>Pets Allowed: {mapMarker.petsAllowed.map((pet, index) => (index === mapMarker.petsAllowed.length - 1 ? <>{pet.category}</> : <>{pet.category}, </>))} </h4>
+        </div>
+
+        <div className="places-reviews background-white">
+          <h2 className="primary-text">Reviews</h2>
+          <div className="line"></div>
+          <h2>{mapMarker.reviews.map((review) => <div>
+            <h4 className="review"></h4>
+            
+            <p>{review.created}</p>
+            <Link to={`/users/${review.author.username}`}>{review.author.username}</Link> 
+            
+            <div>
+            <p>{review.text}</p>
+            </div>
+            </div>)} 
+          </h2>
+        </div>
+      </div>
+  </section>
   );
 }
