@@ -44,7 +44,7 @@ const Register = () => {
 
   return (
     <section class="container">
-      <h1 className="large text-primary">Sign Up</h1>
+      <h1 className="large">Sign Up</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
       </p>
@@ -96,10 +96,10 @@ const Register = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <Link to="/login">Sign In</Link>
+        Already have an account? <Link to="/login" className="sign">Sign In</Link>
       </p>
     </section>
   );
 };
 
-export default Register;
+export default Register
