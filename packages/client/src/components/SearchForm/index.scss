@@ -1,0 +1,44 @@
+.checkbox-container {
+  max-width: 2vh;
+  font-size: 1.5vh;
+  display: flex;
+  flex-direction: row;
+  .pet-checkbox {
+    height: 100%;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  label {
+    @media only screen and (max-width: 600px) {
+      position: relative;
+      bottom: 0.8vh;
+    }
+  }
+  form {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .form-check {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+  }
+
+  .form-check-inline {
+    display: inline-block;
+    margin-right: 0.8vh;
+  }
+
+  .form-check-inline:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .places-checkbox {
+  }
+}
