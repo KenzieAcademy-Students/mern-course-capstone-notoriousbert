@@ -15,8 +15,6 @@ const Login = ({
     password: "",
   });
 
-  
-
   const auth = useProvideAuth();
   const router = useRouter();
 
@@ -38,26 +36,28 @@ const Login = ({
   };
 
   return (
-    <Fragment>
+    <section className="container">
       <h1 className="large">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Sign Into Your Account
       </p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
+        <div className="form-group form-input-width">
           <input
             type="username"
             placeholder="Username"
             name="username"
+            className="rounded border-info"
             value={username}
             onChange={(e) => onChange(e)}
             required
           />
         </div>
-        <div className="form-group">
+        <div className="form-group form-input-width">
           <input
             type="password"
             placeholder="Password"
+            className="rounded border-info"
             name="password"
             value={password}
             onChange={(e) => onChange(e)}
@@ -67,9 +67,12 @@ const Login = ({
         <input type="submit" className="btn btn-primary" value="Sign In" />
       </form>
       <p className="my-1">
-        Don't have an account? <Link to="/signup" className='sign'>Sign Up</Link>
+        Don't have an account?{" "}
+        <Link to="/signup" className="sign">
+          Sign Up
+        </Link>
       </p>
-    </Fragment>
+    </section>
   );
 };
 
