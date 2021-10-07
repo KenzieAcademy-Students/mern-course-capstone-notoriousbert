@@ -5,16 +5,13 @@ import { useProvideAuth } from 'hooks/useAuth'
 
 
 
-
-
-
 const PlaceBox = ({ mapMarker }) => {
-  const { state } = useProvideAuth()
+  // const { state } = useProvideAuth()
 
-const handleFavorite = (e) => {
-  console.log(e)
-  console.log(state)
-}
+// const handleFavorite = (e) => {
+//   console.log(e)
+//   console.log(state)
+// }
   return (
     <Container className='p-sm-2 p-md-4'>
       <Row>
@@ -45,7 +42,7 @@ const handleFavorite = (e) => {
         <Col>
           <div className='row justify-content-left mb-2'>
             <div className='col-xs-8 col-md-7'>
-              <h2>Reviews <br />{mapMarker.reviews.map((review) => <div>
+              <h2>Reviews<br />{mapMarker.reviews.map((review) => <div>
                 <h4>
                   <Link to={`/users/${review.author.username}`}>{review.author.username}</Link> - {review.created}
                 </h4>
@@ -53,16 +50,13 @@ const handleFavorite = (e) => {
                   {review.text}
                 </div>
               </div>)} </h2>
-              <input type="submit" className="btn btn-primary" value="Add to Favorites" onClick={(e)=>{handleFavorite(e)}}/>
             </div>
           </div>
+      {/* <input type="submit" className="btn btn-primary" value="Add to Favorites" onClick={(e)=>{handleFavorite(e)}}/> */}
         </Col>
       </Row>
-
-
     </Container>
-  )
-}
+  )}
 
 export default PlaceBox
 

@@ -122,15 +122,29 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.get('/favorites/:id', async (request, response) => {
-  const { userId } = request.params
-  const user = await User.findOne(userId)
-
-  if (user) {
-    response.send("found user")
+router.all('/favorites/:id', async (request, response) => {
+  const { id } = request.params
+  console.log('frog', id)
+  const user = await User.findById(id)
+  const { favPlace } = request.body
+  console.log(favPlace)
+  if(!user){
+    return response.status(422).json({error:'cannot find user'})
+  } 
+  try {
+    if (user.favorites.includes(favPlace)) {
+            const result = await user.updateOne({
+              $pull: { favorites: favPlace },
+            })
+            response.json(result)
+          } else {
+            const result = await user.updateOne({
+              $push: { favorites: favPlace },
+            }) 
+            response.json(result)
+  }} catch (error) {
+    response.status(404).end()
   }
-
-  //update user model favorites with placename
 })
 
 module.exports = router

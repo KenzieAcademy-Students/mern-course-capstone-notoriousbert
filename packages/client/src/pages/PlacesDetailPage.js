@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LoadingSpinner } from "components";
 import axios from "util/axiosConfig.js";
@@ -16,6 +16,7 @@ export default function PlacesDetailPage({
   } = useProvideAuth();
   const [mapMarker, setMapMarker] = useState();
   const [loading, setLoading] = useState(false);
+  const { state } = useProvideAuth()
 
   const getMarker = async () => {
     setLoading(true);
@@ -47,6 +48,18 @@ export default function PlacesDetailPage({
     );
   }
 
+  const handleFavorite = async (e) => {
+    console.log(e)
+    console.log(state)
+    console.log(mapMarker)
+    try {
+    const addFavorite = await axios.put(`users/favorites/${state.user.uid}`,{
+      favPlace: mapMarker._id
+    }) } catch (error){
+      console.log(error)
+    }
+  }
+
   return (
     <section className="container">
       <div className="places-grid my-1">
@@ -68,16 +81,16 @@ export default function PlacesDetailPage({
           <div className="line"></div>
           <h2>{mapMarker.reviews.map((review) => <div>
             <h4 className="review"></h4>
-            
+    
             <p>{review.created}</p>
             <Link to={`/users/${review.author.username}`}>{review.author.username}</Link> 
-            
             <div>
             <p>{review.text}</p>
             </div>
             </div>)} 
           </h2>
         </div>
+        <input type="submit" className="btn btn-primary" value="Favorite or Remove Favorite" onClick={(e)=>{handleFavorite(e)}}/>
       </div>
   </section>
   );
