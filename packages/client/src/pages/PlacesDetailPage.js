@@ -3,6 +3,7 @@ import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LoadingSpinner } from "components";
 import axios from "util/axiosConfig.js";
+import { timeSince } from 'util/timeSince.js'
 import PlaceBox from "components/PlaceBox";
 import { useProvideAuth } from "hooks/useAuth";
 
@@ -79,7 +80,8 @@ export default function PlacesDetailPage({
         <div className="places-reviews background-white">
           <h2 className="primary-text">Reviews</h2>
           <div className="line"></div>
-          <h2>{mapMarker.reviews.map((review) => <div>
+
+          <div> {mapMarker.reviews.map((review) => <div>
             <h4 className="review"></h4>
     
             <p>{review.created}</p>

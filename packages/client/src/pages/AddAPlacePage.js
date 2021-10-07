@@ -194,9 +194,11 @@ export default function AddAPlacePage() {
     <section className="container">
       <Container className="d-flex flex-row">
         <div className="form-container">
-          <h1 className="text-success m-0">Add a place</h1>
+          <h1 className="large">Add a place</h1>
+          <p className="lead"><i class="fas fa-map-marked-alt"></i> Don't see a place on the map that you know is pet-friendly? Add it here!
+          </p>
           <Row className="justify-content-center">
-            <form onSubmit={(e) => handleSubmit(e)} className="place-form m-0">
+            <form onSubmit={(e) => handleSubmit(e)} className="place-form">
               <Col className="d-flex-baseline">
                 <div className="form-group mt-3">
                   <div className="pr">
@@ -377,7 +379,7 @@ export default function AddAPlacePage() {
                   />
                 </label>
               </div>
-              <button className="btn btn-success" type="submit">
+              <button className="btn btn-primary" type="submit">
                 Add a Place
               </button>
             </form>

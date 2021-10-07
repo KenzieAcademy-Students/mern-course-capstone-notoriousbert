@@ -244,6 +244,7 @@ h1.large {
 
     h4 {
       padding: 0;
+      margin: 0;
     }
 
     .line {
@@ -258,8 +259,28 @@ h1.large {
     }
 
     p {
-      font-size: medium;
+      font-size: x-large;
       margin: 0;
+      padding-top: 10px;
+
+      &.time {
+        font-size: small;
+        padding: 0;
+      }
     }
   }
+}
+
+p .my-1 {
+
+  .a-sign {
+    text-decoration: none;
+    color: $primary-color;
+  }
+}
+
+.place-form {
+  margin: 0;
+  padding: 0;
+  
 }
