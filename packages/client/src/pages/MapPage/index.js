@@ -80,17 +80,6 @@ export default function MapPage() {
     setInitialMarkers();
   }, []);
 
-  // const onMapClick = useCallback((event) => {
-  //   setMarkers((current) => [
-  //     ...current,
-  //     {
-  //       lat: event.latLng.lat(),
-  //       lng: event.latLng.lng(),
-  //       time: new Date(),
-  //     },
-  //   ]);
-  // }, []);
-
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -105,99 +94,91 @@ export default function MapPage() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div className="mapStyleContainer">
-      <h1>
-        Pet Friendly?
-        {/* <span role="img" aria-label="tent">
-          🐩 🐈 🐦 🦎
-        </span> */}
-      </h1>
+    <section className="mapContainer">
+      <div className="mapStyleContainer">
+        <h1>Pet Friendly?</h1>
 
-      <Search panTo={panTo} />
-      <Locate panTo={panTo} />
+        <div className="search-container">
+          <Search panTo={panTo} />
+        </div>
+        <Locate panTo={panTo} />
 
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={8}
-        center={center}
-        options={options}
-        // onClick={onMapClick}
-        onLoad={onMapLoad}
-      >
-        {markers.map((marker) => (
-          <Marker
-            key={marker.time}
-            position={{
-              lat: marker.lat && parseFloat(marker.lat),
-              lng: marker.lng && parseFloat(marker.lng),
-            }}
-            icon={{
-              url: "/icons-dog.svg",
-              scaledSize: new window.google.maps.Size(40, 35),
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-            }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-          />
-        ))}
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={8}
+          center={center}
+          options={options}
+          onLoad={onMapLoad}
+        >
+          {markers.map((marker) => (
+            <Marker
+              key={marker.time}
+              position={{
+                lat: marker.lat && parseFloat(marker.lat),
+                lng: marker.lng && parseFloat(marker.lng),
+              }}
+              icon={{
+                url: "/icons-dog.svg",
+                scaledSize: new window.google.maps.Size(40, 35),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+              }}
+              onClick={() => {
+                setSelected(marker);
+              }}
+            />
+          ))}
 
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            maxWidth="300px"
-            onCloseClick={() => {
-              setSelected(null);
-            }}
-          >
-            <div>
-              {selected.placeName && (
-                <div className="capitalize">
-                  <Link to={`/places/${selected._id}`}>
-                    {selected.placeName}
-                  </Link>
-                </div>
-              )}
-              <div className="capitalize">
-                {selected.typeofPlace || selected.typeOfPlace}
-              </div>
+          {selected ? (
+            <InfoWindow
+              position={{ lat: selected.lat, lng: selected.lng }}
+              maxWidth="300px"
+              onCloseClick={() => {
+                setSelected(null);
+              }}
+            >
               <div>
-                {selected.address}, {selected.city}, {selected.state}
-              </div>
-              {selected.petsAllowed && selected.petsAllowed.length > 0 && (
-                <div>
-                  Pets Allowed:{" "}
-                  {selected.petsAllowed.map((pet, index) =>
-                    index === selected.petsAllowed.length - 1 ? (
-                      <span>{pet.category}</span>
-                    ) : (
-                      <span>{pet.category}, </span>
-                    )
-                  )}{" "}
+                {selected.placeName && (
+                  <div className="capitalize">
+                    <Link to={`/places/${selected._id}`}>
+                      {selected.placeName}
+                    </Link>
+                  </div>
+                )}
+                <div className="capitalize">
+                  {selected.typeofPlace || selected.typeOfPlace}
                 </div>
-              )}
-            </div>
-          </InfoWindow>
-        ) : null}
-      </GoogleMap>
-      <div className="filter-search-form">
-        <Container>
-          <Row className="mt-4" noGutters>
-            <Col xs={12} sm={4} lg={3}>
-              <SearchForm
-                markers={markers}
-                setMarkers={setMarkers}
-                getMarkers={getMarkers}
-              />
-            </Col>
-          </Row>
-        </Container>
+                <div>
+                  {selected.address}, {selected.city}, {selected.state}
+                </div>
+                {selected.petsAllowed && selected.petsAllowed.length > 0 && (
+                  <div>
+                    Pets Allowed:{" "}
+                    {selected.petsAllowed.map((pet, index) =>
+                      index === selected.petsAllowed.length - 1 ? (
+                        <span>{pet.category}</span>
+                      ) : (
+                        <span>{pet.category}, </span>
+                      )
+                    )}{" "}
+                  </div>
+                )}
+              </div>
+            </InfoWindow>
+          ) : null}
+        </GoogleMap>
+        <div className="filter-search-form">
+          <SearchForm
+            markers={markers}
+            setMarkers={setMarkers}
+            getMarkers={getMarkers}
+          />
+        </div>
+        <div className="add-a-location">
+          <Link to="/add-a-place">Add a new location!</Link>
+        </div>
       </div>
-      <div className="add-a-location">
-        <Link to="/add-a-place">Add a new location!</Link>
-      </div>
-    </div>
+    </section>
   );
 }
 
@@ -217,7 +198,11 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="icons8-compass.svg" alt="compass - locate me" />
+      <img
+        className="compass"
+        src="icons8-compass.svg"
+        alt="compass - locate me"
+      />
     </button>
   );
 }
