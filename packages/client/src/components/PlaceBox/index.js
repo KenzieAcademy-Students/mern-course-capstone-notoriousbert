@@ -1,11 +1,20 @@
 import React, { useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useProvideAuth } from 'hooks/useAuth'
+
+
 
 
 
 
 const PlaceBox = ({ mapMarker }) => {
+  const { state } = useProvideAuth()
+
+const handleFavorite = (e) => {
+  console.log(e)
+  console.log(state)
+}
   return (
     <Container className='p-sm-2 p-md-4'>
       <Row>
@@ -44,9 +53,9 @@ const PlaceBox = ({ mapMarker }) => {
                   {review.text}
                 </div>
               </div>)} </h2>
+              <input type="submit" className="btn btn-primary" value="Add to Favorites" onClick={(e)=>{handleFavorite(e)}}/>
             </div>
           </div>
-
         </Col>
       </Row>
 
@@ -56,3 +65,51 @@ const PlaceBox = ({ mapMarker }) => {
 }
 
 export default PlaceBox
+
+// const handleToggleLike = async () => {
+//   if (!likedState) {
+//     setLiked(true)
+//     setLikes(likesState + 1)
+//     try {
+//       await axios.post(`posts/like/${_id}`)
+//     } catch (error) {
+//       console.log(error)
+//       return error
+//     }
+//   } else {
+//     setLiked(false)
+//     setLikes(likesState - 1)
+//     try {
+//       await axios.post(`posts/like/${_id}`)
+//     } catch (error) {
+//       console.log(error)
+//       return error
+//     }
+//   }
+// }
+// router.all('/like/:postId', requireAuth, async (request, response) => {
+//   const { postId } = request.params
+//   const { user } = request
+//   const post = await Post.findOne({ _id: postId })
+
+//   if (!post) {
+//     return response.status(422).json({ error: 'Cannot find post' })
+//   }
+//   try {
+//     if (post.likes.includes(user.id)) {
+//       const result = await post.updateOne({
+//         $pull: { likes: user.id },
+//       })
+
+//       response.json(result)
+//     } else {
+//       const result = await post.updateOne({
+//         $push: { likes: user.id },
+//       })
+
+//       response.json(result)
+//     }
+//   } catch (err) {
+//     return response.status(422).json({ error: err })
+//   }
+// })

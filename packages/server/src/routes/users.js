@@ -124,4 +124,42 @@ router.get('/', (req, res) => {
     }
   })
 
+  router.get('/favorites/:id', async (request,response) => {
+    const {userId} = request.params
+    const user = await User.findOne(userId)
+
+    if(user){
+    response.send("found user")
+  }
+    
+    //update user model favorites with placename
+  })
+
 module.exports = router
+
+// router.all('/like/:postId', requireAuth, async (request, response) => {
+//   const { postId } = request.params
+//   const { user } = request
+//   const post = await Post.findOne({ _id: postId })
+
+//   if (!post) {
+//     return response.status(422).json({ error: 'Cannot find post' })
+//   }
+//   try {
+//     if (post.likes.includes(user.id)) {
+//       const result = await post.updateOne({
+//         $pull: { likes: user.id },
+//       })
+
+//       response.json(result)
+//     } else {
+//       const result = await post.updateOne({
+//         $push: { likes: user.id },
+//       })
+
+//       response.json(result)
+//     }
+//   } catch (err) {
+//     return response.status(422).json({ error: err })
+//   }
+// })

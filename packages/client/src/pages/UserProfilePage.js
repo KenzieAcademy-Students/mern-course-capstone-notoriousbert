@@ -5,6 +5,7 @@ import { Col, Row, Button, Form} from 'react-bootstrap'
 import { useProvideAuth } from "hooks/useAuth";
 import axios from 'util/axiosConfig.js'
 import { toast } from "react-toastify";
+import { Link } from 'react-router-dom';
 
 
 const initialState ={
@@ -133,9 +134,12 @@ return (
           <h2 class="primary-text">Favorites</h2>
           <div class="line"></div>
           <div class="p-1">
-            {user.favorites.map((favorite)=>(
-              <div style={{borderBottom: '1px solid black'}}>{favorite.placeName}</div>
-            ))}
+            {user.favorites.map((favorite)=> {
+              {console.log(favorite)}
+              {console.log(favorite._id)}
+              // return <Link to={`/users/${review.author.username}`}>{review.author.username}</Link>
+              return <Link to={`/places/${favorite._id}`}>{favorite.placeName}</Link>
+            })}
           </div>
         </div>
 
@@ -145,11 +149,12 @@ return (
             <div>{user.reviews.map((review)=>(
               <div><b>Placename:</b> {review.location.placeName}
               <div><b>Author:</b> {review.author.username}</div>
-              <div style={{borderBottom: '1px solid black'}}><b>Review:</b> {review.text}</div>
+              <div><b>Review:</b> {review.text}</div>
+              <hr/>
             </div>
             ))}
             </div>
-            {(state.user && state.user.username === uid) ? (<Col></Col>) : null}
+            {/* {(state.user && state.user.username === uid) ? (<Col></Col>) : null} */}
         </div>
       </div>
   </section>

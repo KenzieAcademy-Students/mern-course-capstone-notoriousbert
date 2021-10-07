@@ -22,6 +22,7 @@ export default function PlacesDetailPage({
     try {
       const singleMarker = await axios.get(`places/${pid}`);
       setMapMarker(singleMarker.data);
+      console.log(singleMarker.data)
       setLoading(false);
     } catch (error) {
       setLoading(false);
