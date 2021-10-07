@@ -198,7 +198,7 @@ export default function AddAPlacePage() {
           <p className="lead"><i class="fas fa-map-marked-alt"></i> Don't see a place on the map that you know is pet-friendly? Add it here!
           </p>
           <Row className="justify-content-center">
-            <form onSubmit={(e) => handleSubmit(e)} className="place-form m-0">
+            <form onSubmit={(e) => handleSubmit(e)} className="place-form">
               <Col className="d-flex-baseline">
                 <div className="form-group mt-3">
                   <div className="pr">
