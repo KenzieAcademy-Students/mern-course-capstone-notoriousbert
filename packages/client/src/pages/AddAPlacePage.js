@@ -387,3 +387,6 @@ export default function AddAPlacePage() {
     </section>
   );
 }
+
+
+//<Row className="pt-5 justify-content-center">
