@@ -114,7 +114,6 @@ router.post("/", async (request, response, next) => {
 
   try {
     const savedPlace = await populatedPlace.save();
-    // savedPlace = await savedPlace.populate({path: 'petsAllowed' })
     response.json(savedPlace);
   } catch (error) {
     next(error);
@@ -123,17 +122,12 @@ router.post("/", async (request, response, next) => {
 
 //put REVIEW
 router.put("/review", async (req, res) => {
-  console.log("fish", req.body);
   const { text, userId, placeId } = req.body;
 
   const review = new Review({
     text: text,
     author: userId,
   });
-
-  // const populateQuery = [
-  //   { path: "comments.author", select: ["username", "profile_image"] },
-  // ];
 
   Place.findByIdAndUpdate(
     placeId,

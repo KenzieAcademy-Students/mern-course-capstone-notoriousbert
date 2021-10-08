@@ -5,6 +5,7 @@ import { Col, Row, Button, Form, Collapse } from "react-bootstrap";
 import { useProvideAuth } from "hooks/useAuth";
 import axios from "util/axiosConfig.js";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const initialState = {
   newusername: "",
@@ -95,105 +96,121 @@ export default function UserProfilePage({
   return (
     <section class="container">
       <div class="profile-grid my-1">
-        <div class="profile-top background-primary p-2">
+        <div class="rounded profile-top background-primary p-2">
           <h1 class="large-profile">{user.username}</h1>
         </div>
-        <div class="profile-about background-white">
-          <div class="line"></div>
-          <div onClick={() => setOpen(!open)} aria-expanded={open}>
-            <Button class="primary-text">Edit Profile Information</Button>
+        {/* CONDITIONAL RENDER */}
+        {user.username === state.user.username && (
+          <div class="rounded profile-about background-white">
+            <div class="line"></div>
+            <div onClick={() => setOpen(!open)} aria-expanded={open}>
+              <Button class="primary-text">Edit Profile Information</Button>
+            </div>
+            <Collapse in={open}>
+              <Form id="editForm" className="mt-3">
+                <h4> Current Username: {user.username}</h4>
+                <div id="example-collapse-text">
+                  <div class="form-group">
+                    <input
+                      name="newusername"
+                      placeholder="New Username"
+                      value={formData.newusername}
+                      className="rounded border-info"
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                  <h4>Change Password</h4>
+                  <div class="form-group">
+                    <input
+                      name="oldPassword"
+                      placeholder="Old Password"
+                      className="rounded border-info"
+                      value={formData.oldPassword}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      name="newPassword"
+                      placeholder="New Password"
+                      className="rounded border-info"
+                      value={formData.newPassword}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      name="confirmPassword"
+                      placeholder="Confirm New Password"
+                      className="rounded border-info"
+                      value={formData.confirmPassword}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                  <h4>Change Email</h4>
+                  <span>Current Email: {user.email}</span>
+                  <div class="form-group">
+                    <input
+                      name="email"
+                      placeholder="New Email"
+                      className="rounded border-info"
+                      value={formData.email}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                  <input
+                    type="submit"
+                    className="btn btn-primary"
+                    value="Confirm Changes"
+                    onClick={(e) => {
+                      handleSubmit(e);
+                    }}
+                  />
+                </div>
+              </Form>
+            </Collapse>
           </div>
-          <Collapse in={open}>
-            <Form id="editForm" className="mt-3">
-              <h4> Current Username: {user.username}</h4>
-              <div id="example-collapse-text">
-                <div class="form-group">
-                  <input
-                    name="newusername"
-                    placeholder="New Username"
-                    value={formData.newusername}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </div>
-                <h4>Change Password</h4>
-                <div class="form-group">
-                  <input
-                    name="oldPassword"
-                    placeholder="Old Password"
-                    value={formData.oldPassword}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    name="newPassword"
-                    placeholder="New Password"
-                    value={formData.newPassword}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    name="confirmPassword"
-                    placeholder="Confirm New Password"
-                    value={formData.confirmPassword}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </div>
-                <h4>Change Email</h4>
-                <span>Current Email: {user.email}</span>
-                <div class="form-group">
-                  <input
-                    name="email"
-                    placeholder="New Email"
-                    value={formData.email}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </div>
-                <input
-                  type="submit"
-                  className="btn btn-primary"
-                  value="Confirm Changes"
-                  onClick={(e) => {
-                    handleSubmit(e);
-                  }}
-                />
-              </div>
-            </Form>
-          </Collapse>
-        </div>
-        <div class="profile-favorites background-white">
+        )}
+        <div class="profile-favorites background-white rounded">
           <h2 class="primary-text">Favorites</h2>
           <div class="line"></div>
           <div class="p-1">
-            {user.favorites.map((favorite) => (
-              <div>PlaceName: {favorite.placeName}</div>
-            ))}
+            {user.favorites.map((favorite) => {
+              // return <Link to={`/users/${review.author.username}`}>{review.author.username}</Link>
+              return (
+                <Link to={`/places/${favorite._id}`}>{favorite.placeName}</Link>
+              );
+            })}
           </div>
         </div>
-        <div class="profile-reviews background-white">
+        <div class="profile-reviews background-white rounded">
           <h2 class="primary-text">Reviews</h2>
           <div class="line"></div>
           <div>
             {user.reviews.map((review) => (
               <div>
-                Placename: {review.location.placeName}
-                <div>Author: {review.author.username}</div>
-                <div>Review: {review.text}</div>
+                <b>Placename:</b> {review.location.placeName}
+                <div>
+                  <b>Author:</b> {review.author.username}
+                </div>
+                <div>
+                  <b>Review:</b> {review.text}
+                </div>
+                <hr />
               </div>
             ))}
           </div>
-          {state.user && state.user.username === uid ? <Col></Col> : null}
+          {/* {(state.user && state.user.username === uid) ? (<Col></Col>) : null} */}
         </div>
       </div>
     </section>

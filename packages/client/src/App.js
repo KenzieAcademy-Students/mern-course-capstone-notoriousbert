@@ -10,7 +10,7 @@ import {
   AddAPlacePage,
 } from "pages";
 
-import { ErrorBoundary, NavbarTop, Header } from "components";
+import { ErrorBoundary, NavbarTop } from "components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import "./app.scss";
@@ -22,7 +22,7 @@ export default function App() {
   const {
     state: { user },
   } = useProvideAuth();
-  console.log(useProvideAuth());
+  // console.log(useProvideAuth());
 
   useEffect(() => {
     if (user) {
