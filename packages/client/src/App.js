@@ -10,7 +10,7 @@ import {
   AddAPlacePage,
 } from "pages";
 
-import { ErrorBoundary, NavbarTop, Header } from "components";
+import { ErrorBoundary, NavbarTop } from "components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import "./app.scss";
