@@ -11,10 +11,11 @@ const NavbarTop = () => {
   } = useProvideAuth();
 
   return (
+    <div>
       <nav className="navbar">
-          <Link to= {user ? (`/users/${user.username}`) : (`/map`)}>
-            <img src="icons8-animal-shelter.svg" alt="logo" className="logo" />
-          </Link>
+        <Link to={user ? `/users/${user.username}` : `/map`}>
+          <img src="/icons8-animal-shelter.svg" alt="logo" className="logo" />
+        </Link>
         <ul>
           <li>
             <Link to="/map">Map</Link>
@@ -23,20 +24,19 @@ const NavbarTop = () => {
             <Link to="/add-a-place">Add a Place</Link>
           </li>
           {user ? null : (
-          <li>
-            <Link to="/signup">Register</Link>
-          </li>)}
-          {user ? null : (<li>
-            <Link to="/login">Login</Link>
-          </li>)}
+            <li>
+              <Link to="/signup">Register</Link>
+            </li>
+          )}
+          {user ? null : (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
         </ul>
-        {user ? (
-        <Button
-          onClick={() => signout()}
-          >
-          Sign Out
-        </Button>) : null}
+        {user ? <Button onClick={() => signout()}>Sign Out</Button> : null}
       </nav>
+    </div>
   );
 };
 
