@@ -15,11 +15,13 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { useProvideAuth } from "hooks/useAuth";
 
 export default function AddAPlacePage() {
   const { state, getCurrentUser } = useProvideAuth();
+  const [user, setUser] = useState();
 
   const petsAllowedInitialState = {
     Reptile: {
@@ -95,7 +97,9 @@ export default function AddAPlacePage() {
   };
 
   useEffect(() => {
-    getCurrentUser();
+    const thisUser = getCurrentUser();
+    console.log(thisUser);
+    setUser(thisUser);
     getPets();
   }, []);
 
@@ -192,203 +196,226 @@ export default function AddAPlacePage() {
   };
   return (
     <section className="container">
-      <Container className="d-flex flex-row">
-        <div className="form-container">
-          <h1 className="large">Add a place</h1>
-          <p className="lead"><i class="fas fa-map-marked-alt"></i> Don't see a place on the map that you know is pet-friendly? Add it here!
-          </p>
-          <Row className="justify-content-center">
-            <form onSubmit={(e) => handleSubmit(e)} className="place-form">
-              <Col className="d-flex-baseline">
-                <div className="form-group mt-3">
-                  <div className="pr">
+      {getCurrentUser() ? (
+        <Container className="d-flex flex-row">
+          <div className="form-container">
+            <h1 className="large">Add a place</h1>
+            <p className="lead">
+              <i class="fas fa-map-marked-alt"></i> Don't see a place on the map
+              that you know is pet-friendly? Add it here!
+            </p>
+            <Row className="justify-content-center">
+              <form onSubmit={(e) => handleSubmit(e)} className="place-form">
+                <Col className="d-flex-baseline">
+                  <div className="form-group mt-3">
+                    <div className="pr">
+                      <label>
+                        Place Name:
+                        <input
+                          className="rounded border-info"
+                          type="text"
+                          name="placeName"
+                          required
+                          value={values.placeName}
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group custom-select pr form-input-width">
                     <label>
-                      Place Name:
-                      <input
-                        className="rounded border-info"
-                        type="text"
-                        name="placeName"
+                      Place Type:
+                      <select
+                        className="border border-info rounded"
+                        name="typeOfPlace"
                         required
-                        value={values.placeName}
+                        id="places"
+                        value={values.typeOfPlace}
+                        onChange={handleChange}
+                      >
+                        <option value="restaurant">Restaurant</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="parks">Park</option>
+                        <option value="bar">Bar</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div className="form-group pr">
+                    <label>
+                      Address:
+                      <input
+                        class="form-control form-rounded border border-info"
+                        type="text"
+                        name="address"
+                        required
+                        value={values.address}
                         onChange={handleChange}
                       />
                     </label>
                   </div>
-                </div>
-                <div className="form-group custom-select pr">
+                  <div className="">
+                    <div className="p-2">Pets Allowed:</div>
+                    <div className="pb-0 d-flex form-input-width wrap-checkboxes">
+                      <div className="form-check m-1">
+                        <label>
+                          Cats
+                          <input
+                            class="form-check-input border-info"
+                            type="checkbox"
+                            name="Cat"
+                            checked={petsAllowedCheck.Cat.check}
+                            onChange={handleCheckBox}
+                          />
+                        </label>
+                      </div>
+                      <div className="form-check m-1">
+                        <label>
+                          Dogs
+                          <input
+                            class="form-check-input border border-info"
+                            type="checkbox"
+                            name="Dog"
+                            checked={petsAllowedCheck.Dog.check}
+                            onChange={handleCheckBox}
+                          />
+                        </label>
+                      </div>
+                      <div className="form-check m-1">
+                        <label>
+                          Reptiles
+                          <input
+                            class="form-check-input border border-info"
+                            type="checkbox"
+                            name="Reptile"
+                            checked={petsAllowedCheck.Reptile.check}
+                            onChange={handleCheckBox}
+                          />
+                        </label>
+                      </div>
+                      <div className="form-check m-1">
+                        <label>
+                          Birds
+                          <input
+                            class="form-check-input border border-info"
+                            type="checkbox"
+                            name="Bird"
+                            checked={petsAllowedCheck.Bird.check}
+                            onChange={handleCheckBox}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col className="d-flex">
+                  <div className="form-group">
+                    <label>
+                      Description (optional):
+                      <textarea
+                        class="form-control form-rounded border border-info"
+                        type="text"
+                        rows="5"
+                        cols="33"
+                        name="description"
+                        value={values.description}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </div>
+                </Col>
+                <div className="form-group m-0">
                   <label>
-                    Place Type:
-                    <select
-                      className="border border-info rounded"
-                      name="typeOfPlace"
-                      required
-                      id="places"
-                      value={values.typeOfPlace}
-                      onChange={handleChange}
-                    >
-                      <option value="restaurant">Restaurant</option>
-                      <option value="hotel">Hotel</option>
-                      <option value="parks">Park</option>
-                      <option value="bar">Bar</option>
-                    </select>
-                  </label>
-                </div>
-                <div className="form-group pr">
-                  <label>
-                    Address:
+                    Apt or suite number:
                     <input
                       class="form-control form-rounded border border-info"
                       type="text"
-                      name="address"
-                      required
-                      value={values.address}
+                      name="aptOrSuiteNumber"
+                      value={values.aptOrSuiteNumber}
                       onChange={handleChange}
                     />
                   </label>
                 </div>
-                <div className="">
-                  <div className="p-2">Pets Allowed:</div>
-                  <div className="pb-0 d-flex">
-                    <div className="form-check m-1">
-                      <label>
-                        Cats
-                        <input
-                          class="form-check-input border-info"
-                          type="checkbox"
-                          name="Cat"
-                          checked={petsAllowedCheck.Cat.check}
-                          onChange={handleCheckBox}
-                        />
-                      </label>
-                    </div>
-                    <div className="form-check m-1">
-                      <label>
-                        Dogs
-                        <input
-                          class="form-check-input border border-info"
-                          type="checkbox"
-                          name="Dog"
-                          checked={petsAllowedCheck.Dog.check}
-                          onChange={handleCheckBox}
-                        />
-                      </label>
-                    </div>
-                    <div className="form-check m-1">
-                      <label>
-                        Reptiles
-                        <input
-                          class="form-check-input border border-info"
-                          type="checkbox"
-                          name="Reptile"
-                          checked={petsAllowedCheck.Reptile.check}
-                          onChange={handleCheckBox}
-                        />
-                      </label>
-                    </div>
-                    <div className="form-check m-1">
-                      <label>
-                        Birds
-                        <input
-                          class="form-check-input border border-info"
-                          type="checkbox"
-                          name="Bird"
-                          checked={petsAllowedCheck.Bird.check}
-                          onChange={handleCheckBox}
-                        />
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-              <Col className="d-flex">
                 <div className="form-group">
                   <label>
-                    Description (optional):
-                    <textarea
+                    City:
+                    <input
                       class="form-control form-rounded border border-info"
                       type="text"
-                      rows="5"
-                      cols="33"
-                      name="description"
-                      value={values.description}
+                      name="city"
+                      required
+                      value={values.city}
                       onChange={handleChange}
                     />
                   </label>
                 </div>
-              </Col>
-              <div className="form-group m-0">
-                <label>
-                  Apt or suite number:
-                  <input
-                    class="form-control form-rounded border border-info"
-                    type="text"
-                    name="aptOrSuiteNumber"
-                    value={values.aptOrSuiteNumber}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-              <div className="form-group">
-                <label>
-                  City:
-                  <input
-                    class="form-control form-rounded border border-info"
-                    type="text"
-                    name="city"
-                    required
-                    value={values.city}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-              <div className="form-group">
-                <label>
-                  State:
-                  <input
-                    class="form-control form-rounded border border-info"
-                    type="text"
-                    name="state"
-                    required
-                    value={values.state}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-              <div className="form-group">
-                <label>
-                  Zip code:
-                  <input
-                    class="form-control form-rounded border border-info"
-                    type="text"
-                    name="zipcode"
-                    required
-                    value={values.zipcode}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-              <div className="form-group">
-                <label>
-                  Price per night (optional):
-                  <input
-                    class="form-control form-rounded border border-info"
-                    type="number"
-                    name="pricePerNight"
-                    value={values.pricePerNight}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-              <button className="btn btn-primary" type="submit">
-                Add a Place
-              </button>
-            </form>
-          </Row>
-        </div>
-      </Container>
+                <div className="form-group">
+                  <label>
+                    State:
+                    <input
+                      class="form-control form-rounded border border-info"
+                      type="text"
+                      name="state"
+                      required
+                      value={values.state}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label>
+                    Zip code:
+                    <input
+                      class="form-control form-rounded border border-info"
+                      type="text"
+                      name="zipcode"
+                      required
+                      value={values.zipcode}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label>
+                    Price per night (optional):
+                    <input
+                      class="form-control form-rounded border border-info"
+                      type="number"
+                      name="pricePerNight"
+                      value={values.pricePerNight}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </div>
+                <button className="btn btn-primary" type="submit">
+                  Add a Place
+                </button>
+              </form>
+            </Row>
+          </div>
+        </Container>
+      ) : (
+        <Container className="d-flex flex-row">
+          <div className="form-container">
+            <h1 className="large you-must-be-logged-in">
+              You must be logged in to add a place.
+            </h1>
+            <p className="my-1 responsive">
+              Already have an account?{" "}
+              <Link to="/login" className="sign">
+                Sign In
+              </Link>
+            </p>
+            <p className="my-1 responsive">
+              Don't have an account?{" "}
+              <Link to="/signup" className="sign">
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        </Container>
+      )}
     </section>
   );
 }
-
 
 //<Row className="pt-5 justify-content-center">
