@@ -38,8 +38,32 @@ a.sign {
 h1.large {
   font-size: 3rem;
   line-height: 1.2;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   color: $primary-color;
+}
+
+h1.large-places {
+  padding: 0;
+  margin: 0;
+}
+
+span.shift-up {
+  position: relative;
+  bottom: 4px;
+}
+
+p.text-overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 40vw;
+  text-overflow: ellipsis;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+h1.large.you-must-be-logged-in {
+  font-size: 5vh;
 }
 
 // Landing
@@ -65,9 +89,9 @@ h1.large {
 .profile-grid {
   display: grid;
   grid-template-areas:
-    "top top"
-    "about about"
-    "favorites reviews";
+    "top top top top"
+    "about about about about"
+    "favorites reviews reviews reviews";
   grid-gap: 1rem;
 
   .profile-top {
@@ -82,6 +106,49 @@ h1.large {
       color: #fff;
       margin: 0;
     }
+  }
+
+  div#reviews-container-responsive {
+    display: flex;
+    // flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  div#reviews-top-container {
+    // width: calc(20vw + 20px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+
+  div.review-card {
+    // width: calc(22vw + 16px);
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: calc(10px + 0.4vw);
+    @media only screen and (max-width: 600px) {
+      width: calc(20vw + 40px);
+    }
+  }
+
+  div.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    // padding:0;
+    // justify-content: flex-start;
+  }
+
+  p#card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0;
   }
 
   .profile-about {
@@ -102,6 +169,24 @@ h1.large {
       padding-bottom: 1rem;
       margin: 0;
     }
+  }
+
+  // #favorites-section {
+  //   width: 20vw;
+  //   @media only screen and (max-width: 600px) {
+  //     width: calc(20vw + 40px);
+  //   }
+  // }
+
+  // #reviews-section {
+  //   width: 50vw;
+  //   @media only screen and (max-width: 600px) {
+  //     width: calc(40vw + 40px);
+  //   }
+  // }
+
+  h2.responsive-header-user-profile {
+    font-size: calc(15px + 0.9vw);
   }
 
   .profile-favorites {
@@ -241,6 +326,27 @@ h1.large {
     }
   }
 
+  div.place-details-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  div.place-details-content.place-responsive {
+    // padding: 2% 15%;
+
+    // padding-left: calc(16px + 10vw);
+    align-items: flex-start;
+  }
+
+  div.place-details-content.place-responsive > h4 {
+    text-align: left !important;
+    font-size: calc(12px + 1vw);
+  }
+
+  div.place-details-content.place-responsive span.bold-responsive {
+    font-weight: 600;
+  }
+
   .places-reviews {
     grid-area: reviews;
 
@@ -284,6 +390,26 @@ p .my-1 {
     text-decoration: none;
     color: $primary-color;
   }
+}
+
+a.sign.responsive-card-title {
+  font-size: calc(12px + 0.9vw);
+}
+
+a.sign.responsive-favorites-text > p {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: calc(10px + 0.9vw);
+  max-width: 25vw;
+  text-overflow: ellipsis;
+}
+
+#responsive-card-subtitle {
+  font-size: calc(10px + 0.7vw);
+}
+
+p.my-1.responsive {
+  font-size: calc(12px + 0.9vw);
 }
 
 .place-form {

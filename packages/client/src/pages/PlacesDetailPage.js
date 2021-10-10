@@ -13,6 +13,7 @@ import { timeSince } from "util/timeSince.js";
 import { useProvideAuth } from "hooks/useAuth";
 import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "react-responsive";
 
 export default function PlacesDetailPage({
   match: {
@@ -26,10 +27,9 @@ export default function PlacesDetailPage({
   const [loading, setLoading] = useState(true);
   const { state } = useProvideAuth();
   const [favorited, setFavorited] = useState(false);
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
 
   const getMarkerAndSetFav = async () => {
-    setLoading(true);
-
     try {
       const singleMarker = await axios.get(`places/${pid}`);
       setMapMarker(singleMarker.data);
@@ -49,13 +49,27 @@ export default function PlacesDetailPage({
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error(error.message);
+      toast.error(error.message);
+    }
+  };
+
+  const getMarker = async () => {
+    try {
+      const singleMarker = await axios.get(`places/${pid}`);
+      console.log(singleMarker);
+      setMapMarker(singleMarker.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
     }
   };
 
   useEffect(() => {
     if (user) {
       getMarkerAndSetFav();
+    } else {
+      getMarker();
     }
   }, [user]);
 
@@ -83,65 +97,103 @@ export default function PlacesDetailPage({
   };
 
   const renderFavoritesTooltip = (props) => {
-    // const newProps = {
-    //   ...props,
-    //   ["data-popper-reference-hidden"]: false,
-    //   style: {
-    //     ...props.style,
-    //     transform: "translate3d(65vw, 114px, 0)",
-    //   },
-    // };
-    console.log(props);
-    return (
+    if (user) {
+      return (
+        <Tooltip id="tooltip-top" {...props}>
+          {favorited ? "Added to favorites!" : "Add to favorites?"}
+        </Tooltip>
+      );
+    } else {
       <Tooltip id="tooltip-top" {...props}>
-        {favorited ? "Added to favorites!" : "Add to favorites?"}
-      </Tooltip>
-    );
+        Log in or sign up to add favorites
+      </Tooltip>;
+    }
   };
 
   return (
     <section className="container">
       <div className="places-grid my-1 rounded">
-        <div className=" rounded places-top background-primary p-2">
+        <div className=" rounded places-top background-primary pt-2 d-flex justify-content-md-between overflow-hidden">
           <h1 className="large-places">
-            {mapMarker.placeName}
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 40 }}
-              overlay={renderFavoritesTooltip}
-            >
-              <Button variant="link" size="sm" onClick={handleFavorite}>
-                {favorited ? (
-                  <RiHeart3Fill className="heart active" />
-                ) : (
-                  <RiHeart3Line className="heart" />
+            <p className="text-overflow-ellipsis">{mapMarker.placeName}</p>
+            {isMobile ? (
+              <span className="shift-up">
+                {user && (
+                  <Button variant="link" size="sm" onClick={handleFavorite}>
+                    {favorited ? (
+                      <RiHeart3Fill className="heart active" />
+                    ) : (
+                      <RiHeart3Line className="heart" />
+                    )}
+                  </Button>
                 )}
-              </Button>
-            </OverlayTrigger>
+              </span>
+            ) : (
+              <span className="shift-up">
+                {user ? (
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 50, hide: 40 }}
+                    overlay={renderFavoritesTooltip}
+                  >
+                    <Button variant="link" size="sm" onClick={handleFavorite}>
+                      {favorited ? (
+                        <RiHeart3Fill className="heart active" />
+                      ) : (
+                        <RiHeart3Line className="heart" />
+                      )}
+                    </Button>
+                  </OverlayTrigger>
+                ) : null}
+              </span>
+            )}
           </h1>
         </div>
 
         <div className="rounded places-about background-white">
           <h2 className="primary-text">Details</h2>
           <div className="line"></div>
-          <div>
-            <h4>Category: {mapMarker.typeofPlace || mapMarker.typeOfPlace}</h4>
-            <h4>
-              Address: {mapMarker.address} <br /> {mapMarker.city},
-              {mapMarker.state} <br />
-              {mapMarker.zipcode}
-            </h4>
-
-            <h4>
-              Pets Allowed:{" "}
-              {mapMarker.petsAllowed.map((pet, index) =>
-                index === mapMarker.petsAllowed.length - 1 ? (
-                  <>{pet.category}</>
+          <div className="place-details-wrapper">
+            <div className="place-details-content place-responsive">
+              <h4>
+                Category: {mapMarker.typeofPlace || mapMarker.typeOfPlace}
+              </h4>
+              <h4 className="d-flex flex-wrap capitalize">
+                {isMobile ? (
+                  <span className="text-capitalize">
+                    Address: {mapMarker.address.toLowerCase()} <br />
+                    {mapMarker.city.toLowerCase()},{" "}
+                    {mapMarker.state.length <= 2
+                      ? mapMarker.state
+                      : mapMarker.state.toLowerCase()}{" "}
+                    {mapMarker.zipcode}
+                  </span>
                 ) : (
-                  <>{pet.category}, </>
-                )
-              )}{" "}
-            </h4>
+                  <span className="text-capitalize">
+                    Address: {mapMarker.address.toLowerCase()}{" "}
+                    {mapMarker.city.toLowerCase()},{" "}
+                    {mapMarker.state.length <= 2
+                      ? mapMarker.state
+                      : mapMarker.state.toLowerCase()}{" "}
+                    {mapMarker.zipcode}
+                  </span>
+                )}
+              </h4>
+
+              <h4>
+                Pets Allowed:{" "}
+                {mapMarker.petsAllowed.map((pet, index) =>
+                  index === mapMarker.petsAllowed.length - 1 ? (
+                    <>{pet.category}</>
+                  ) : (
+                    <>{pet.category}, </>
+                  )
+                )}{" "}
+              </h4>
+              {mapMarker.description && (
+                <h4>Description: {mapMarker.description}</h4>
+              )}
+            </div>
           </div>
         </div>
 
@@ -174,7 +226,6 @@ export default function PlacesDetailPage({
               </Card>
             ))}
           </div>
-          <div></div>
         </div>
       </div>
     </section>

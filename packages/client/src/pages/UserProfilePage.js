@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "components";
 import { Container } from "react-bootstrap";
-import { Col, Row, Button, Form, Collapse } from "react-bootstrap";
+import { Col, Row, Button, Form, Collapse, Card } from "react-bootstrap";
 import { useProvideAuth } from "hooks/useAuth";
 import axios from "util/axiosConfig.js";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { timeSince } from "util/timeSince";
 
 const initialState = {
   newusername: "",
@@ -82,7 +83,6 @@ export default function UserProfilePage({
       });
       setFormData(initialState);
       updateUsername(userData);
-      console.log("newstate:", state);
       getUser(uid);
     } catch (error) {
       console.log("you cannot edit profile at this time");
@@ -94,13 +94,13 @@ export default function UserProfilePage({
   }
 
   return (
-    <section class="container">
+    <section class="container user-profile">
       <div class="profile-grid my-1">
         <div class="rounded profile-top background-primary p-2">
-          <h1 class="large-profile">{user.username}</h1>
+          <h1 class="large-profile">{uid}</h1>
         </div>
         {/* CONDITIONAL RENDER */}
-        {user.username === state.user.username && (
+        {state.user && user.username === state.user.username && (
           <div class="rounded profile-about background-white">
             <div class="line"></div>
             <div onClick={() => setOpen(!open)} aria-expanded={open}>
@@ -181,34 +181,74 @@ export default function UserProfilePage({
             </Collapse>
           </div>
         )}
-        <div class="profile-favorites background-white rounded">
-          <h2 class="primary-text">Favorites</h2>
+        <div
+          id="favorites-section"
+          class="profile-favorites background-white rounded"
+        >
+          <h2 class="primary-text responsive-header-user-profile">Favorites</h2>
           <div class="line"></div>
           <div class="p-1">
-            {user.favorites.map((favorite) => {
+            {user.favorites.map((favorite, index) => {
               // return <Link to={`/users/${review.author.username}`}>{review.author.username}</Link>
               return (
-                <Link to={`/places/${favorite._id}`}>{favorite.placeName}</Link>
+                <div className="favorites-text-outer-container">
+                  <div className="favorites-text-inner-container">
+                    <a
+                      className="sign responsive-favorites-text"
+                      href={`/places/${favorite._id}`}
+                    >
+                      <p> {favorite.placeName}</p>
+                    </a>
+                  </div>
+                  {user.favorites &&
+                  index === user.favorites.length - 1 ? null : (
+                    <hr />
+                  )}
+                </div>
               );
             })}
           </div>
         </div>
-        <div class="profile-reviews background-white rounded">
-          <h2 class="primary-text">Reviews</h2>
+        <div
+          id="reviews-section"
+          class="profile-reviews background-white rounded"
+        >
+          <h2 class="primary-text responsive-header-user-profile">Reviews</h2>
           <div class="line"></div>
-          <div>
+          <div id="reviews-top-container">
+            {/* <div id="reviews-container-responsive"> */}
             {user.reviews.map((review) => (
-              <div>
-                <b>Placename:</b> {review.location.placeName}
-                <div>
-                  <b>Author:</b> {review.author.username}
-                </div>
-                <div>
-                  <b>Review:</b> {review.text}
-                </div>
-                <hr />
+              //   <div>
+              //     <b>Placename:</b> {review.location.placeName}
+              //     <div>
+              //       <b>Review:</b> {review.text}
+              //     </div>
+              //     <hr />
+              //   </div>
+              <div className="review-card">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>
+                      <a
+                        className="sign responsive-card-title"
+                        href={`/places/${review.location._id}`}
+                      >
+                        {review.location.placeName}
+                      </a>{" "}
+                    </Card.Title>
+                    <Card.Subtitle
+                      className="mb-2 text-muted"
+                      id="responsive-card-subtitle"
+                    >
+                      {timeSince(review.created)} ago
+                    </Card.Subtitle>
+                    <Card.Text id="card-text">{review.text}</Card.Text>
+                  </Card.Body>
+                </Card>
+                {/* <hr /> */}
               </div>
             ))}
+            {/* </div> */}
           </div>
           {/* {(state.user && state.user.username === uid) ? (<Col></Col>) : null} */}
         </div>

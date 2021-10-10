@@ -2,47 +2,30 @@ import express from "express";
 const router = express.Router();
 import { Map } from "../models";
 import requireAuth from "../middleware";
-const cors = require('cors');
+const cors = require("cors");
 
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-router.use(cors(corsOptions))
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+router.use(cors(corsOptions));
 
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
-router.get('/https://maps.googleapis.com/maps/api/geocode/json', function(req, res, next) {
-  console.log(res.toJSON())
-});
-
-
-
-
-// router.get("/", async (req, res, next) => {
-  // const populateQuery = [
-  //   { 
-  //     path: "place",      
-
-  //     populate: {
-  //       path: "petsAllowed", select: ["category"]
-  //     }
-  //   },
-//   ];
-//   const maps = await Map.find({}).sort({}).populate(populateQuery)
-//   .exec();
-//   console.log(maps[0].place.petsAllowed)
-//   try {
-//     res.json(maps.map((map) => map.toJSON()));
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.get(
+  "/https://maps.googleapis.com/maps/api/geocode/json",
+  function (req, res, next) {
+    console.log(res.toJSON());
+  }
+);
 
 router.get("/:city", async (request, response) => {
   const populateQuery = [
