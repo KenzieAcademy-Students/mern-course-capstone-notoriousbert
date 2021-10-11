@@ -8,6 +8,16 @@ section.container {
   padding: 0 2rem;
   margin-top: 6rem;
   margin-bottom: 3rem;
+  section.container.user-profile {
+    @media only screen and (max-width: 600px) {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+b {
+  font-weight: 2000;
 }
 
 section.mapContainer {
@@ -37,7 +47,14 @@ section.mapContainer {
 
 .form-input-width {
   width: 20vw;
-  min-width: 100px;
+  min-width: 200px;
+}
+
+.wrap-checkboxes {
+  @media only screen and (max-width: 500px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
 // #someselector {
@@ -172,11 +189,12 @@ section.mapContainer {
 }
 
 .heart {
+  padding: 0;
   font-size: 35px;
   position: relative;
-  bottom: 4px;
+  bottom: 0.5rem;
   color: rgb(182, 173, 173);
-  margin-top: 7px;
+  margin: 0;
   width: 70px;
   outline: none;
   text-transform: uppercase;
@@ -194,6 +212,8 @@ button.btn.btn-link.btn-sm {
   color: transparent;
   background-color: transparent;
   // outline: transparent;
+  padding: 0;
+  margin: 0;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 255, 0.2);
   border: none;
   .btn:focus {
