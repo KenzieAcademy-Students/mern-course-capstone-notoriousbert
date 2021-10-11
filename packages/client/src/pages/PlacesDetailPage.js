@@ -28,11 +28,13 @@ export default function PlacesDetailPage({
   const { state } = useProvideAuth();
   const [favorited, setFavorited] = useState(false);
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
+  const [ reviewText, setReviewText] = useState("")
 
   const getMarkerAndSetFav = async () => {
     try {
       const singleMarker = await axios.get(`places/${pid}`);
       setMapMarker(singleMarker.data);
+      console.log(singleMarker.data)
       const userResponse = await axios.get(
         `/users/username/${state.user.username}`
       );
@@ -66,12 +68,13 @@ export default function PlacesDetailPage({
   };
 
   useEffect(() => {
+    console.log(reviewText)
     if (user) {
       getMarkerAndSetFav();
     } else {
       getMarker();
     }
-  }, [user]);
+  }, [user, reviewText]);
 
   if (!mapMarker) {
     return (
@@ -109,6 +112,25 @@ export default function PlacesDetailPage({
       </Tooltip>;
     }
   };
+
+  const handleReview = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const {
+      user: { uid },
+    } = state;
+
+    const addReview = await axios.put("places/review",{
+      text : reviewText,
+      userId : uid,
+      placeId : mapMarker._id 
+    })
+
+
+    console.log(uid)
+    console.log("handling review")
+    console.log(state)
+  }
 
   return (
     <section className="container">
@@ -206,6 +228,16 @@ export default function PlacesDetailPage({
 
           <div className="d-flex justify-content-md-between align-items-space-between">
             {" "}
+          <input
+                    type="submit"
+                    className="btn btn-primary"
+                    value="Add a Review"
+                    onClick={(e) => {
+                      handleReview(e)
+                    }}
+                  />
+            <textarea onChange={(e) => setReviewText(e.target.value)
+            }/>
             {mapMarker.reviews.map((review) => (
               <Card>
                 <Card.Body>
