@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-import { Map } from "../models";
 import requireAuth from "../middleware";
 const cors = require("cors");
 

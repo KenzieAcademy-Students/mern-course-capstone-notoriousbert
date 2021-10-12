@@ -1,24 +1,24 @@
-import jwt from 'jsonwebtoken'
-import mongoose from 'mongoose'
-import keys from '../config/keys'
-import { User } from '../models'
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+import keys from "../config/keys";
+import { User } from "../models";
 
 module.exports = async (req, res, next) => {
-  console.log(req.get('content-type'))
-  const authorization = req.get('authorization')
+  const authorization = req.get("authorization");
+  console.log("going thru middleware");
   // authorization === Bearer ewefwegwrherhe
   if (!authorization) {
-    return res.status(401).json({ error: 'you must be logged in' })
+    return res.status(401).json({ error: "you must be logged in" });
   }
-  const token = authorization.replace('Bearer ', '')
+  const token = authorization.replace("Bearer ", "");
   jwt.verify(token, keys.jwt.secret, (err, payload) => {
     if (err) {
-      return res.status(401).json({ error: 'you must be logged in' })
+      return res.status(401).json({ error: "you must be logged in" });
     }
-    const { id } = payload
+    const { id } = payload;
     User.findById(id).then((userdata) => {
-      req.user = userdata
-      next()
-    })
-  })
-}
+      req.user = userdata;
+      next();
+    });
+  });
+};
