@@ -1,7 +1,7 @@
 module.exports = (error, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = error.message;
-  res.locals.error = req.app.get("env") === "deployment" ? error : {};
+  res.locals.error = req.app.get("env") === "production" ? error : {};
   if (error.name === "NotFoundError") {
     console.log(req.app.get("env"));
     return res.status(404).send({
