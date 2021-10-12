@@ -48,6 +48,6 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use(errorHandler);
+// app.use(errorHandler);
 
 module.exports = app;
