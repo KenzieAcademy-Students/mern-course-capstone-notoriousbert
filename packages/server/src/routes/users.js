@@ -30,35 +30,33 @@ router.get("/username/:id", async (req, res) => {
       res.json(user.toJSON());
     }
   } catch (err) {
-    res.status(404).end()
+    res.status(404).end();
   }
-})
+});
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
 
   const populateQuery = [
     {
-      path: 'reviews',
-      populate: { path: 'author', select: ['username'] },
+      path: "reviews",
+      populate: { path: "author", select: ["username"] },
     },
     {
-      path: 'reviews',
-      populate: { path: 'location' },
+      path: "reviews",
+      populate: { path: "location" },
     },
     {
-      path: 'favorites'
+      path: "favorites",
     },
-  ]
+  ];
   try {
-    const user = await User.findById(id)
-      .populate(populateQuery)
-      .exec()
+    const user = await User.findById(id).populate(populateQuery).exec();
     if (user) {
-      res.json(user.toJSON())
+      res.json(user.toJSON());
     }
   } catch (err) {
-    res.status(404).end()
+    res.status(404).end();
   }
 });
 
@@ -72,7 +70,7 @@ router.put("/:id", async (req, res) => {
     const passwordCorrect = await bcrypt.compare(
       oldPassword,
       thisUser.passwordHash
-    )
+    );
 
     if (!(thisUser && passwordCorrect)) {
       console.log("invalid password");
@@ -99,7 +97,9 @@ router.put("/:id", async (req, res) => {
       userUpdate.save();
       res.json(userUpdate.toJSON());
     } catch (error) {
-      res.status(404).end();
+      res.status(422).json({
+        error: "A user already exists with that username or email address.",
+      });
     }
   } else {
     try {
@@ -117,37 +117,41 @@ router.put("/:id", async (req, res) => {
       userUpdate.save();
       res.json(userUpdate.toJSON());
     } catch (error) {
+      res.status(422).json({
+        error: "A user already exists with that username or email address.",
+      });
       res.status(404).end();
     }
   }
 });
 
-router.all('/favorites/:id', async (request, response) => {
-  const { id } = request.params
-  console.log('frog', id)
-  const user = await User.findById(id)
-  const { favPlace } = request.body
-  console.log(favPlace)
-  if(!user){
-    return response.status(422).json({error:'cannot find user'})
-  } 
+router.all("/favorites/:id", async (request, response) => {
+  const { id } = request.params;
+  console.log("frog", id);
+  const user = await User.findById(id);
+  const { favPlace } = request.body;
+  console.log(favPlace);
+  if (!user) {
+    return response.status(422).json({ error: "cannot find user" });
+  }
   try {
     if (user.favorites.includes(favPlace)) {
-            const result = await user.updateOne({
-              $pull: { favorites: favPlace },
-            })
-            response.json(result)
-          } else {
-            const result = await user.updateOne({
-              $push: { favorites: favPlace },
-            }) 
-            response.json(result)
-  }} catch (error) {
-    response.status(404).end()
+      const result = await user.updateOne({
+        $pull: { favorites: favPlace },
+      });
+      response.json(result);
+    } else {
+      const result = await user.updateOne({
+        $push: { favorites: favPlace },
+      });
+      response.json(result);
+    }
+  } catch (error) {
+    response.status(404).end();
   }
-})
+});
 
-module.exports = router
+module.exports = router;
 
 // router.all('/like/:postId', requireAuth, async (request, response) => {
 //   const { postId } = request.params

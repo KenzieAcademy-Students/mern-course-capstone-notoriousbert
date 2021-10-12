@@ -119,19 +119,36 @@ h1.large.you-must-be-logged-in {
   div#reviews-top-container {
     // width: calc(20vw + 20px);
     display: flex;
+    padding: 20px;
     flex-direction: row;
     justify-content: space-evenly;
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+      justify-content: space-between;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0;
+      width: calc(36vw);
+    }
     flex-wrap: wrap;
   }
 
   div.review-card {
     // width: calc(22vw + 16px);
     text-align: left;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 40vw;
     align-items: flex-start;
+    margin-top: calc(2px + 0.4rem);
+    margin-bottom: calc(2px + 0.4rem);
     justify-content: flex-start;
     font-size: calc(10px + 0.4vw);
     @media only screen and (max-width: 600px) {
-      width: calc(20vw + 40px);
+      margin-top: 0;
+      margin-bottom: 0;
+      width: calc(36vw);
+      word-break: break-word;
     }
   }
 
@@ -139,8 +156,6 @@ h1.large.you-must-be-logged-in {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    // padding:0;
-    // justify-content: flex-start;
   }
 
   p#card-text {
@@ -171,20 +186,6 @@ h1.large.you-must-be-logged-in {
     }
   }
 
-  // #favorites-section {
-  //   width: 20vw;
-  //   @media only screen and (max-width: 600px) {
-  //     width: calc(20vw + 40px);
-  //   }
-  // }
-
-  // #reviews-section {
-  //   width: 50vw;
-  //   @media only screen and (max-width: 600px) {
-  //     width: calc(40vw + 40px);
-  //   }
-  // }
-
   h2.responsive-header-user-profile {
     font-size: calc(15px + 0.9vw);
   }
@@ -199,6 +200,27 @@ h1.large.you-must-be-logged-in {
 
     .line {
       padding: 0;
+    }
+
+    hr {
+      width: 100px;
+      height: 35px;
+      filter: contrast(1);
+      margin: 0;
+      padding: 0;
+      background: url("./icons8-dog-bone.svg") center;
+      border: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hr {
+      display: inline-block;
+    }
+    .hr:after {
+      display: block;
+      // border-top: 1px solid lightgray;
+      margin-top: 0.5em;
     }
   }
 
@@ -256,7 +278,30 @@ h1.large.you-must-be-logged-in {
   }
 }
 
+svg.dog-bone {
+  // filter: contrast(4.5);
+}
+
 // Places Page
+
+div.pet-cat-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+figure.figure {
+  position: relative;
+}
+
+figcaption {
+  text-align: center;
+}
+
+img#pet-categories {
+  height: calc(30px + 2vw);
+  width: calc(30px + 2vw);
+}
+
 .places-grid {
   display: grid;
   grid-template-areas:
@@ -337,10 +382,9 @@ h1.large.you-must-be-logged-in {
     // padding-left: calc(16px + 10vw);
     align-items: flex-start;
   }
-
   div.place-details-content.place-responsive > h4 {
     text-align: left !important;
-    font-size: calc(12px + 1vw);
+    font-size: calc(14px + 0.7vw);
   }
 
   div.place-details-content.place-responsive span.bold-responsive {
@@ -349,6 +393,56 @@ h1.large.you-must-be-logged-in {
 
   .places-reviews {
     grid-area: reviews;
+
+    textarea.review-text-area {
+      margin-top: 0.8rem;
+    }
+
+    div#review-card {
+      margin: 1rem;
+      width: 40vw;
+      @media only screen and (max-width: 600px) {
+        width: 70vw;
+      }
+    }
+
+    span#review-text {
+      display: flex;
+      justify-content: center;
+      text-align: left;
+      padding: 0.8rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.8rem;
+      margin-top: 0.3rem;
+      font-size: calc(14px + 0.7vw);
+    }
+
+    span.top-header {
+      font-weight: bold;
+      font-size: calc(16px + 0.8vw);
+    }
+
+    span.react-stars {
+      padding: 0.4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    div.add-a-review {
+      margin-bottom: 1rem;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    button {
+      #review-submit {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+    }
 
     h2 {
       text-align: center;
@@ -373,9 +467,8 @@ h1.large.you-must-be-logged-in {
     }
 
     p {
-      font-size: x-large;
+      font-size: calc(14px + 0.7vw);
       margin: 0;
-      padding-top: 10px;
 
       &.time {
         font-size: small;
@@ -391,6 +484,15 @@ p .my-1 {
     color: $primary-color;
   }
 }
+
+// p.card-text {
+//   display: flex;
+//   justify-content: center;
+// }
+
+// p.card-text > p {
+//   text-align: left;
+// }
 
 a.sign.responsive-card-title {
   font-size: calc(12px + 0.9vw);

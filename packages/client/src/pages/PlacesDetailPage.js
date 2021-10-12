@@ -5,7 +5,9 @@ import {
   Tooltip,
   OverlayTrigger,
   Card,
+  Figure,
 } from "react-bootstrap";
+import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import { LoadingSpinner } from "components";
 import axios from "util/axiosConfig.js";
@@ -19,6 +21,7 @@ export default function PlacesDetailPage({
   match: {
     params: { pid },
   },
+  history,
 }) {
   const {
     state: { user },
@@ -28,13 +31,14 @@ export default function PlacesDetailPage({
   const { state } = useProvideAuth();
   const [favorited, setFavorited] = useState(false);
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
-  const [ reviewText, setReviewText] = useState("")
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState();
 
   const getMarkerAndSetFav = async () => {
     try {
       const singleMarker = await axios.get(`places/${pid}`);
       setMapMarker(singleMarker.data);
-      console.log(singleMarker.data)
+      console.log(singleMarker.data);
       const userResponse = await axios.get(
         `/users/username/${state.user.username}`
       );
@@ -58,7 +62,6 @@ export default function PlacesDetailPage({
   const getMarker = async () => {
     try {
       const singleMarker = await axios.get(`places/${pid}`);
-      console.log(singleMarker);
       setMapMarker(singleMarker.data);
       setLoading(false);
     } catch (error) {
@@ -68,13 +71,13 @@ export default function PlacesDetailPage({
   };
 
   useEffect(() => {
-    console.log(reviewText)
+    console.log(user);
     if (user) {
       getMarkerAndSetFav();
     } else {
       getMarker();
     }
-  }, [user, reviewText]);
+  }, [user]);
 
   if (!mapMarker) {
     return (
@@ -99,6 +102,24 @@ export default function PlacesDetailPage({
     }
   };
 
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
+  };
+
+  const calculateAverageRating = (reviews) => {
+    let numReviewsWithARating = 0;
+    const sum = reviews.reduce((accumulator, review) => {
+      if (review.rating) {
+        accumulator = accumulator + review.rating;
+        numReviewsWithARating++;
+      }
+      return accumulator;
+    }, 0);
+
+    const average = sum / numReviewsWithARating;
+    return average.toFixed(2);
+  };
+
   const renderFavoritesTooltip = (props) => {
     if (user) {
       return (
@@ -119,18 +140,60 @@ export default function PlacesDetailPage({
     const {
       user: { uid },
     } = state;
+    try {
+      const addReview = await axios.put("places/review", {
+        text: reviewText,
+        userId: uid,
+        placeId: mapMarker._id,
+        rating: rating,
+      });
+      setReviewText("");
+      setRating(0);
+      getMarker();
+      toast.success("Review was created!");
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
 
-    const addReview = await axios.put("places/review",{
-      text : reviewText,
-      userId : uid,
-      placeId : mapMarker._id 
-    })
-
-
-    console.log(uid)
-    console.log("handling review")
-    console.log(state)
-  }
+  const petCategories = {
+    Dog: (
+      <Figure>
+        <Figure.Image
+          id="pet-categories"
+          alt="Dog"
+          src="/icons8-dog-right.svg"
+        />
+        <Figure.Caption>Dog</Figure.Caption>
+      </Figure>
+    ),
+    Cat: (
+      <Figure>
+        <Figure.Image
+          id="pet-categories"
+          alt="Cat"
+          src="/icons8-cat-smile.svg"
+        />
+        <Figure.Caption>Cat</Figure.Caption>
+      </Figure>
+    ),
+    Bird: (
+      <Figure>
+        <Figure.Image id="pet-categories" alt="Bird" src="/icons8-bird.svg" />
+        <Figure.Caption>Bird</Figure.Caption>
+      </Figure>
+    ),
+    Reptile: (
+      <Figure id="figure-pet-categories">
+        <Figure.Image
+          id="pet-categories"
+          alt="Reptile"
+          src="/icons8-turtle.svg"
+        />
+        <Figure.Caption>Reptile</Figure.Caption>
+      </Figure>
+    ),
+  };
 
   return (
     <section className="container">
@@ -203,15 +266,23 @@ export default function PlacesDetailPage({
               </h4>
 
               <h4>
-                Pets Allowed:{" "}
-                {mapMarker.petsAllowed.map((pet, index) =>
-                  index === mapMarker.petsAllowed.length - 1 ? (
-                    <>{pet.category}</>
-                  ) : (
-                    <>{pet.category}, </>
-                  )
-                )}{" "}
+                Pets Allowed: <br />
+                <br />
+                <div className="pet-cat-container">
+                  {mapMarker.petsAllowed.map((pet, index) => (
+                    <>
+                      {petCategories[pet.category]}
+                      {"   "}
+                    </>
+                  ))}{" "}
+                </div>
               </h4>
+              {mapMarker.reviews.length > 0 &&
+                !isNaN(calculateAverageRating(mapMarker.reviews)) && (
+                  <h4>
+                    Average Rating: {calculateAverageRating(mapMarker.reviews)}
+                  </h4>
+                )}
               {mapMarker.description && (
                 <h4>Description: {mapMarker.description}</h4>
               )}
@@ -228,31 +299,70 @@ export default function PlacesDetailPage({
 
           <div className="d-flex justify-content-md-between align-items-space-between">
             {" "}
-          <input
-                    type="submit"
-                    className="btn btn-primary"
-                    value="Add a Review"
-                    onClick={(e) => {
-                      handleReview(e)
-                    }}
-                  />
-            <textarea onChange={(e) => setReviewText(e.target.value)
-            }/>
+            {user && (
+              <div className="add-a-review">
+                <span className="top-header">Leave A Review</span>
+                <form onSubmit={(e) => handleReview(e)} className="place-form">
+                  <label>
+                    <span className="react-stars">
+                      <ReactStars
+                        value={rating}
+                        count={5}
+                        onChange={ratingChanged}
+                        size={24}
+                        isHalf={false}
+                        activeColor="#ffd700"
+                      />
+                    </span>
+                    <textarea
+                      className="form-control form-rounded border border-info review-text-area"
+                      type="text"
+                      rows="5"
+                      cols="50"
+                      required
+                      value={reviewText}
+                      placeholder="Share your experience..."
+                      onChange={(e) => setReviewText(e.target.value)}
+                    />
+                  </label>
+                  <Button type="submit" id="review-submit">
+                    Submit
+                  </Button>
+                </form>
+              </div>
+            )}
             {mapMarker.reviews.map((review) => (
-              <Card>
+              <Card id="review-card">
                 <Card.Body>
                   <Card.Title>
                     <Link to={`/users/${review.author.username}`}>
                       <h4>{review.author.username}</h4>
                     </Link>{" "}
                   </Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
+                  <Card.Subtitle className="m-1 text-muted">
                     {timeSince(review.created)} ago
                   </Card.Subtitle>
                   <Card.Text>
-                    <div>
-                      <p>{review.text}</p>
-                    </div>
+                    {review.rating && (
+                      <span className="react-stars">
+                        <ReactStars
+                          count={5}
+                          edit={false}
+                          value={review.rating}
+                          size={24}
+                          isHalf={true}
+                          emptyIcon={
+                            <img
+                              src="/icons8-cat-unfilled.png"
+                              alt="empty-star"
+                            ></img>
+                          }
+                          fullIcon={<i className="fa fa-star"></i>}
+                          activeColor="#ffd700"
+                        />
+                      </span>
+                    )}
+                    <span id="review-text">{review.text}</span>
                   </Card.Text>
                 </Card.Body>
               </Card>
