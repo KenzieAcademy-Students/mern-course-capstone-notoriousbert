@@ -8,10 +8,6 @@ import petsRouter from "./pets";
 
 const router = express.Router();
 
-router.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/app/client/build/index.html"));
-});
-
 router.get("/", (req, res, next) => {
   res.status(200).send("api endpoint");
 });
