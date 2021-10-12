@@ -1,0 +1,11 @@
+{"typeofPlace": "restaurant", "placeName": "Dog N Suds", "address": "123 Fake St", "city": "Indianapolis", "state": "IN", "zipcode": 46204, 
+"petsAllowed": [
+  {
+    "pet": {
+      "type": "Dog"
+    },
+    "allowed": {
+      "type": true
+    }
+  }
+]}

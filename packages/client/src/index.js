@@ -1,17 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import HomePage from 'pages/HomePage'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "App";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { AppRouter } from "AppRouter";
+import { ProvideAuth } from "hooks/useAuth";
+
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>  
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-        { /* Add more routes here */} 
-      </Switch>
-    </BrowserRouter>
+    <ProvideAuth>
+      <BrowserRouter>
+        <AppRouter>
+          <App />
+        </AppRouter>
+      </BrowserRouter>
+    </ProvideAuth>
   </React.StrictMode>,
-  document.getElementById('root')
-)
+  document.getElementById("root")
+);

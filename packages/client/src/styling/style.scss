@@ -1,0 +1,520 @@
+@import "_config";
+@import "_utilities";
+@import "_form";
+
+.app {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.body {
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  background-color: #fff;
+  color: #333;
+  // max-width: 1100px;
+}
+
+a {
+  text-decoration: none;
+  color: $primary-color;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+a.sign {
+  text-decoration: none;
+  color: $primary-color;
+}
+
+h1.large {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 0rem;
+  color: $primary-color;
+}
+
+h1.large-places {
+  padding: 0;
+  margin: 0;
+}
+
+span.shift-up {
+  position: relative;
+  bottom: 4px;
+}
+
+p.text-overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 40vw;
+  text-overflow: ellipsis;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+h1.large.you-must-be-logged-in {
+  font-size: 5vh;
+}
+
+// Landing
+.landing {
+  position: relative;
+  background: url("./flying-with-dog-2.jpeg") no-repeat center center/cover;
+  height: 100vh;
+
+  &-inner {
+    color: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+// Profile Page
+.profile-grid {
+  display: grid;
+  grid-template-areas:
+    "top top top top"
+    "about about about about"
+    "favorites reviews reviews reviews";
+  grid-gap: 1rem;
+
+  .profile-top {
+    grid-area: top;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1.large {
+      color: #fff;
+      margin: 0;
+    }
+  }
+
+  div#reviews-container-responsive {
+    display: flex;
+    // flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  div#reviews-top-container {
+    // width: calc(20vw + 20px);
+    display: flex;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+      justify-content: space-between;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0;
+      width: calc(36vw);
+    }
+    flex-wrap: wrap;
+  }
+
+  div.review-card {
+    // width: calc(22vw + 16px);
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 40vw;
+    align-items: flex-start;
+    margin-top: calc(2px + 0.4rem);
+    margin-bottom: calc(2px + 0.4rem);
+    justify-content: flex-start;
+    font-size: calc(10px + 0.4vw);
+    @media only screen and (max-width: 600px) {
+      margin-top: 0;
+      margin-bottom: 0;
+      width: calc(36vw);
+      word-break: break-word;
+    }
+  }
+
+  div.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  p#card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0;
+  }
+
+  .profile-about {
+    grid-area: about;
+    text-align: center;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-bottom: #ccc 1px solid;
+
+    h2 {
+      text-align: center;
+      padding-bottom: 1rem;
+      margin: 0;
+    }
+  }
+
+  h2.responsive-header-user-profile {
+    font-size: calc(15px + 0.9vw);
+  }
+
+  .profile-favorites {
+    grid-area: favorites;
+
+    h2 {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .line {
+      padding: 0;
+    }
+
+    hr {
+      width: 100px;
+      height: 35px;
+      filter: contrast(1);
+      margin: 0;
+      padding: 0;
+      background: url("./icons8-dog-bone.svg") center;
+      border: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hr {
+      display: inline-block;
+    }
+    .hr:after {
+      display: block;
+      // border-top: 1px solid lightgray;
+      margin-top: 0.5em;
+    }
+  }
+
+  .profile-favorites > div,
+  .profile-reviews > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: #ccc 1px dotted;
+
+    &:last-child {
+      border: none;
+    }
+
+    p {
+      margin: 1rem;
+    }
+  }
+
+  .profile-reviews {
+    grid-area: reviews;
+
+    h2 {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .line {
+      padding: 0;
+    }
+  }
+}
+
+.form {
+  &-group {
+    margin: 1.5rem 0;
+    input,
+    select,
+    textarea {
+      display: block;
+      width: 100%;
+      padding: 0.4rem;
+      font-size: 1.2rem;
+      border: 1px solid #ccc;
+    }
+  }
+  &-text {
+    display: block;
+    margin-top: 0.3rem;
+    color: #888;
+  }
+}
+
+svg.dog-bone {
+  // filter: contrast(4.5);
+}
+
+// Places Page
+
+div.pet-cat-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+figure.figure {
+  position: relative;
+}
+
+figcaption {
+  text-align: center;
+}
+
+img#pet-categories {
+  height: calc(30px + 2vw);
+  width: calc(30px + 2vw);
+}
+
+.places-grid {
+  display: grid;
+  grid-template-areas:
+    "top top"
+    "about about"
+    "reviews reviews";
+  grid-gap: 1rem;
+
+  .places-top {
+    grid-area: top;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1.large {
+      color: #fff;
+      margin: 0;
+    }
+  }
+
+  .places-about {
+    grid-area: about;
+
+    h2,
+    h4 {
+      text-align: center;
+      padding: 0.5rem;
+      margin: 0;
+    }
+
+    .line {
+      height: 1px;
+      padding: 0;
+    }
+  }
+
+  .places-details {
+    grid-area: about;
+  }
+
+  .places-about > div {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: #ccc 1px solid;
+  }
+
+  .places-reviews > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    border-bottom: #ccc 1px dotted;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  div.place-details-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  div.place-details-content.place-responsive {
+    // padding: 2% 15%;
+
+    // padding-left: calc(16px + 10vw);
+    align-items: flex-start;
+  }
+  div.place-details-content.place-responsive > h4 {
+    text-align: left !important;
+    font-size: calc(14px + 0.7vw);
+  }
+
+  div.place-details-content.place-responsive span.bold-responsive {
+    font-weight: 600;
+  }
+
+  .places-reviews {
+    grid-area: reviews;
+
+    textarea.review-text-area {
+      margin-top: 0.8rem;
+    }
+
+    div#review-card {
+      margin: 1rem;
+      width: 40vw;
+      @media only screen and (max-width: 600px) {
+        width: 70vw;
+      }
+    }
+
+    span#review-text {
+      display: flex;
+      justify-content: center;
+      text-align: left;
+      padding: 0.8rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.8rem;
+      margin-top: 0.3rem;
+      font-size: calc(14px + 0.7vw);
+    }
+
+    span.top-header {
+      font-weight: bold;
+      font-size: calc(16px + 0.8vw);
+    }
+
+    span.react-stars {
+      padding: 0.4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    div.add-a-review {
+      margin-bottom: 1rem;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    button {
+      #review-submit {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      padding: 0.5rem;
+      margin: 0;
+    }
+
+    h4 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .line {
+      padding-bottom: 0;
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: $primary-color;
+      font-size: large;
+    }
+
+    p {
+      font-size: calc(14px + 0.7vw);
+      margin: 0;
+
+      &.time {
+        font-size: small;
+        padding: 0;
+      }
+    }
+  }
+}
+
+p .my-1 {
+  .a-sign {
+    text-decoration: none;
+    color: $primary-color;
+  }
+}
+
+// p.card-text {
+//   display: flex;
+//   justify-content: center;
+// }
+
+// p.card-text > p {
+//   text-align: left;
+// }
+
+a.sign.responsive-card-title {
+  font-size: calc(12px + 0.9vw);
+}
+
+a.sign.responsive-favorites-text > p {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: calc(10px + 0.9vw);
+  max-width: 25vw;
+  text-overflow: ellipsis;
+}
+
+#responsive-card-subtitle {
+  font-size: calc(10px + 0.7vw);
+}
+
+p.my-1.responsive {
+  font-size: calc(12px + 0.9vw);
+}
+
+.place-form {
+  margin: 0;
+  padding: 0;
+}
