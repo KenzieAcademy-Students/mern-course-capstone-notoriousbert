@@ -37,17 +37,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(requestLogger);
 
-//app.use(express.static(path.join(__dirname, "../../client/build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/app/client/build/index.html"));
-});
+app.use(express.static(path.join(__dirname, "/client/build/index.html")));
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname + "/app/client/build/index.html"));
+// });
 // api router
 app.use(keys.app.apiEndpoint, router);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404, "NotFound"));
-});
+// app.use((req, res, next) => {
+//   next(createError(404, "NotFound"));
+// });
 
 // error handler
 // app.use(errorHandler);
