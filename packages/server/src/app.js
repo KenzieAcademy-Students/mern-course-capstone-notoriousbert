@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(requestLogger);
 
-app.use(express.static(path.join(__dirname, "../../client/build/index.html")));
+app.use(express.static(path.join(__dirname, "../../client/build")));
 
 // api router
 app.use(keys.app.apiEndpoint, router);
