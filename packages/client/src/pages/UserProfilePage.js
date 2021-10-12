@@ -107,66 +107,70 @@ export default function UserProfilePage({
             </div>
             <Collapse in={open}>
               <Form id="editForm" className="mt-3">
-                <h4> Current Username: {user.username}</h4>
-                <div id="example-collapse-text">
-                  <div class="form-group">
-                    <input
-                      name="newusername"
-                      placeholder="New Username"
-                      value={formData.newusername}
-                      className="rounded border-info"
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
+                <div id="edit-form">
+                  <h4> Current Username: {user.username}</h4>
+                  <div id="example-collapse-text">
+                    <div class="form-group">
+                      <input
+                        name="newusername"
+                        placeholder="New Username"
+                        value={formData.newusername}
+                        className="rounded border-info"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                    <h4>Change Password</h4>
+                    <div class="form-group">
+                      <input
+                        name="oldPassword"
+                        placeholder="Old Password"
+                        className="rounded border-info"
+                        value={formData.oldPassword}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        name="newPassword"
+                        placeholder="New Password"
+                        className="rounded border-info"
+                        value={formData.newPassword}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        name="confirmPassword"
+                        placeholder="Confirm New Password"
+                        className="rounded border-info"
+                        value={formData.confirmPassword}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                    <h4>Change Email</h4>
+                    <span>Current Email: {user.email}</span>
+                    <div class="form-group">
+                      <input
+                        name="email"
+                        placeholder="New Email"
+                        className="rounded border-info"
+                        value={formData.email}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
                   </div>
-                  <h4>Change Password</h4>
-                  <div class="form-group">
-                    <input
-                      name="oldPassword"
-                      placeholder="Old Password"
-                      className="rounded border-info"
-                      value={formData.oldPassword}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="newPassword"
-                      placeholder="New Password"
-                      className="rounded border-info"
-                      value={formData.newPassword}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="confirmPassword"
-                      placeholder="Confirm New Password"
-                      className="rounded border-info"
-                      value={formData.confirmPassword}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <h4>Change Email</h4>
-                  <span>Current Email: {user.email}</span>
-                  <div class="form-group">
-                    <input
-                      name="email"
-                      placeholder="New Email"
-                      className="rounded border-info"
-                      value={formData.email}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
+                </div>
+                <span id="edit-profile-button">
                   <input
                     type="submit"
                     className="btn btn-primary"
@@ -175,7 +179,7 @@ export default function UserProfilePage({
                       handleSubmit(e);
                     }}
                   />
-                </div>
+                </span>
               </Form>
             </Collapse>
           </div>

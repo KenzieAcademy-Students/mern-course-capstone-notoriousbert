@@ -109,7 +109,7 @@ export default function PlacesDetailPage({
   const calculateAverageRating = (reviews) => {
     let numReviewsWithARating = 0;
     const sum = reviews.reduce((accumulator, review) => {
-      if (review.rating) {
+      if (review.rating && review.author) {
         accumulator = accumulator + review.rating;
         numReviewsWithARating++;
       }
@@ -331,42 +331,44 @@ export default function PlacesDetailPage({
                 </form>
               </div>
             )}
-            {mapMarker.reviews.map((review) => (
-              <Card id="review-card">
-                <Card.Body>
-                  <Card.Title>
-                    <Link to={`/users/${review.author.username}`}>
-                      <h4>{review.author.username}</h4>
-                    </Link>{" "}
-                  </Card.Title>
-                  <Card.Subtitle className="m-1 text-muted">
-                    {timeSince(review.created)} ago
-                  </Card.Subtitle>
-                  <Card.Text>
-                    {review.rating && (
-                      <span className="react-stars">
-                        <ReactStars
-                          count={5}
-                          edit={false}
-                          value={review.rating}
-                          size={24}
-                          isHalf={true}
-                          emptyIcon={
-                            <img
-                              src="/icons8-cat-unfilled.png"
-                              alt="empty-star"
-                            ></img>
-                          }
-                          fullIcon={<i className="fa fa-star"></i>}
-                          activeColor="#ffd700"
-                        />
-                      </span>
-                    )}
-                    <span id="review-text">{review.text}</span>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            ))}
+            {mapMarker.reviews.map((review) => {
+              return !review.author ? null : (
+                <Card id="review-card">
+                  <Card.Body>
+                    <Card.Title className="m-0">
+                      <Link to={`/users/${review.author.username}`}>
+                        <h4>{review.author.username}</h4>
+                      </Link>{" "}
+                    </Card.Title>
+                    <Card.Subtitle className="text-muted">
+                      {timeSince(review.created)} ago
+                    </Card.Subtitle>
+                    <Card.Text>
+                      {review.rating && (
+                        <span className="react-stars finished-review">
+                          <ReactStars
+                            count={5}
+                            edit={false}
+                            value={review.rating}
+                            size={24}
+                            isHalf={true}
+                            emptyIcon={
+                              <img
+                                src="/icons8-cat-unfilled.png"
+                                alt="empty-star"
+                              ></img>
+                            }
+                            fullIcon={<i className="fa fa-star"></i>}
+                            activeColor="#ffd700"
+                          />
+                        </span>
+                      )}
+                      <span id="review-text">{review.text}</span>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>
