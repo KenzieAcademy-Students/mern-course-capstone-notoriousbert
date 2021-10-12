@@ -1,6 +1,7 @@
 import express from "express";
-import { Place, Review } from "../models";
+import { Place, Review, User } from "../models";
 const router = express.Router();
+import { requireAuth } from "../middleware";
 
 router.get("/", async (req, res) => {
   const populateQuery = [
@@ -121,23 +122,44 @@ router.post("/", async (request, response, next) => {
 });
 
 //put REVIEW
-router.put("/review", async (req, res) => {
-  const { text, userId, placeId } = req.body;
+router.put("/review", requireAuth, async (req, res) => {
+  const { text, userId, placeId, rating } = req.body;
 
   const review = new Review({
     text: text,
     author: userId,
+    location: placeId,
+    rating: rating,
   });
+  try {
+    const placeResult = await Place.findByIdAndUpdate(
+      placeId,
+      {
+        $push: { reviews: review },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(placeResult);
+  } catch (error) {
+    res.status(404).end();
+  }
 
-  Place.findByIdAndUpdate(
-    placeId,
-    {
-      $push: { reviews: review },
-    },
-    {
-      new: true,
-    }
-  );
+  try {
+    const userResult = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: { reviews: review },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(userResult);
+  } catch (error) {
+    res.status(404).end();
+  }
 
   try {
     const savedReview = await review.save();

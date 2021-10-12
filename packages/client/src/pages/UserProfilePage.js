@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "components";
-import { Container } from "react-bootstrap";
-import { Col, Row, Button, Form, Collapse, Card } from "react-bootstrap";
+import { Button, Form, Collapse, Card } from "react-bootstrap";
 import { useProvideAuth } from "hooks/useAuth";
 import axios from "util/axiosConfig.js";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import { timeSince } from "util/timeSince";
+import ReactStars from "react-rating-stars-component";
 
 const initialState = {
   newusername: "",
@@ -51,7 +50,7 @@ export default function UserProfilePage({
 
   useEffect(() => {
     getUser();
-  }, [uid]);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -85,7 +84,7 @@ export default function UserProfilePage({
       updateUsername(userData);
       getUser(uid);
     } catch (error) {
-      console.log("you cannot edit profile at this time");
+      toast.error(error.response.data.error);
     }
   };
 
@@ -214,17 +213,9 @@ export default function UserProfilePage({
           class="profile-reviews background-white rounded"
         >
           <h2 class="primary-text responsive-header-user-profile">Reviews</h2>
-          <div class="line"></div>
+          <div class="line" style={{ padding: "0", margin: "0" }}></div>
           <div id="reviews-top-container">
-            {/* <div id="reviews-container-responsive"> */}
             {user.reviews.map((review) => (
-              //   <div>
-              //     <b>Placename:</b> {review.location.placeName}
-              //     <div>
-              //       <b>Review:</b> {review.text}
-              //     </div>
-              //     <hr />
-              //   </div>
               <div className="review-card">
                 <Card>
                   <Card.Body>
@@ -242,7 +233,28 @@ export default function UserProfilePage({
                     >
                       {timeSince(review.created)} ago
                     </Card.Subtitle>
-                    <Card.Text id="card-text">{review.text}</Card.Text>
+                    <Card.Text id="card-text">
+                      {review.rating && (
+                        <span className="react-stars">
+                          <ReactStars
+                            count={5}
+                            edit={false}
+                            value={review.rating}
+                            size={16}
+                            isHalf={true}
+                            emptyIcon={
+                              <img
+                                src="/icons8-cat-unfilled.png"
+                                alt="empty-star"
+                              ></img>
+                            }
+                            fullIcon={<i className="fa fa-star"></i>}
+                            activeColor="#ffd700"
+                          />
+                        </span>
+                      )}
+                      {review.text}
+                    </Card.Text>
                   </Card.Body>
                 </Card>
                 {/* <hr /> */}
