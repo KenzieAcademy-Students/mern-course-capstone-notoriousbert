@@ -44,9 +44,10 @@ app.use(keys.app.apiEndpoint, router)
 
 if (process.env.NODE_ENV === "production") {
   app.get("*", function (req, res) {
-    res.sendFile(path.join(_dirname, "../../client/build/index.html"))
-  })
+    res.sendFile(path.join(__dirname, "../../client/build/index.html"));
+  });
 }
+
 
 // catch 404 and forward to error handler
 // app.use((req, res, next) => {
