@@ -12,10 +12,10 @@ import { requestLogger, errorHandler } from "./middleware";
 const createError = require("http-errors");
 
 mongoose.connect(keys.database.url, {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-  // useFindAndModify: false,
-  // useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
 });
 
 mongoose.connection.on("connected", () => {
@@ -29,6 +29,13 @@ mongoose.connection.on("error", (err) => {
 const app = express();
 
 // middleware
+if (process.env.NODE_ENV === "production") {
+  console.log("PRODUCTION PRODUCTION");
+  app.use(express.static("client/build"));
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
+}
 app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
