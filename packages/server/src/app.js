@@ -43,11 +43,16 @@ app.use(express.static(path.join(__dirname, '../../client/build')));
 app.use(keys.app.apiEndpoint, router)
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404, 'NotFound'))
-})
+// app.use((req, res, next) => {
+//   next(createError(404, 'NotFound'))
+// })
 
 // error handler
-app.use(errorHandler)
+// app.use(errorHandler)
+if (process.env.NODE_ENV === "production") {
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../../client/build/index.html"));
+  });
+}
 
 module.exports = app
