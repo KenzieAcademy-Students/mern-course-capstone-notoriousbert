@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "./navbar.scss";
@@ -16,12 +16,16 @@ const NavbarTop = () => {
         <Link to={user ? `/users/${user.username}` : `/map`}>
           <img src="/icons8-animal-shelter.svg" alt="logo" className="logo" />
         </Link>
-        <ul>
+        <ul className={user ? "logged-in" : "not-logged-in"}>
           <li>
-            <Link to="/map">Map</Link>
+            <Link id={user ? "logged-in-a-1" : ""} to="/map">
+              Map
+            </Link>
           </li>
           <li>
-            <Link to="/add-a-place">Add a Place</Link>
+            <Link id={user ? "logged-in-a-2" : ""} to="/add-a-place">
+              Add a Place
+            </Link>
           </li>
           {user ? null : (
             <li>
