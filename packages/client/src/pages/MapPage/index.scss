@@ -38,12 +38,7 @@
     font-size: calc(5px + 1.8vw);
   }
 
-  img {
-    max-width: none;
-  }
-
   img.compass {
-    min-width: 4vw;
   }
 
   .search-container {
@@ -56,27 +51,39 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
+      @media only screen and (max-width: 600px) {
+        left: 40%;
+      }
     }
 
     .search input {
-      width: 100%;
+      width: 45vw;
+      max-width: 500px;
       height: 5vh;
       font-size: calc(8px + 0.8vw);
       padding: 0.5rem;
+
+      @media only screen and (max-width: 600px) {
+        width: 60vw;
+        height: 7vh;
+        font-size: calc(10px + 0.8vw + 0.3vh);
+      }
     }
   }
 
   .locate {
     position: absolute;
-    top: 1rem;
+    top: 2%;
     right: 1rem;
     background: none;
     border: none;
     z-index: 10;
   }
   .locate img {
-    width: 30px;
+    width: 50px;
     cursor: pointer;
+    max-width: 70px;
+    width: calc(4vw + 25px + 2vh);
   }
 
   .add-a-location {
@@ -92,24 +99,53 @@
 
   .filter-search-form {
     display: flex;
-    padding-left: 2.5vh;
-    padding-top: 2vh;
-    padding-right: 1vh;
-    padding-bottom: 0;
     margin-bottom: 0;
-    font-size: 2vh;
     position: fixed;
-    background-color: rgb(237, 241, 245, 0.8);
     border-radius: 2vh;
     box-sizing: content-box;
-    width: 18vh;
-    max-width: 100%;
+    // width: calc(10vw + 100px);
+    // max-width: 500px;
     z-index: 10;
     bottom: 5vh;
     left: 2vh;
 
-    @media only screen and (max-width: 350px) {
+    @media only screen and (max-width: 600px) {
       height: 23vh;
+      bottom: 6.8vh;
+      left: 0.3vw;
+      margin-left: 0;
     }
   }
+
+  // gm-style .gm-style-iw {
+  //   // background-color: #252525 !important;
+  //   top: 0 !important;
+  //   left: 0 !important;
+  //   width: 100% !important;
+  //   height: 100% !important;
+  //   min-height: 120px !important;
+  //   padding-top: 10px;
+  //   // display: block !important;
+  // }
+
+  /*style the paragraph tag*/
+  //   .gm-style .gm-style-iw #google-popup p {
+  //     padding: 10px;
+  //   }
+
+  //   /*style the annoying little arrow at the bottom*/
+  //   .gm-style div div div div div div div div {
+  //     // background-color: #252525 !important;
+  //     // margin: 0;
+  //     // padding: 0;
+  //     // top: 0;
+  //     // color: #fff;
+  //     // font-size: 16px;
+  //   }
+
+  //   /*style the link*/
+  //   .gm-style div div div div div div div div a {
+  //     // color: #f1f1f1;
+  //     // font-weight: bold;
+  //   }
 }
