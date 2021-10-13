@@ -94,6 +94,16 @@ h1.large.you-must-be-logged-in {
     "favorites reviews reviews reviews";
   grid-gap: 1rem;
 
+  div#edit-form {
+    text-align: left;
+  }
+
+  span#edit-profile-button {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
   .profile-top {
     grid-area: top;
     display: flex;
@@ -134,14 +144,17 @@ h1.large.you-must-be-logged-in {
   }
 
   div.review-card {
-    // width: calc(22vw + 16px);
+    div.card {
+      border: none;
+    }
+
     text-align: left;
     overflow-wrap: break-word;
     word-break: break-word;
     width: 40vw;
     align-items: flex-start;
-    margin-top: calc(2px + 0.4rem);
-    margin-bottom: calc(2px + 0.4rem);
+    margin-top: calc(2px + 0.2rem);
+    margin-bottom: calc(2px + 0.2rem);
     justify-content: flex-start;
     font-size: calc(10px + 0.4vw);
     @media only screen and (max-width: 600px) {
@@ -399,18 +412,30 @@ img#pet-categories {
     }
 
     div#review-card {
-      margin: 1rem;
+      text-align: left;
+      border: none;
+      margin: 0.4rem;
       width: 40vw;
       @media only screen and (max-width: 600px) {
         width: 70vw;
       }
+
+      div.card-subtitle {
+        padding: 0;
+        margin: 0;
+      }
+
+      div.card-body {
+        padding-top: 0.6rem;
+      }
     }
 
     span#review-text {
+      padding-top: 0.4rem;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       text-align: left;
-      padding: 0.8rem;
+      // padding-top: 0.3rem;
     }
 
     label {
@@ -429,6 +454,13 @@ img#pet-categories {
       padding: 0.4rem;
       display: flex;
       justify-content: center;
+    }
+
+    span.react-stars.finished-review {
+      padding: 0.4rem;
+      padding-left: 0;
+      display: flex;
+      justify-content: flex-start;
     }
 
     div.add-a-review {
@@ -484,15 +516,6 @@ p .my-1 {
     color: $primary-color;
   }
 }
-
-// p.card-text {
-//   display: flex;
-//   justify-content: center;
-// }
-
-// p.card-text > p {
-//   text-align: left;
-// }
 
 a.sign.responsive-card-title {
   font-size: calc(12px + 0.9vw);
