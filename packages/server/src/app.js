@@ -29,15 +29,15 @@ mongoose.connection.on("error", (err) => {
 const app = express();
 
 // middleware
-// if (process.env.NODE_ENV === "production") {
-//   console.log(__dirname);
-//   console.log("PRODUCTION PRODUCTION");
-//   // app.use(express.static("client/build"));
-//   app.use(express.static(path.join(__dirname, "../../client/build")));
-//   app.get("*", function (req, res) {
-//     res.sendFile(path.join(__dirname, "../../client/build/index.html"));
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  console.log(__dirname);
+  console.log("PRODUCTION PRODUCTION");
+  // app.use(express.static("client/build"));
+  // app.use(express.static(path.join(__dirname, "../../client/build")));
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../../client/build/index.html"));
+  });
+}
 app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
