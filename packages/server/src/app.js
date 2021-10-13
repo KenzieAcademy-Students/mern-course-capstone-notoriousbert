@@ -32,10 +32,10 @@ const app = express();
 if (process.env.NODE_ENV === "production") {
   console.log(__dirname);
   console.log("PRODUCTION PRODUCTION");
-  app.use(express.static("client/build"));
-  // app.use(express.static(path.join(__dirname, "public")));
-  app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "/index.html"));
+  // app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "../../client/public/build")));
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../../client/public/index.html"));
   });
 }
 app.use(logger("dev"));
