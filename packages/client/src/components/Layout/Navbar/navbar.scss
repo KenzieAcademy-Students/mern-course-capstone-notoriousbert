@@ -22,7 +22,15 @@ nav.navbar {
     left: 5%;
   }
 
-  ul {
+  ul.logged-in {
+    display: flex;
+    box-sizing: border-box;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    padding: 0;
+  }
+
+  ul.not-logged-in {
     display: flex;
     justify-content: space-around;
     box-sizing: border-box;
@@ -32,6 +40,9 @@ nav.navbar {
     @media only screen and (max-width: 600px) {
       width: 75%;
     }
+  }
+
+  ul {
   }
 
   li {
@@ -44,12 +55,24 @@ nav.navbar {
     margin: 0 0.5rem;
     text-decoration: none;
 
-    @media only screen and (max-width: 600px) {
-      margin: 0;
+    @media only screen and (max-width: 320px) {
+      margin: 0rem;
     }
 
     &:hover {
       color: #2a9d8f;
+    }
+  }
+
+  a#logged-in-a-1 {
+    @media only screen and (max-width: 320px) {
+      margin: 0.3rem;
+    }
+  }
+
+  a#logged-in-a-2 {
+    @media only screen and (max-width: 320px) {
+      margin: 0.3rem;
     }
   }
 
