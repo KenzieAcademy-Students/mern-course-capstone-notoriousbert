@@ -6,6 +6,7 @@ import "./index.scss";
 import { Link } from "react-router-dom";
 import { useState, useCallback, useRef, useEffect } from "react";
 import axios from "util/axiosConfig.js";
+import { useMediaQuery } from "react-responsive";
 
 import {
   GoogleMap,
@@ -52,6 +53,7 @@ export default function MapPage() {
     libraries,
   });
 
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
 
@@ -96,8 +98,6 @@ export default function MapPage() {
   return (
     <section className="mapContainer">
       <div className="mapStyleContainer">
-        <h1>Pet Friendly?</h1>
-
         <div className="search-container">
           <Search panTo={panTo} />
         </div>
@@ -167,16 +167,18 @@ export default function MapPage() {
             </InfoWindow>
           ) : null}
         </GoogleMap>
-        <div className="filter-search-form">
-          <SearchForm
-            markers={markers}
-            setMarkers={setMarkers}
-            getMarkers={getMarkers}
-          />
-        </div>
-        <div className="add-a-location">
-          <Link to="/add-a-place">Add a new location!</Link>
-        </div>
+        {/* <div className="filter-search-form"> */}
+        <SearchForm
+          markers={markers}
+          setMarkers={setMarkers}
+          getMarkers={getMarkers}
+        />
+        {/* </div> */}
+        {!isMobile && (
+          <div className="add-a-location">
+            <Link to="/add-a-place">Add a new location!</Link>
+          </div>
+        )}
       </div>
     </section>
   );
