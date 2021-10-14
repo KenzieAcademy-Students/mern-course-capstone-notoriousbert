@@ -8,10 +8,12 @@ const getUserToken = () => {
 
 // configure axios instance
 const instance = axios.create({
+
   // url: "api/",
   // baseURL: `http://localhost:3000/api/`,
   baseURL: `https://kibbles-and-ritz.herokuapp.com/api`,
 });
+
 
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers.common["Authorization"] = getUserToken();

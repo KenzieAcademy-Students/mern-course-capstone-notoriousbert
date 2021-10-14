@@ -52,12 +52,20 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+if (process.env.NODE_ENV === "production") {
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../../client/build/index.html"));
+  });
+}
+
+
 // catch 404 and forward to error handler
 // app.use((req, res, next) => {
 //   next(createError(404, 'NotFound'))
 // })
 
-// error handler
-// app.use(errorHandler)
+
+//app.use(errorHandler)
+
 
 module.exports = app;
