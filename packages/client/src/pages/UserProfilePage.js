@@ -27,6 +27,7 @@ export default function UserProfilePage({
   const [open, setOpen] = useState(false);
 
   const getUser = async (userId) => {
+    setLoading(true);
     if (userId) {
       try {
         const userResponse = await axios.get(`/users/${userId}`);
@@ -50,7 +51,7 @@ export default function UserProfilePage({
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [uid]);
 
   const handleChange = (e) => {
     setFormData({

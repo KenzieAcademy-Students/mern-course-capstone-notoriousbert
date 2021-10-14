@@ -17,7 +17,7 @@ const reducer = (state, action) => {
         user: action.payload,
       };
     case "LOGOUT":
-      localStorage.clear();
+      localStorage.removeItem("MernAppUser");
       return {
         ...state,
         isAuthenticated: false,
