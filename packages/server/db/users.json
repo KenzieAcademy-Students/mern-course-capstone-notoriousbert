@@ -1,0 +1,7 @@
+{"_id":{"$oid":"6099c53e3ee2c947b544a84c"},"profile_image":"/bird.svg","username":"alice","email":"a@a.com", "passwordHash":"$2a$12$fsBxfD2j7E9M7z0JLQPBvubh6F4j80IwJef6SDWpA7lCcJ.TFaHRu","__v":1}
+
+{"_id":{"$oid":"6099c5713ee2c947b544a84e"},"profile_image":"/fox.svg","username":"jeffrey","email":"b@b.com","passwordHash":"$2a$12$/XIwqvhWAIvDrpaZxb0NH.UFPTxx9jWL2etAztvyzZW0gWGF/B7v6","__v":2}
+
+{"_id":{"$oid":"6099c61a3ee2c947b544a851"},"profile_image":"/owl.svg","username":"shaquon","email":"c@c.com","passwordHash":"$2a$12$bK2dRoIe9H5lwoBsx.h.4.7PdL2L03DmiGX6AekBS3vkCxAjzOyXm","__v":1}
+
+{"_id":{"$oid":"6099c6683ee2c947b544a854"},"profile_image":"/tiger.svg","username":"sonia","email":"d@d.com","passwordHash":"$2a$12$6aylyC9HVnWDVuV0J6auDO4qZtpZUJ08SEIbn87l.xHVr89Cr0DCK","__v":1}
