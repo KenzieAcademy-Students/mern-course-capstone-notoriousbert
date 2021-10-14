@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useState, useCallback, useRef, useEffect } from "react";
 import axios from "util/axiosConfig.js";
 import { useMediaQuery } from "react-responsive";
+import { useMapCenter } from "hooks";
 
 import {
   GoogleMap,
@@ -36,15 +37,16 @@ const mapContainerStyle = {
   height: "calc(100vh - 80px)",
 };
 
-const center = {
-  lat: 39.76584,
-  lng: -86.15762,
-};
+// const center = {
+//   lat: 39.76584,
+//   lng: -86.15762,
+// };
 
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
+  gestureHandling: "greedy",
 };
 
 export default function MapPage() {
@@ -53,14 +55,16 @@ export default function MapPage() {
     libraries,
   });
 
+  const { mapCenterState, toggleMapCoords, setZoom } = useMapCenter();
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [center, setCenter] = useState();
+  const [zoomSetting, setZoomSetting] = useState();
 
   const getMarkers = async () => {
     try {
       const mapMarkers = await axios.get("places");
-      console.log(mapMarkers);
       return mapMarkers.data;
     } catch (error) {
       console.error(error.message);
@@ -70,7 +74,6 @@ export default function MapPage() {
   const setInitialMarkers = async () => {
     try {
       const mapMarkers = await axios.get("places");
-      console.log(mapMarkers);
       setMarkers((prev) => [...prev, ...mapMarkers.data]);
     } catch (error) {
       console.error(error.message);
@@ -79,7 +82,17 @@ export default function MapPage() {
 
   // eslint-disable react-hooks/exhaustive-deps
   useEffect(() => {
+    const savedMapCoords = JSON.parse(localStorage.getItem("mapCenterCoords"));
+    const savedZoom = JSON.parse(localStorage.getItem("zoomSetting"));
+
     setInitialMarkers();
+    const mapCenter = {
+      lat: mapCenterState.lat,
+      lng: mapCenterState.lng,
+    };
+    setCenter(savedMapCoords ? savedMapCoords : mapCenter);
+    console.log(mapCenterState.zoom);
+    setZoomSetting(savedZoom ? savedZoom : mapCenterState.zoom);
   }, []);
 
   const mapRef = useRef();
@@ -91,6 +104,20 @@ export default function MapPage() {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
   }, []);
+
+  const handleCenterChanged = () => {
+    if (!mapRef.current) return;
+    const newPos = mapRef.current.getCenter().toJSON();
+    if (newPos.lat !== 39.76584 || newPos.lng !== -86.15762) {
+      toggleMapCoords(newPos);
+    }
+  };
+
+  const handleZoomChanged = () => {
+    if (!mapRef.current) return;
+    const newZoom = mapRef.current.getZoom();
+    setZoom(newZoom);
+  };
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
@@ -105,10 +132,12 @@ export default function MapPage() {
 
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
-          zoom={8}
-          center={center}
+          zoom={zoomSetting}
           options={options}
           onLoad={onMapLoad}
+          center={center}
+          onCenterChanged={handleCenterChanged}
+          onZoomChanged={handleZoomChanged}
         >
           {markers.map((marker) => (
             <Marker

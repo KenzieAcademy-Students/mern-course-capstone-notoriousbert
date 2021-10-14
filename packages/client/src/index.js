@@ -6,18 +6,19 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppRouter } from "AppRouter";
 import { ProvideAuth } from "hooks/useAuth";
-
-
+import { ManagedUIMapCenterContext } from "hooks/useMapCenter";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProvideAuth>
-      <BrowserRouter>
-        <AppRouter>
-          <App />
-        </AppRouter>
-      </BrowserRouter>
-    </ProvideAuth>
+    <ManagedUIMapCenterContext>
+      <ProvideAuth>
+        <BrowserRouter>
+          <AppRouter>
+            <App />
+          </AppRouter>
+        </BrowserRouter>
+      </ProvideAuth>
+    </ManagedUIMapCenterContext>
   </React.StrictMode>,
   document.getElementById("root")
 );
