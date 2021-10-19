@@ -199,9 +199,9 @@ export default function UserProfilePage({
                   <div className="favorites-text-inner-container">
                     <a
                       className="sign responsive-favorites-text"
-                      href={`/places/${favorite._id}`}
+                      href={`/places/${favorite && favorite._id}`}
                     >
-                      <p> {favorite.placeName}</p>
+                      <p> {favorite && favorite.placeName}</p>
                     </a>
                   </div>
                   {user.favorites &&
@@ -227,9 +227,11 @@ export default function UserProfilePage({
                     <Card.Title>
                       <a
                         className="sign responsive-card-title"
-                        href={`/places/${review.location._id}`}
+                        href={`/places/${
+                          review.location && review.location._id
+                        }`}
                       >
-                        {review.location.placeName}
+                        {review.location && review.location.placeName}
                       </a>{" "}
                     </Card.Title>
                     <Card.Subtitle
