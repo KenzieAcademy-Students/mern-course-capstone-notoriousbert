@@ -222,48 +222,50 @@ export default function UserProfilePage({
           <div id="reviews-top-container">
             {user.reviews.map((review) => (
               <div className="review-card">
-                <Card>
-                  <Card.Body>
-                    <Card.Title>
-                      <a
-                        className="sign responsive-card-title"
-                        href={`/places/${
-                          review.location && review.location._id
-                        }`}
+                {review.location && (
+                  <Card>
+                    <Card.Body>
+                      <Card.Title>
+                        <a
+                          className="sign responsive-card-title"
+                          href={`/places/${
+                            review.location && review.location._id
+                          }`}
+                        >
+                          {review.location && review.location.placeName}
+                        </a>{" "}
+                      </Card.Title>
+                      <Card.Subtitle
+                        className="mb-2 text-muted"
+                        id="responsive-card-subtitle"
                       >
-                        {review.location && review.location.placeName}
-                      </a>{" "}
-                    </Card.Title>
-                    <Card.Subtitle
-                      className="mb-2 text-muted"
-                      id="responsive-card-subtitle"
-                    >
-                      {timeSince(review.created)} ago
-                    </Card.Subtitle>
-                    <Card.Text id="card-text">
-                      {review.rating && (
-                        <span className="react-stars">
-                          <ReactStars
-                            count={5}
-                            edit={false}
-                            value={review.rating}
-                            size={16}
-                            isHalf={true}
-                            emptyIcon={
-                              <img
-                                src="/icons8-cat-unfilled.png"
-                                alt="empty-star"
-                              ></img>
-                            }
-                            fullIcon={<i className="fa fa-star"></i>}
-                            activeColor="#ffd700"
-                          />
-                        </span>
-                      )}
-                      {review.text}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+                        {timeSince(review.created)} ago
+                      </Card.Subtitle>
+                      <Card.Text id="card-text">
+                        {review.rating && (
+                          <span className="react-stars">
+                            <ReactStars
+                              count={5}
+                              edit={false}
+                              value={review.rating}
+                              size={16}
+                              isHalf={true}
+                              emptyIcon={
+                                <img
+                                  src="/icons8-cat-unfilled.png"
+                                  alt="empty-star"
+                                ></img>
+                              }
+                              fullIcon={<i className="fa fa-star"></i>}
+                              activeColor="#ffd700"
+                            />
+                          </span>
+                        )}
+                        {review.text}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                )}
                 {/* <hr /> */}
               </div>
             ))}
