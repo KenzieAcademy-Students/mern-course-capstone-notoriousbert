@@ -1,0 +1,69 @@
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgb(237, 241, 245, 0.8);
+  // padding: 1vw 1vw 1vw 1vw;
+  margin-bottom: 0;
+  position: fixed;
+  border-radius: 2vh;
+  box-sizing: content-box;
+  z-index: 10;
+  padding-bottom: 15px;
+  bottom: 5vh;
+  left: 2vh;
+  @media only screen and (max-width: 600px) {
+    font-size: calc(0.8vw + 10px);
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-top: 8px;
+  }
+
+  .pet-checkbox {
+    height: 100%;
+    margin: 0;
+  }
+  > form {
+    // height: 25vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    @media only screen and (max-width: 600px) {
+      padding: 0;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+
+  label {
+    @media only screen and (max-width: 600px) {
+      position: relative;
+      bottom: 0.8vh;
+    }
+  }
+  form {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .form-check {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+  }
+
+  .form-check-inline {
+    display: inline-block;
+    margin-right: 0.8vh;
+  }
+
+  .form-check-inline:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .places-checkbox {
+  }
+}
